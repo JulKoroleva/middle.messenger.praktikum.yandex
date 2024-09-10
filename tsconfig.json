@@ -1,15 +1,13 @@
 {
     "compilerOptions": {
+      "outDir": "./dist", // Директория для скомпилированных файлов
+      "rootDir": "./src", // Корневая директория с исходниками
       "target": "ESNext",
       "module": "ESNext",
-      "moduleResolution": "bundler",
-      "strict": true,
       "esModuleInterop": true,
-      "skipLibCheck": true,
-      "forceConsistentCasingInFileNames": true,
-      "allowImportingTsExtensions": true,
-      "noEmit": true
+      "strict": true,
+      "moduleResolution": "node"
     },
-    "include": ["src"]
+    "include": ["src/**/*", "src/types/**/*"]
   }
   

@@ -6,23 +6,29 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "start": "vite build && node server.ts",
+    "compile-server": "tsc",
+    "start": "vite build && npm run compile-server && node dist/server/server.js", 
     "serve": "vite preview",
     "lint": "eslint . --ext .ts,.js,.vue,.hbs",
     "lint:fix": "eslint . --ext .ts,.js,.vue,.hbs --fix"
   },
   "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.5.4",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.45",
     "postcss-cli": "^11.0.0",
+    "sass": "^1.78.0",
     "ts-node": "^10.9.2",
     "vite": "^5.4.3",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-handlebars": "^2.0.0"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "handlebars": "^4.7.8",
-    "postcss-preset-env": "^10.0.2"
+    "postcss-preset-env": "^10.0.2",
+    "postcss-simple-vars": "^7.0.1"
   }
 }

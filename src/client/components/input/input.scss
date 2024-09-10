@@ -1,0 +1,35 @@
+.input {
+  position: relative;
+  width: 280px;
+
+  &__placeholder {
+    line-height: 13px;
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    transition: .3s;
+    color: var(--color-placeholder);
+    font-weight: 300;
+    font-size: 13px;
+
+    &_active {
+      top: 3px;
+      font-size: 9px;
+      font-weight: 200;
+      line-height: 9px;
+    }
+  }
+}
+.input-data {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 16px;
+
+  &:focus {
+    outline: none;
+    border-bottom: 1px solid var(--color-border-active);
+  }
+}
