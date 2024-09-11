@@ -1,18 +1,21 @@
 :root {
-  --color-text-main: #1e1e1e;
+  --color-text-main: #1E1E1E;
+  --color-text-primary: #3369F3;
   --color-text-secondary: #9B9B9B;
-  --color-placeholder: #999999;
   --color-button-primary: #3369f3;
   --color-button-disabled: #A3ABC1;
-  --color-message-main: #e4edfd;
-  --color-message-secondary: #f8f8f8;
-  --color-white: #fff;
-  --color-danger: #f00;
-  --color-chatlist-background: #fbfbfb;
-  --color-hover-background: #f5f5f5;
-  --color-element-hover: rgba(82, 82, 82, 0.5);
-  --color-border: #dbdbdb;
+  --color-message-primary: #E4EDFD;
+  --color-message-secondary: #EEF1F4;
+  --color-white: #FFFFFF;
+  --color-red: #FF0000;
+  --color-element: rgba(82, 82, 82, 0.5);
+  --color-border: #EAEAEA;
   --color-border-active: #3369f3;
+  
+  --color-chats-bg: #fbfbfb;
+  --color-chat-bg-unread: #f5f6f7;
+  --color-chat-bg-hoover: #e6eefc;
+  --color-chat-count: #3369F3;
 
   --box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.14);
 

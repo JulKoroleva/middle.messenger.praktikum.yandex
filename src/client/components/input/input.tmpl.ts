@@ -1,7 +1,7 @@
 const Input = `
-  <div class="input">
-    <input name="{{name}}" id="{{name}}" type="{{type}}" class="input-data">
-    <label for="{{name}}" class="input__placeholder">{{label}}</label>
+  <div class="{{inputMainClass}}">
+    <label for="{{inputName}}" class="{{labelClass}}">{{inputLabel}}</label>
+    <input name="{{inputName}}" id="{{inputName}}" type="{{inputType}}" class="{{inputClass}}" value="{{inputValue}}">
   </div>
 `;
 

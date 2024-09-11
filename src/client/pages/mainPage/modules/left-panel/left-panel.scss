@@ -1,0 +1,9 @@
+@import url(./components/components.scss);
+
+.left-panel {
+  width: 30%;
+  background-color: var(--color-chats-bg);
+  padding: 20px 0 10px;
+  border-right: 1px solid var(--color-border);
+  height: 100vh;
+}

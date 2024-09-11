@@ -1,17 +1,13 @@
-import mainPageRaw from './mainPage';
-import loginPageRaw from './login';
-import signInPageRaw from './signIn';
+import mainPageRaw from "./mainPage/mainPage.tmpl";
+import loginPageRaw from "./login";
+import signUpPageRaw from "./signUp";
+import profilePage from "./profilePage/profilePage";
 
-interface Pages {
-    MainPage: string;
-    LoginPage: string;
-    SigninPage: string;
-  }
-  
-  const Pages: Pages = {
-      MainPage: mainPageRaw,
-      LoginPage: loginPageRaw,
-      SigninPage: signInPageRaw,
-  };
-  
-  export default Pages;
+const Pages: Pages = {
+  MainPage: mainPageRaw,
+  LoginPage: loginPageRaw,
+  SignupPage: signUpPageRaw,
+  ProfilePage: profilePage,
+};
+
+export default Pages;

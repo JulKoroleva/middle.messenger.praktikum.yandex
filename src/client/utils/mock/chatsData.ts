@@ -1,4 +1,4 @@
-const chatData = [
+const chatData: Chat[] = [
     {
       chatUserName: 'John Doe',
       chatLastMessage: 'Привет! Как дела?',
@@ -105,7 +105,7 @@ const chatData = [
       chatUserName: 'Amelia',
       chatLastMessage: 'Отправила ссылку на документы.',
       lastMessageDate: '2024-08-28 15:55',
-      newMessages: '0',
+      newMessages: '',
     },
     {
       chatUserName: 'Harper',
@@ -121,4 +121,4 @@ const chatData = [
     }
   ];
 
-  export { chatData };  
+  export default chatData

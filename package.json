@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "compile-server": "tsc",
-    "start": "vite build && npm run compile-server && node dist/server/server.js", 
+    "start": "vite build && npm run compile-server && node dist/server/server.js",
     "serve": "vite preview",
     "lint": "eslint . --ext .ts,.js,.vue,.hbs",
     "lint:fix": "eslint . --ext .ts,.js,.vue,.hbs --fix"
@@ -22,7 +22,8 @@
     "ts-node": "^10.9.2",
     "vite": "^5.4.3",
     "vite-plugin-eslint": "^1.8.1",
-    "vite-plugin-handlebars": "^2.0.0"
+    "vite-plugin-handlebars": "^2.0.0",
+    "vite-plugin-svgr": "^4.2.0"
   },
   "dependencies": {
     "dotenv": "^16.4.5",

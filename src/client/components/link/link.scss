@@ -11,7 +11,7 @@
   }
 
   &_primary {
-    background-color: var(--color-text-primary);
+    background-color: var(--color-button-primary);
     border-radius: 8px;
     width: 280px;
     height: 37px;
@@ -21,13 +21,8 @@
     line-height: 13px;
   }
 
-  &_link {
-    color: var(--color-text-secondary);
-    background-color: inherit;
-  }
-
   &_text {
-    color: var(--color-text-primary);
+    color: var(--color-button-primary);
     background-color: inherit;
   }
 
@@ -35,16 +30,8 @@
     font-size: 13px;
     line-height: 13px;
   }
-  
-  &_danger {
-    color: var(--color-red);
-    background-color: inherit;
-  }
 
-  &_border {
-    border-bottom: 1px solid var(--color-border);
-    width: 100%;
-    text-align: start;
-    padding: 10px 0;
+  &_danger {
+    color: var(--color-danger);
   }
 }

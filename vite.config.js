@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite';
 import handlebars from 'vite-plugin-handlebars';
 import eslintPlugin from 'vite-plugin-eslint';
-import { resolve } from 'path'; // Импортируем функцию resolve
+import { resolve } from 'path'; 
+import svgr from 'vite-plugin-svgr';
 
 export default defineConfig({
   plugins: [
@@ -9,8 +10,9 @@ export default defineConfig({
       include: ['/**/*.ts', '/**/*.js', '/**/*.hbs'],
     }),
     handlebars({
-      partialDirectory: resolve(__dirname, 'src/partials'), // Используем resolve для указания пути
+      partialDirectory: resolve(__dirname, 'src/partials'),
     }),
+    svgr(),
   ],
   build: {
     outDir: 'dist',
