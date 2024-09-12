@@ -8,5 +8,5 @@
     "strict": true,
     "moduleResolution": "node"
   },
-  "include": ["src/**/*", "src/types/**/*"]
+  "include": ["src/**/*", "src/types/**/*", "custom.d.ts"]
 }

@@ -5,9 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && tsc",
     "compile-server": "tsc",
-    "start": "vite build && npm run compile-server && node dist/server/server.js",
+    "start": "vite build && node server.cjs",
     "serve": "vite preview",
     "lint": "eslint . --ext .ts,.js,.vue,.hbs",
     "lint:fix": "eslint . --ext .ts,.js,.vue,.hbs --fix"

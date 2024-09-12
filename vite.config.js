@@ -10,7 +10,7 @@ export default defineConfig({
       include: ["/**/*.ts", "/**/*.js", "/**/*.hbs"],
     }),
     handlebars({
-      partialDirectory: resolve(__dirname, "src/partials"),
+      partialDirectory: resolve(__dirname, "src/components"),
     }),
     svgr(),
   ],
@@ -19,15 +19,19 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       input: {
-        main: resolve(__dirname, "src/client/index.html"),
+        main: resolve(__dirname, 'index.html'),
       },
-    },
+      output: {
+        dir: 'dist',
+        format: 'es'
+      }
+    }
   },
 
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "src/client/styles/variables.scss";`,
+        additionalData: `@import "src/styles/variables.scss";`,
       },
     },
   },
