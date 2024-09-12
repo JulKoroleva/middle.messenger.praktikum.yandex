@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && tsc",
+    "build": "vite build",
     "compile-server": "tsc",
     "start": "vite build && node server.cjs",
     "serve": "vite preview",
