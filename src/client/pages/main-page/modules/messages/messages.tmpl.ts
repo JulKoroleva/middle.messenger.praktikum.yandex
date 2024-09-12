@@ -1,5 +1,5 @@
 import Handlebars from "../../../../helpers";
-import Avatar from "../../../../../../static/assets/avatar.jpg";
+import Avatar from "../../../../../../static/assets/union.svg"
 import MessageItem from "./components/message/message.tmpl";
 import Header from "./components/dialog-header/dialog-header.tmpl";
 import InputBar from "./components/input-bar/input-bar.tmpl";

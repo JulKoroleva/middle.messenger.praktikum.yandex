@@ -1,11 +1,11 @@
 @import url(./components/components.scss);
 
 .dialog {
-  position: relative;
   width: 70%;
   height: 100vh;
   padding-top: 55px;
   padding-bottom: 75px;
+  position: relative;
 
   &__messages-container {
     display: flex;

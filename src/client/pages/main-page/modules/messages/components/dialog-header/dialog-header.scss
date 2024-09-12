@@ -1,12 +1,12 @@
 .dialog {
   &__header {
-    width: 95%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     position: absolute;
     top: 0;
     left: 2.5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 95%;
     padding: 10px 5px;
     border-bottom: 1px solid var(--color-border);
   }
@@ -22,11 +22,11 @@
   &__ellipse {
     width: 30px;
     height: 30px;
-    border: none;
     border-radius: 50%;
+    border: none;
+    background: unset;
     cursor: pointer;
     transition: 0.3s;
-    background: unset;
 
     &:hover {
       opacity: 0.4;
@@ -38,8 +38,8 @@
   &__avatar {
     width: 34px;
     height: 34px;
-    object-fit: cover;
     border-radius: 50%;
+    object-fit: cover;
     background-color: var(--color-button-disabled);
   }
 

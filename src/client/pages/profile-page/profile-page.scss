@@ -5,8 +5,8 @@
   align-items: center;
 
   &__btn-back {
-    height: 100vh;
     width: 64px;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,15 +25,15 @@
   &__form-container {
     width: calc(100% - 64px);
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
   }
 
   &__form {
+    width: 30%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 30%;
   }
 
   &__avatar {
@@ -41,18 +41,18 @@
     height: 130px;
     border-radius: 50%;
     object-fit: cover;
+    transition: 0.3s;
 
     &:hover {
       opacity: 0.6;
-      transition: 0.3s;
     }
   }
 
   &__name {
+    margin-top: 20px;
     font-size: 16px;
     font-weight: 600;
     line-height: 16px;
-    margin-top: 20px;
   }
 
   &__inputs-container {
@@ -64,9 +64,9 @@
 
   &__btn-container {
     width: 100%;
+    margin-top: 50px;
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
     align-items: baseline;
   }
 }
