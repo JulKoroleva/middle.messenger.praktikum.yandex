@@ -19,13 +19,13 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
+        main: resolve(__dirname, "index.html"),
       },
       output: {
-        dir: 'dist',
-        format: 'es'
-      }
-    }
+        dir: "dist",
+        format: "es",
+      },
+    },
   },
 
   css: {
