@@ -1,13 +1,12 @@
 {
-    "compilerOptions": {
-      "outDir": "./dist", // Директория для скомпилированных файлов
-      "rootDir": "./src", // Корневая директория с исходниками
-      "target": "ESNext",
-      "module": "ESNext",
-      "esModuleInterop": true,
-      "strict": true,
-      "moduleResolution": "node"
-    },
-    "include": ["src/**/*", "src/types/**/*"]
-  }
-  
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "target": "ESNext",
+    "module": "ESNext",
+    "esModuleInterop": true,
+    "strict": true,
+    "moduleResolution": "node"
+  },
+  "include": ["src/**/*", "src/types/**/*", "custom.d.ts"]
+}
