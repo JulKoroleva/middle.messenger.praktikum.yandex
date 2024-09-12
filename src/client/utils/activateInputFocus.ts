@@ -1,5 +1,4 @@
 function activatePlaceholder(input: HTMLElement): void {
-  console.log("activatePlaceholder");
   const placeholder = input.querySelector(
     ".dynamic-input__placeholder"
   ) as HTMLElement | null;
@@ -10,7 +9,6 @@ function activatePlaceholder(input: HTMLElement): void {
 }
 
 function deactivatePlaceholder(input: HTMLElement): void {
-  console.log("Input blur, deactivating placeholder");
   const placeholder = input.querySelector(
     ".dynamic-input__placeholder"
   ) as HTMLElement | null;
@@ -23,13 +21,10 @@ function deactivatePlaceholder(input: HTMLElement): void {
 const initializeInputFocusHandlers = (
   inputs: NodeListOf<HTMLElement>
 ): void => {
-  console.log("initializeInputFocusHandlers");
-  console.log("inputs", inputs);
   inputs.forEach((input: HTMLElement) => {
     const inputData = input.querySelector(
       ".dynamic-input__data"
     ) as HTMLInputElement | null;
-    console.log("inputData", inputData);
     if (inputData) {
       inputData.addEventListener("focus", () => {
         activatePlaceholder(input);

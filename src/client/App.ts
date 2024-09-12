@@ -38,12 +38,14 @@ export default class App {
 
     switch (this.state.currentPage) {
       case "/":
-        template = Handlebars.compile(Pages.MainPage);
-        this.appElement.innerHTML = template({
-          chats: this.state.chats,
-          messages: this.state.messages,
-        });
         break;
+        case "/chats":
+          template = Handlebars.compile(Pages.MainPage);
+          this.appElement.innerHTML = template({
+            chats: this.state.chats,
+            messages: this.state.messages,
+          });
+          break;
       case "/profile":
         template = Handlebars.compile(Pages.ProfilePage);
         this.appElement.innerHTML = template({

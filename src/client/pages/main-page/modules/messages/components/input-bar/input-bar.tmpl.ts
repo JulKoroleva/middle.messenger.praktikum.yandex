@@ -3,13 +3,9 @@ import arrowBtn from "../../../../../../../../static/assets/arrowBtn.svg";
 
 const InputBar = `
   <div class="dialog__input-bar">
-    <button class="input-bar__pin-button">
-      <img src="${pinIcon}" alt="file">
-    </button>
+    {{> Button buttonImage="${pinIcon}" buttonClass="input-bar__pin-button" imageAlt="file"}}
     <textarea name="message" class="dialog__input-bar__input" type="textarea" placeholder="Сообщение..."></textarea>
-    <button class="input-bar__send-button">
-      <img class="input-bar__send-icon" src="${arrowBtn}" alt="send">
-    </button>
+    {{> Button buttonImage="${arrowBtn}" buttonClass="input-bar__send-button" buttonImageClass="input-bar__send-icon" imageAlt="send"}}
   </div>
 `;
 

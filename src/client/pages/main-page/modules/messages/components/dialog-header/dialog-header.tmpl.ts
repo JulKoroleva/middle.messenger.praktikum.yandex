@@ -6,9 +6,7 @@ const Header = `
       <img class="container__avatar" src={{avatar}} alt="img">
       <p class="container__title">{{chatName}}</p>
     </div>
-    <button class="header__ellipse">
-      <img src=${ellipseIcon} alt="settings">
-    </button>
+    {{> Button buttonImage="${ellipseIcon}" buttonClass="header__ellipse" imageAlt="settings"}}
   </div>
 `;
 

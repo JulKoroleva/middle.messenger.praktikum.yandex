@@ -6,6 +6,29 @@ html {
   overflow-y: hidden;
 }
 
+.pages__navigation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: 20% auto;
+
+  li {
+    list-style-type: none;
+    padding: 5px;
+
+    a {
+      text-decoration: none;
+      padding: 0.5em 1em;
+    }
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }
