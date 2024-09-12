@@ -1,3 +1,2 @@
-import loginPageRaw from './login.hbs?raw';
-export default  loginPageRaw
-
+import loginPageRaw from "./login.hbs?raw";
+export default loginPageRaw;

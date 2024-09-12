@@ -5,7 +5,7 @@ Handlebars.registerHelper("formatDate", function (time: string) {
   const now = new Date();
   const yesterday = new Date();
   const dayBeforeYesterday = new Date(now);
-  
+
   const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long" };
   const optionsWithYear: Intl.DateTimeFormatOptions = {
     ...options,

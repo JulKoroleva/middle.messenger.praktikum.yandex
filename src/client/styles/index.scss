@@ -3,32 +3,32 @@
 @import url(../pages/pages.scss);
 
 html {
-overflow-y: hidden;
+  overflow-y: hidden;
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+  background: #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 10px;
-    border: 2px solid #f1f1f1;
+  background-color: #888;
+  border-radius: 10px;
+  border: 2px solid #f1f1f1;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+  background: #555;
 }
 
 ::-webkit-scrollbar-button {
-    display: none;
+  display: none;
 }
 
 * {
-    scrollbar-width: thin;
-    scrollbar-color: #888 #f1f1f1; 
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f1f1f1;
 }

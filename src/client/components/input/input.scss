@@ -1,14 +1,14 @@
 .dynamic-input {
   position: relative;
   width: 280px;
-  
+
   &__data {
     width: 100%;
     padding: 10px;
     border: none;
     border-bottom: 1px solid var(--color-border);
     font-size: 16px;
-  
+
     &:focus {
       outline: none;
       border-bottom: 1px solid var(--color-border-active);
@@ -20,7 +20,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    transition: .3s;
+    transition: 0.3s;
     color: var(--color-text-secondary);
     font-weight: 300;
     font-size: 13px;
@@ -37,7 +37,7 @@
 .line-input {
   position: relative;
   width: 100%;
-  
+
   &__data {
     width: 100%;
     padding: 10px 0 10px 40px;
@@ -47,7 +47,7 @@
     text-align: right;
     font-weight: 200;
     color: var(--color-text-secondary);
-  
+
     &:focus {
       outline: none;
       border-bottom: 1px solid var(--color-border-active);
@@ -59,7 +59,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    transition: .3s;
+    transition: 0.3s;
     color: var(--color-text-secondary);
     font-weight: 500;
     font-size: 13px;

@@ -1,6 +1,5 @@
-import Handlebars from 'handlebars';
+import Handlebars from "handlebars";
 
-Handlebars.registerHelper('isCurrentUserMessage', function(isCurrentUser) {
-    return isCurrentUser ? 'message_mine' : 'message_other';
+Handlebars.registerHelper("isCurrentUserMessage", function (isCurrentUser) {
+  return isCurrentUser ? "message_mine" : "message_other";
 });
-  

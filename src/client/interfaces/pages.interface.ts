@@ -3,4 +3,5 @@ interface Pages {
   LoginPage: string;
   SignupPage: string;
   ProfilePage: string;
+  ErrorPage: string;
 }

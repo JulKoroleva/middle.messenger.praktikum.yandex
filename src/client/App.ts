@@ -22,7 +22,7 @@ export default class App {
       currentPage: this.getPageFromUrl(),
       chats: chatData,
       messages: processMessages(messages),
-      currentUserData: currentUserData
+      currentUserData: currentUserData,
     };
     this.appElement = document.getElementById("app");
 
@@ -39,11 +39,16 @@ export default class App {
     switch (this.state.currentPage) {
       case "/":
         template = Handlebars.compile(Pages.MainPage);
-        this.appElement.innerHTML = template({ chats: this.state.chats, messages: this.state.messages });
+        this.appElement.innerHTML = template({
+          chats: this.state.chats,
+          messages: this.state.messages,
+        });
         break;
       case "/profile":
         template = Handlebars.compile(Pages.ProfilePage);
-        this.appElement.innerHTML = template({ userData: this.state.currentUserData });
+        this.appElement.innerHTML = template({
+          userData: this.state.currentUserData,
+        });
         break;
       case "/login":
         template = Handlebars.compile(Pages.LoginPage);
@@ -52,6 +57,15 @@ export default class App {
       case "/signup":
         template = Handlebars.compile(Pages.SignupPage);
         this.appElement.innerHTML = template({});
+        break;
+      case "/error":
+        const errorCode = "404";
+        const description = "Такой страницы нет";
+        template = Handlebars.compile(Pages.ErrorPage);
+        this.appElement.innerHTML = template({
+          errorCode: errorCode,
+          description: description,
+        });
         break;
       default:
         template = Handlebars.compile(Pages.MainPage);
@@ -76,7 +90,7 @@ export default class App {
   }
 
   navigate(page: string): void {
-    history.pushState({}, "", page); 
+    history.pushState({}, "", page);
     this.setState({ currentPage: page });
   }
 
