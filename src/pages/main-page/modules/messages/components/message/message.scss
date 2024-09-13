@@ -1,0 +1,43 @@
+.message {
+  max-width: 80%;
+  padding: 10px 10px 15px;
+  position: relative;
+  background-color: var(--color-message-secondary);
+
+  &__date {
+    width: 10%;
+    margin: 20px auto;
+    text-align: center;
+    font-size: 10px;
+  }
+
+  &__text {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 15px;
+  }
+
+  &__time-container {
+    position: absolute;
+    bottom: 3px;
+    right: 10px;
+  }
+
+  &__time {
+    font-size: 7px;
+    font-weight: 500;
+    line-height: 9px;
+    color: var(--color-text-secondary);
+  }
+
+  &_other {
+    align-self: flex-start;
+    border-radius: 0 8px 8px 8px;
+  }
+
+  &_mine {
+    align-self: flex-end;
+    border-radius: 8px 8px 0;
+    background-color: var(--color-message-primary);
+  }
+}
