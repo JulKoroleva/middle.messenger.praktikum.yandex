@@ -1,6 +1,6 @@
 import "./styles/index.scss";
 import App from "./App";
-import { initializeInputFocusHandlers } from "./utils/activateInputFocus";
+import { initializeInputFocusHandlers } from "./utils/dom/activateInputFocus";
 
 document.addEventListener("DOMContentLoaded", () => {
   const app = new App();

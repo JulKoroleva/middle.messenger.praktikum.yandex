@@ -1,11 +1,11 @@
 import Handlebars from "handlebars";
 import Pages from "./pages";
 
-import chatData from "./utils/mock/chatsData";
-import messages from "./utils/mock/messagesData";
-import currentUserData from "./utils/mock/currentUserData";
+import chatData from "./mocks/chatsData";
+import messages from "./mocks/messagesData";
+import currentUserData from "./mocks/currentUserData";
 
-import processMessages from "./utils/processMessages";
+import processMessages from "./utils/messages/processMessages";
 
 import Button from "./components/button/button.tmpl";
 import Input from "./components/input/input.tmpl";
