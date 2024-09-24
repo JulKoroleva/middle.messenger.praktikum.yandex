@@ -1,11 +1,8 @@
-import Handlebars from 'handlebars';
-import Block from '../../framework/block';
+import Block from '../../framework/Block';
 import templateLogin from './login.hbs'
 import { inputs, buttons } from '../../constants/login/login.constants';
 import { validateForm } from '../../validators/form.validator';
-import { renderTemplate } from '../../utils/dom/render';
 
-const template = Handlebars.compile(templateLogin);
 const handleFormSubmit = (e: Event) => {
   e.preventDefault();
   const form = e.target as HTMLFormElement;
@@ -30,7 +27,10 @@ export class LoginPage extends Block {
     })
   }
 
-  renderTemplate() {
-    return this.compile(template, this.props)
+  render() {
+    return `
+    <div class="app">
+        {{{ Footer }}}
+    </div>`;
   }
 }
