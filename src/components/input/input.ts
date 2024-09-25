@@ -10,6 +10,7 @@ interface InputProps {
   inputMainClass: string;
   inputClass: string;
   labelClass: string;
+  inputValue: unknown,
   onClick?: () => void;
   events?: {
     click: () => void;
@@ -18,18 +19,7 @@ interface InputProps {
 
 export default class Input extends Block {
   constructor(props: InputProps) {
-    super({
-      ...props,
-      events: {
-        focus: (e: Event) => {
-          // handleFocusInput(e.target as HTMLInputElement);
-        },
-        focusout: (e: Event) => {
-          // handleFocusoutInput(e.target as HTMLInputElement)
-          // checkInputValidation(e.target as HTMLInputElement)
-        }
-      }
-    })
+    super(props);
   }
 
   render() {

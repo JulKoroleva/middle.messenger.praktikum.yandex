@@ -1,5 +1,5 @@
-import EventBus, { EventCallback } from "./EventBus";
-import Handlebars from "handlebars";
+import EventBus from "../framework/EventBus";
+import { v4 as uuidv4 } from "uuid";
 interface Props {
   [key: string]: any;
 }
@@ -12,69 +12,73 @@ class Block {
     FLOW_RENDER: "flow:render",
   };
 
-  protected _element: HTMLElement | null = null;
-
-  protected _id: number = Math.floor(100000 + Math.random() * 900000);
-
+  public id = uuidv4(6);
   protected props: Props;
-
   protected refs: Record<string, Block> = {};
+  public children: Record<string, Block>;
+  eventBus: () => EventBus;
+  private _element: HTMLElement | null = null;
 
-  protected children: Record<string, Block>;
-
-  protected lists: Record<string, any[]>;
-
-  protected eventBus: () => EventBus;
-
+  /** JSDoc
+   * @param {string} tagName
+   * @param {Object} props
+   *
+   * @returns {void}
+   */
   constructor(propsWithChildren: Props = {}) {
     const eventBus = new EventBus();
-    const { props, children, lists } =
-      this._getChildrenPropsAndProps(propsWithChildren);
-    this.props = this._makePropsProxy({ ...props });
+
+    const { props, children } = this._getChildrenAndProps(propsWithChildren);
+
     this.children = children;
-    this.lists = lists;
+    this.props = this._makePropsProxy(props);
+
     this.eventBus = () => eventBus;
+
     this._registerEvents(eventBus);
+
     eventBus.emit(Block.EVENTS.INIT);
   }
 
-  private _addEvents(): void {
-    const { events = {} } = this.props;
-    if (!events || Object.keys(events).length === 0) {
-      return;
-    }
-  
-    Object.keys(events).forEach((eventName) => {
-      if (this._element) {
-        this._element.addEventListener(eventName, events[eventName]);
+  _getChildrenAndProps(childrenAndProps: Props) {
+    const props: Record<string, Props> = {};
+    const children: Record<string, Block> = {};
+
+    Object.entries(childrenAndProps).forEach(([key, value]) => {
+      if (value instanceof Block) {
+        children[key] = value;
+      } else {
+        props[key] = value;
       }
+    });
+
+    return { props, children };
+  }
+
+  _addEvents() {
+    const { events = {} } = this.props as { events: Record<string, () => void> };
+  
+    console.log("Привязка событий:", events, this._element); 
+    console.log("Привязка событий:", events); // Проверьте, отображаются ли события
+    Object.keys(events).forEach(eventName => {
+      console.log(`Привязка события: ${eventName}`); // Проверьте, какие события привязываются
+      this._element?.addEventListener(eventName, events[eventName]);
     });
   }
 
-  private _removeEvents() {
-    const { events = {} } = this.props as {
-      events: Record<string, () => void>;
-    };
+  _removeEvents() {
+    const { events = {} } = this.props as { events: Record<string, () => void> };
 
-    Object.keys(events).forEach((eventName) => {
+    Object.keys(events).forEach(eventName => {
       this._element?.removeEventListener(eventName, events[eventName]);
     });
   }
 
-  private _registerEvents(eventBus: EventBus): void {
-    eventBus.on(Block.EVENTS.INIT, this._init.bind(this) as EventCallback);
-    eventBus.on(
-      Block.EVENTS.FLOW_CDM,
-      this._componentDidMount.bind(this) as EventCallback
-    );
-    eventBus.on(
-      Block.EVENTS.FLOW_CDU,
-      this._componentDidUpdate.bind(this) as EventCallback
-    );
-    eventBus.on(
-      Block.EVENTS.FLOW_RENDER,
-      this._render.bind(this) as EventCallback
-    );
+  _registerEvents(eventBus: EventBus) {
+    eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
   private _init() {
@@ -86,12 +90,10 @@ class Block {
   protected init() {
   }
 
-
   _componentDidMount() {
     this.componentDidMount();
   }
 
-  
   componentDidMount() {
   }
 
@@ -111,39 +113,6 @@ class Block {
     return true;
   }
 
-  private _getChildrenPropsAndProps(propsAndChildren: Props): {
-    children: Record<string, Block>;
-    props: Props;
-    lists: Record<string, any[]>;
-  } {
-    const children: Record<string, Block> = {};
-    const props: Props = {};
-    const lists: Record<string, any[]> = {};
-
-    Object.entries(propsAndChildren).forEach(([key, value]) => {
-      if (value instanceof Block) {
-        children[key] = value;
-      } else if (Array.isArray(value)) {
-        lists[key] = value;
-      } else {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        props[key] = value;
-      }
-    });
-
-    return { children, props, lists };
-  }
-
-  protected addAttributes(): void {
-    const { attr = {} } = this.props;
-
-    Object.entries(attr).forEach(([key, value]) => {
-      if (this._element) {
-        this._element.setAttribute(key, value as string);
-      }
-    });
-  }
-
   public setProps = (nextProps: Props) => {
     if (!nextProps) {
       return;
@@ -157,9 +126,7 @@ class Block {
   }
 
   private _render() {
-    const { events = {} } = this.props as {
-      events: Record<string, () => void>;
-    };
+    const { events = {} } = this.props as { events: Record<string, () => void> };
 
     if (Object.keys(events).length > 0) {
       this._removeEvents();
@@ -167,31 +134,23 @@ class Block {
 
     const fragment = this.render();
 
-    console.log("fragment", fragment);
     const newElement = fragment.firstElementChild as HTMLElement;
 
-    console.log("fragment.firstElementChild", fragment.firstElementChild);
-    console.log("newElement", newElement);
     if (this._element) {
       this._element.replaceWith(newElement);
     }
 
     this._element = newElement;
 
-    console.log("this._element", this._element);
     this._addEvents();
   }
 
   protected compile(template: (context: Props) => string, context: any) {
     const contextAndStubs = { ...context, __refs: this.refs };
-    console.log("contextAndStubs", contextAndStubs);
-    console.log("context", context);
-    console.log("template", template);
+console.log('contextAndStubs', contextAndStubs)
     const html = template(contextAndStubs);
 
-    console.log("html", html);
-    const temp = document.createElement("template");
-    console.log("temp", temp);
+    const temp = document.createElement('template');
 
     temp.innerHTML = html;
 
@@ -199,7 +158,6 @@ class Block {
       embed(temp.content);
     });
 
-    console.log("temp.content", temp.content);
     return temp.content;
   }
 
@@ -232,22 +190,13 @@ class Block {
       }
     });
   }
-  private _createDocumentElement(tagName: string): HTMLTemplateElement {
-    return document.createElement(tagName) as HTMLTemplateElement;
+
+  show() {
+    this.getContent()!.style.display = 'block';
   }
 
-  public show(): void {
-    const content = this.getContent();
-    if (content) {
-      content.style.display = "block";
-    }
-  }
-
-  public hide(): void {
-    const content = this.getContent();
-    if (content) {
-      content.style.display = "none";
-    }
+  hide() {
+    this.getContent()!.style.display = 'none';
   }
 }
 

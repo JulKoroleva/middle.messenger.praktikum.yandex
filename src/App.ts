@@ -8,6 +8,15 @@ import messages from "./mocks/messagesData";
 import currentUserData from "./mocks/currentUserData";
 
 import processMessages from "./utils/messages/processMessages";
+import { registerComponent } from './utils/dom/registerComponent';
+import Form from './components/form/form';
+import Button from './components/button/button';
+import Input from './components/input/input';
+import renderTemplate from "./utils/dom/render";
+
+registerComponent('Form', Form);
+registerComponent('Button', Button);
+registerComponent('Input', Input);
 
 interface AppState {
   currentPage: string;
@@ -36,14 +45,14 @@ export default class App {
     let pageContent;
     switch (this.state.currentPage) {
       case "/login":
-        const loginPage = new LoginPage();
-        console.log('loginPage.getContent()' ,loginPage.getContent());
-        pageContent = loginPage.getContent();
+        renderTemplate('login')
+        // console.log('case "/login":')
+        // const loginPage = new LoginPage();
+        // console.log('loginPage.getContent()' ,loginPage.getContent());
+        // pageContent = loginPage.getContent();
         break;
       case "/signup":
-        const signupPage = new SignupPage();
-        console.log('signupPage.getContent()' ,signupPage.getContent());
-        pageContent = signupPage.getContent();
+        renderTemplate('signup')
         break;
       // Добавьте остальные страницы, если необходимо
       default:

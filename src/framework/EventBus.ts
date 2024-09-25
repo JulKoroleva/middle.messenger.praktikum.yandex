@@ -1,37 +1,33 @@
-export type EventCallback = (...args: any[]) => void;
+type EventCallback = (...args: unknown[]) => void
 
 export default class EventBus {
-  private listeners: Record<string, EventCallback[]>;
+  private listeners: Record<string, EventCallback[]> = {}
 
-  constructor() {
-    this.listeners = {};
-  }
-
-  public on(event: string, callback: EventCallback): void {
-    if (!this.listeners[event]) {
-      this.listeners[event] = [];
+  on (event: string, callback: EventCallback): void {
+    if (this.listeners[event] === undefined) {
+      this.listeners[event] = []
     }
-
-    this.listeners[event].push(callback);
+    this.listeners[event].push(callback)
   }
 
-  public off(event: string, callback: EventCallback): void {
-    if (!this.listeners[event]) {
-      throw new Error(`No event: ${event}`);
+  off (event: string, callback: EventCallback): void {
+    if (this.listeners[event] === undefined) {
+      throw new Error(`Нет события: ${event}`)
     }
 
     this.listeners[event] = this.listeners[event].filter(
-      listener => listener !== callback,
-    );
+      listener => listener !== callback
+    )
   }
 
-  public emit(event: string, ...args: any[]): void {
-    if (!this.listeners[event]) {
-      throw new Error(`No event: ${event}`);
+  emit (event: string, ...args: unknown[]): void {
+    if (this.listeners[event] === undefined) {
+      throw new Error(`Нет события: ${event}`)
     }
 
     this.listeners[event].forEach(listener => {
-      listener(...args);
-    });
+      listener(...args)
+    })
   }
 }
+

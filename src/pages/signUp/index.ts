@@ -2,7 +2,6 @@ import templateSignup from './signup.hbs';
 import Block from '../../framework/Block';
 import { inputs, buttons } from '../../constants/login/login.constants';
 import { validateForm } from '../../validators/form.validator';
-import { renderTemplate } from '../../utils/dom/render';
 
 const handleFormSubmit = (e: Event) => {
   e.preventDefault();
@@ -20,14 +19,15 @@ const handleFormSubmit = (e: Event) => {
 
 export class SignupPage extends Block {
   constructor() {
-    super({
-      inputs,
+    super({ 
       buttons,
-    })
+      inputs,
+      onSubmitForm: (e: Event) => handleFormSubmit(e),
+    });
   }
+  
 
-  // render() {
-  //   return this.compile(templateSignup, this.props).firstElementChild?.outerHTML ||
-  //   "";
-  // }
+  render() {
+    return this.compile(templateSignup, this.props);
+  }
 }

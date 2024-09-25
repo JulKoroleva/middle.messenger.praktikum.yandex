@@ -1,6 +1,6 @@
 import { LoginPage } from '../../pages/login';
 // import { ChatPage } from '../../pages/chat';
-// import { SignupPage } from '../../pages/signUp';
+import { SignupPage } from '../../pages/signUp';
 // import { ProfilePage } from '../../pages/profile';
 // import { ErrorPage } from '../../pages/error-page/';
 
@@ -8,11 +8,12 @@ const ROUTES = {
 //   'chat': ChatPage,
 //   'profile': ProfilePage,
 //   'errorPage': ErrorPage,
+  'signup': SignupPage,
   'login': LoginPage,
-  // 'signup': SignupPage,
 }
 
-export function renderTemplate (name: keyof typeof ROUTES) {
+export default function renderTemplate (name: keyof typeof ROUTES) {
+  console.log('its render')
   const root = document.querySelector('#app')!;
 
   root.innerHTML = '';
