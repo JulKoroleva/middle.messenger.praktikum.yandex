@@ -28,12 +28,6 @@ export const buttons = [
     buttonText: "Авторизоваться",
     buttonClass: "button_primary",
     buttonType: "submit",
-    onClick: (e: MouseEvent) => {
-      e.preventDefault();
-      const form = document.querySelector('.login-page__form');
-      console.log('Обработчики событий формы:', form);
-      
-    },
   }),
   new Button({
     buttonText: "Нет аккаунта?",

@@ -29,21 +29,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const forms = document.querySelectorAll(
-    "form"
-  ) as NodeListOf<HTMLFormElement>;
-  forms.forEach((form) => {
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-    });
-  });
+  // const forms = document.querySelectorAll(
+  //   "form"
+  // ) as NodeListOf<HTMLFormElement>;
+  // forms.forEach((form) => {
+  //   form.addEventListener("submit", (event) => {
+  //     event.preventDefault();
+  //   });
+  // });
 
-  const buttons = document.querySelectorAll(
-    "button"
-  ) as NodeListOf<HTMLButtonElement>;
-  buttons.forEach((button) => {
-    button.addEventListener("click", (event) => {
-      event.preventDefault();
-    });
-  });
+  // const buttons = document.querySelectorAll(
+  //   "button"
+  // ) as NodeListOf<HTMLButtonElement>;
+  // buttons.forEach((button) => {
+  //   button.addEventListener("click", (event) => {
+  //     event.preventDefault();
+  //   });
+  // });
 });

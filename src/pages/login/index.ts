@@ -1,25 +1,10 @@
 import Block from "../../framework/Block";
-import Form from "../../components/form/form";
 import templateLogin from "./login.hbs";
 import { inputs, buttons } from "../../constants/login/login.constants";
-import { validateForm } from "../../validators/form.validator";
-import renderTemplate from "../../utils/dom/render";
 
 const handleFormSubmit = (e: Event) => {
-  console.log("!!!!");
-  const form = e.target as HTMLFormElement;
-
-  // const formIsValid = validateForm(form);
-  const formIsValid = true;
-  if (formIsValid) {
-    const formData = new FormData(form);
-    console.log(formData);
-    // console.log(Object.fromEntries(formData))
-    renderTemplate("signup");
-  } else {
-    console.log("Form is invalid");
-    // renderTemplate("signup");
-  }
+  e.preventDefault();
+  console.log("Событие submit сработало!");
 };
 
 export class LoginPage extends Block {
@@ -27,7 +12,7 @@ export class LoginPage extends Block {
     super({
       buttons,
       inputs,
-      onSubmitForm: handleFormSubmit,
+      onSubmitForm: (e: Event) => handleFormSubmit(e),
     });
   }
 

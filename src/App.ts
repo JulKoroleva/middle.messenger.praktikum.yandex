@@ -72,6 +72,7 @@ export default class App {
 
   changePage(page: string): void {
     this.state.currentPage = page;
+    console.log('this.state.currentPage', this.state.currentPage)
     this.render();
   }
 }
