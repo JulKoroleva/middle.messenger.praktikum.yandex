@@ -1,6 +1,7 @@
-declare module "*.hbs" {
-  const content: string;
-  export default content;
+declare module '*.hbs' {
+  import Handlebars from 'handlebars';
+  const template: Handlebars.TemplateDelegate;
+  export default template;
 }
 
 declare module "*.hbs?raw" {
@@ -27,3 +28,5 @@ declare module "*.jpg" {
   const content: string;
   export default content;
 }
+
+declare module 'uuid';
