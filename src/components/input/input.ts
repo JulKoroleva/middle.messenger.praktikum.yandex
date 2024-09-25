@@ -4,9 +4,12 @@ import Block from "../../framework/Block";
 import templateInput from "./input.hbs";
 
 interface InputProps {
-  name: string;
-  type: string;
-  label: string;
+  inputName: string,
+  inputLabel: string;
+  inputType: string;
+  inputMainClass: string;
+  inputClass: string;
+  labelClass: string;
   onClick?: () => void;
   events?: {
     click: () => void;
@@ -30,7 +33,6 @@ export default class Input extends Block {
   }
 
   render() {
-    return this.compile(templateInput, this.props).firstElementChild?.outerHTML ||
-      ""
+    return this.compile(templateInput, this.props)
   }
 }

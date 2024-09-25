@@ -11,10 +11,7 @@ export default class Button extends Block {
     });
   }
 
-  render(): string {
-    return (
-      this.compile(templateButton, this.props).firstElementChild?.outerHTML ||
-      ""
-    );
+  render() {
+    return this.compile(templateButton, this.props)
   }
 }

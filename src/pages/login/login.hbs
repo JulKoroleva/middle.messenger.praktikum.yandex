@@ -2,12 +2,14 @@
   <form class="login-page__form">
      <h1 class="form__title">Вход</h1>
     <div class="form__inputs-container">
-      {{> Input inputName="login" inputLabel="Логин" inputType="text" inputMainClass="dynamic-input" inputClass='dynamic-input__data' labelClass='dynamic-input__placeholder'}}
-      {{> Input inputName="password" inputLabel="Пароль" inputType="password"  inputMainClass="dynamic-input" inputClass='dynamic-input__data' labelClass='dynamic-input__placeholder'}}
-    </div>
+      {{#each inputs}}
+        {{{ Input inputName=this.inputName inputLabel=this.inputLabel inputType=this.inputType inputMainClass=this.inputMainClass inputClass=this.inputClass labelClass=this.labelClass }}}
+      {{/each}}
+      </div>
     <div class="form__buttons-container">
-      {{> Button buttonText="Авторизоваться" buttonClass="button_primary" buttonLink="/chats"}}
-      {{> Button buttonText="Нет аккаунта?" buttonClass="button_text" buttonLink="/signup"}}
+      {{#each buttons}}
+        {{{ Button buttonText=this.buttonText buttonClass=this.buttonClass buttonLink=this.buttonLink}}}
+      {{/each}}
     </div>
   </form>
 </main>

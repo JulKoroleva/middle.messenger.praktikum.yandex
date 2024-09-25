@@ -1,9 +1,10 @@
 interface ButtonProps {
-  text: string;
-  class: string;
+  buttonText: string;
+  buttonClass: string;
+  buttonLink: string;
   type?: "submit" | "reset" | "button";
-  onClick?: () => void;
+  onClick?: (e: Event) => void;
   events?: {
-    click: () => void;
+    onClick?: (e: Event) => void;
   };
 }

@@ -1,4 +1,4 @@
-import Handlebars from "handlebars";
+
 // import Pages from "./pages";
 import { LoginPage } from "./pages/login/index";
 import { SignupPage } from "./pages/signUp/index";
@@ -22,7 +22,7 @@ export default class App {
 
   constructor() {
     this.state = {
-      currentPage: 'createQuestionnaire',
+      currentPage: '/login',
       chats: chatData,
       messages: processMessages(messages),
       currentUserData: currentUserData,
@@ -32,52 +32,34 @@ export default class App {
 
   render(): string {
     if (!this.appElement) return "";
-
+  
+    let pageContent;
     switch (this.state.currentPage) {
-      // case "/":
-      // case "/chats":
-      //   template = Handlebars.compile(Pages.MainPage);
-      //   this.appElement.innerHTML = template({
-      //     chats: this.state.chats,
-      //     messages: this.state.messages,
-      //   });
-      //   break;
-      // case "/profile":
-      //   template = Handlebars.compile(Pages.ProfilePage);
-      //   this.appElement.innerHTML = template({
-      //     userData: this.state.currentUserData,
-      //   });
-      //   break;
       case "/login":
         const loginPage = new LoginPage();
-        console.log(loginPage.getContent());
-        this.appElement.replaceWith(loginPage.getContent());
+        console.log('loginPage.getContent()' ,loginPage.getContent());
+        pageContent = loginPage.getContent();
         break;
       case "/signup":
         const signupPage = new SignupPage();
-        console.log(signupPage.getContent());
-        this.appElement.replaceWith(signupPage.getContent());
+        console.log('signupPage.getContent()' ,signupPage.getContent());
+        pageContent = signupPage.getContent();
         break;
-      // case "/error":
-      //   const errorCode = "404";
-      //   const description = "Такой страницы нет";
-      //   template = Handlebars.compile(Pages.ErrorPage);
-      //   this.appElement.innerHTML = template({
-      //     errorCode: errorCode,
-      //     description: description,
-      //   });
-      //   break;
+      // Добавьте остальные страницы, если необходимо
       default:
-        // template = Handlebars.compile(Pages.MainPage);
-    }
-
-    return "";
-  }
-
-  createQuestionnaire(): void {
-      this.render();
+        console.warn("Unknown page: ", this.state.currentPage);
+        return "";
     }
   
+    console.log('pageContent', pageContent)
+    if (pageContent) {
+      console.log('pageContent', pageContent)
+      this.appElement.innerHTML = ""; // Очистка содержимого
+      this.appElement.appendChild(pageContent); // Добавление нового содержимого
+    }
+  
+    return "";
+  }
 
   changePage(page: string): void {
     this.state.currentPage = page;

@@ -1,6 +1,6 @@
 import { LoginPage } from '../../pages/login';
 // import { ChatPage } from '../../pages/chat';
-import { SignupPage } from '../../pages/signUp';
+// import { SignupPage } from '../../pages/signUp';
 // import { ProfilePage } from '../../pages/profile';
 // import { ErrorPage } from '../../pages/error-page/';
 
@@ -9,7 +9,7 @@ const ROUTES = {
 //   'profile': ProfilePage,
 //   'errorPage': ErrorPage,
   'login': LoginPage,
-  'signup': SignupPage,
+  // 'signup': SignupPage,
 }
 
 export function renderTemplate (name: keyof typeof ROUTES) {
