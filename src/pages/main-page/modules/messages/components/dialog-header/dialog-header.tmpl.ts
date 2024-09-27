@@ -8,13 +8,18 @@ import templateDialogHeader from "./dialog-header.hbs";
 interface PropsDialogHeader {
   avatar: string;
   chatName: string;
+  changePage: (page: string) => void;
 }
 
 export default class DialogHeader extends Block {
   constructor(props: PropsDialogHeader) {
     super({
       ...props,
-      ellipseIcon
+      ellipseIcon,
+      onSettingsClick: (e: Event) => {
+        e.preventDefault();
+        props.changePage("");
+      },
     });
   }
 

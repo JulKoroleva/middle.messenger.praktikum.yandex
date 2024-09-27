@@ -14,10 +14,7 @@ export default class MainPage extends Block {
       ...props,
       messages: props.messages,
       chats: props.chats,
-      changePage: (e: MouseEvent) => {
-        e.preventDefault();
-        props.changePage("profile");
-      },
+      changePage: props.changePage
     });
   }
 

@@ -10,9 +10,6 @@ export default class LeftPanel extends Block {
     console.log("props",props);
     super({
       ...props,
-      changePage: (e: MouseEvent) => {
-        props.changePage("profile");
-      },
     });
   }
 

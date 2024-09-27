@@ -28,6 +28,7 @@ import Messages from "./pages/main-page/modules/messages/messages";
 import LeftPanel from "./pages/main-page/modules/left-panel/left-panel";
 import MainPage from "./pages/main-page/main-page";
 import ProfilePage from "./pages/profile-page/profile-page.tmpl";
+import ErrorPage from "./pages/error-page/error-page.tmpl";
 
 registerComponent('Form', Form);
 registerComponent('Button', Button);
@@ -48,15 +49,10 @@ interface AppState {
   chats: any[];
   messages: any[];
   currentUserData: UserInfo;
+  errorCode: string,
+  description: string,
 }
 
-const ROUTES = {
-  'mainPage': MainPage,
-  'profile': ProfilePage,
-//   'errorPage': ErrorPage,
-  'login': LoginPage,
-  'signup': SignupPage,
-}
 export default class App {
   private state: AppState;
   private appElement: HTMLElement | null;
@@ -67,6 +63,8 @@ export default class App {
       chats: chatData,
       messages: processMessages(messages),
       currentUserData: currentUserData,
+      errorCode: '404',
+      description: 'Такой страницы нет',
     };
     this.appElement = document.getElementById("app");
     this.render();
@@ -90,8 +88,7 @@ export default class App {
           pageContent = new ProfilePage({ currentUserData: this.state.currentUserData, changePage: this.changePage.bind(this) }).getContent();
           break;
       default:
-        console.warn("Unknown page: ", this.state.currentPage);
-        return "";
+        pageContent = new ErrorPage({ errorCode: this.state.errorCode, description: this.state.description, changePage: this.changePage.bind(this) }).getContent();
     }
 
     if (pageContent) {
