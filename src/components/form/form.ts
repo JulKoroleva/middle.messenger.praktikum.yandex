@@ -1,12 +1,6 @@
 import Block from "../../framework/Block";
 import template from './form.hbs';
 
-interface FormProps {
-  onSubmit: () => void
-  events: {
-    submit: () => void
-  }
-}
 export default class Form extends Block {
   constructor(props: FormProps) {
     super({

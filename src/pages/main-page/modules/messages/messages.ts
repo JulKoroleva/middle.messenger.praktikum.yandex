@@ -3,10 +3,6 @@ import Block from "../../../../framework/Block";
 import templateMessages from "./messages.hbs";
 import Avatar from "../../../../../static/assets/union.svg"
 
-interface PropsMessages {
-  messages: Messages[];
-  changePage: (page: string) => void;
-}
 export default class Messages extends Block {
   constructor(props: PropsMessages) {
     super({

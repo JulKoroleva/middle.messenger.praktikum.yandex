@@ -6,14 +6,22 @@ import Block from "../../framework/Block";
 import { createButtons, createInputs } from "../../constants/profile/profile.constants";
 // export default profilePage;
 
-interface PropsProfilePage {
-  currentUserData: UserInfo;
-  changePage: (page: string) => void;
-}
 
 export default class ProfilePage extends Block {
   constructor(props: PropsProfilePage) {
     super({
+      ...props,
+      isEditable: false,  // начальное состояние редактирования
+      toggleEdit: () => {
+        this.setProps({ isEditable: !this.props.isEditable });
+      },
+      saveChanges: (e: MouseEvent) => {
+        e.preventDefault();
+        const form = document.getElementById('profileForm') as HTMLFormElement;
+        const formData = new FormData(form);
+        console.log(Object.fromEntries((formData as any).entries()));
+        this.setProps({ isEditable: false }); 
+      },
       buttons: createButtons(props.changePage),
       inputs: createInputs(props.currentUserData),
       union,
@@ -22,7 +30,6 @@ export default class ProfilePage extends Block {
         e.preventDefault();
         props.changePage("mainPage");
       },
-      ...props,
     });
   }
 

@@ -1,10 +1,12 @@
-interface ButtonProps {
+interface PropsButton {
   buttonText: string;
   buttonClass: string;
-  // buttonLink: string;
   buttonType?: "submit" | "reset" | "button";
-  onClick?: (e: Event) => void;
+  buttonImage?: string;
+  imageAlt?: string;
+  buttonImageClass?: string;
+  onClick?: (e: MouseEvent) => void;
   events?: {
-    onClick?: (e: Event) => void;
+    click: (e: MouseEvent) => void;
   };
 }

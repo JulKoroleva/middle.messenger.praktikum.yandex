@@ -1,9 +1,5 @@
 import EventBus from "../framework/EventBus";
 import { v4 as uuidv4 } from "uuid";
-interface Props {
-  [key: string]: any;
-}
-
 class Block {
   static EVENTS = {
     INIT: "init",

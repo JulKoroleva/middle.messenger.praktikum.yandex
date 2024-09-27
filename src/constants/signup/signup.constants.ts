@@ -49,7 +49,7 @@ export const createInputs = () => [
   }),
   new Input({
     inputName: "password",
-    inputLabel: "Пароль (еще раз)",
+    inputLabel: "Пароль",
     inputType: "password",
     inputMainClass: "dynamic-input",
     inputClass: "dynamic-input__data",
@@ -58,7 +58,7 @@ export const createInputs = () => [
   }),
   new Input({
     inputName: "confirmPassword",
-    inputLabel: "Пароль",
+    inputLabel: "Пароль (еще раз)",
     inputType: "password",
     inputMainClass: "dynamic-input",
     inputClass: "dynamic-input__data",

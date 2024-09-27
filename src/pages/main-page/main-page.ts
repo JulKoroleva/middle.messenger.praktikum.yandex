@@ -1,12 +1,5 @@
 import Block from "../../framework/Block";
-import messages from "../../mocks/messagesData";
 import templateMainPage from "./main-page.hbs";
-
-interface PropsMainPage {
-  messages: Message[];
-  chats: Chat[];
-  changePage: (page: string) => void;
-}
 
 export default class MainPage extends Block {
   constructor(props: PropsMainPage) {

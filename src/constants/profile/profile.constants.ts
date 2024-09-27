@@ -9,7 +9,7 @@ export const createInputs = (userData: UserInfo) => [
       inputMainClass: "line-input",
       inputClass: "line-input__data",
       labelClass: "line-input__placeholder",
-      inputValue: userData.email || "",
+      inputValue: userData.email,
     }),
     new Input({
       inputName: "login",
@@ -18,7 +18,7 @@ export const createInputs = (userData: UserInfo) => [
       inputMainClass: "line-input",
       inputClass: "line-input__data",
       labelClass: "line-input__placeholder",
-      inputValue: userData.login || "",
+      inputValue: userData.login,
     }),
     new Input({
       inputName: "first_name",
@@ -27,7 +27,7 @@ export const createInputs = (userData: UserInfo) => [
       inputMainClass: "line-input",
       inputClass: "line-input__data",
       labelClass: "line-input__placeholder",
-      inputValue: userData.first_name || "",
+      inputValue: userData.first_name,
     }),
     new Input({
       inputName: "second_name",
@@ -36,7 +36,7 @@ export const createInputs = (userData: UserInfo) => [
       inputMainClass: "line-input",
       inputClass: "line-input__data",
       labelClass: "line-input__placeholder",
-      inputValue: userData.second_name || "",
+      inputValue: userData.second_name,
     }),
     new Input({
       inputName: "display_name",
@@ -45,7 +45,7 @@ export const createInputs = (userData: UserInfo) => [
       inputMainClass: "line-input",
       inputClass: "line-input__data",
       labelClass: "line-input__placeholder",
-      inputValue: userData.display_name || "",
+      inputValue: userData.display_name,
     }),
     new Input({
       inputName: "phone",
@@ -54,7 +54,7 @@ export const createInputs = (userData: UserInfo) => [
       inputMainClass: "line-input",
       inputClass: "line-input__data",
       labelClass: "line-input__placeholder",
-      inputValue: userData.phone || "",
+      inputValue: userData.phone,
     }),
   ];
   
