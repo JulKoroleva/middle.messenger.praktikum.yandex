@@ -1,8 +1,15 @@
 <main class="profile">
-  {{{Button buttonLink="/chats" buttonImage=arrowBtn buttonClass="profile__btn-back" buttonImageClass="profile__btn-back-icon" imageAlt="back" onClick=this.onChangePage}}}
+  {{{Button
+    buttonType="button"
+    buttonImage=arrowBtn
+    buttonClass="profile__btn-back"
+    buttonImageClass="profile__btn-back-icon"
+    imageAlt="back"
+    onClick=this.onChangePage
+  }}}
   <div class="profile__form-container">
-    <form class="profile__form">
-      <img class="profile__avatar" src="{{union}}" alt="Аватар">
+    {{#Form onSubmit=this.saveChanges class="profile__form"}}
+      <img class="profile__avatar" src="{{union}}" alt="Аватар" />
       <h3 class="profile__name">{{userData.display_name}}</h3>
       <div class="profile__inputs-container">
         {{#each inputs}}
@@ -14,6 +21,7 @@
             inputClass=this.props.inputClass
             labelClass=this.props.labelClass
             inputValue=this.props.inputValue
+            isEditing=this.props.isEditing
           }}}
         {{/each}}
       </div>
@@ -27,6 +35,6 @@
           }}}
         {{/each}}
       </div>
-    </form>
+    {{/Form}}
   </div>
 </main>

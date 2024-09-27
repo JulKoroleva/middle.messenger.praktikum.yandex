@@ -102,7 +102,7 @@ class Block {
     }
   }
 
-  protected componentDidUpdate() {
+  componentDidUpdate() {
     return true;
   }
 
@@ -140,7 +140,6 @@ class Block {
 
   protected compile(template: (context: Props) => string, context: any) {
     const contextAndStubs = { ...context, __refs: this.refs };
-console.log('contextAndStubs', contextAndStubs)
     const html = template(contextAndStubs);
 
     const temp = document.createElement('template');

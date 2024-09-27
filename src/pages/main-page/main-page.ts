@@ -12,7 +12,6 @@ export default class MainPage extends Block {
   }
 
   render() {
-    console.log("MainPage", this.props);
     return this.compile(templateMainPage, this.props);
   }
 }

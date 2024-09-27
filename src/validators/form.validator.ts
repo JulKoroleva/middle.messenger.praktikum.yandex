@@ -21,7 +21,7 @@ const validationRules: ValidationRules = {
   display_name: {
     regex: /^[A-Za-zА-ЯЁа-яё][A-Za-zА-ЯЁа-яё-]*$/,
     errorMessage:
-      "Отображаемое имя должно начинаться с буквы и содержать только буквы или дефис, без пробелов или спецсимволов",
+      "Имя должно начинаться с буквы и содержать только буквы или дефис, без пробелов или спецсимволов",
   },
   login: {
     regex: /^(?!-|\d)[A-Za-z0-9_-]{3,20}(?<!-)$/,
@@ -36,14 +36,14 @@ const validationRules: ValidationRules = {
   password: {
     regex: /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/,
     errorMessage:
-      "Пароль должен быть длиной от 8 до 40 символов, содержать хотя бы одну заглавную букву и хотя бы одну цифру",
+      "Пароль должен быть от 8 до 40 символов, содержать хотя бы одну заглавную букву и хотя бы одну цифру",
   },
   confirmPassword: {
     regex: /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,40}$/,
     errorMessage: "Повторите пароль",
   },
   phone: {
-    regex: /^\+?\d{10,15}$/,
+    regex: /\+?7\s?\(\d{3}\)\s?\d{3}\s?\d{2}\s?\d{2}/,
     errorMessage: "Номер телефона должен содержать от 10 до 15 цифр",
   },
   message: {
@@ -55,12 +55,15 @@ const validationRules: ValidationRules = {
 const getErrorMessage = (inputName: string): string =>
   validationRules[inputName]?.errorMessage || "Поле заполнено некорректно";
 
-export  const validateInput = (
+export const validateInput = (
   input: HTMLInputElement | HTMLTextAreaElement
 ): boolean => {
-  const errorSpan = document.getElementById(`${input.name}-error`) as HTMLElement;
+  const errorSpan = document.getElementById(
+    `${input.name}-error`
+  ) as HTMLElement;
   const validationRule = validationRules[input.name];
-  const inputWrapper = input.closest('.dynamic-input') as HTMLElement;
+  const dynamicInputWrapper = input.closest(".dynamic-input") as HTMLElement;
+  const lineInputWrapper = input.closest(".line-input") as HTMLElement;
 
   if (validationRule && !validationRule.regex.test(input.value)) {
     if (errorSpan) {
@@ -68,8 +71,11 @@ export  const validateInput = (
       errorSpan.textContent = getErrorMessage(input.name);
     }
 
-    if (inputWrapper) {
-      inputWrapper.classList.add('error');
+    if (dynamicInputWrapper) {
+      dynamicInputWrapper.classList.add("error");
+    }
+    if (lineInputWrapper) {
+      lineInputWrapper.classList.add("error");
     }
     return false;
   } else {
@@ -77,8 +83,11 @@ export  const validateInput = (
       errorSpan.classList.remove("input__error_visible");
       errorSpan.textContent = "";
     }
-    if (inputWrapper) {
-      inputWrapper.classList.remove('error');
+    if (dynamicInputWrapper) {
+      dynamicInputWrapper.classList.remove("error");
+    }
+    if (lineInputWrapper) {
+      lineInputWrapper.classList.remove("error");
     }
     return true;
   }

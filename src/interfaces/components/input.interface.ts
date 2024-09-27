@@ -6,6 +6,7 @@ interface InputProps {
   inputClass: string;
   labelClass: string;
   inputValue: unknown;
+  isEditing?: boolean;
   onClick?: () => void;
   events?: {
     click: () => void;

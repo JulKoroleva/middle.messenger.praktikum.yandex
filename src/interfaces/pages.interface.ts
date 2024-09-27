@@ -25,6 +25,10 @@ interface PropsProfilePage {
   changePage: (page: string) => void;
 }
 
+interface ProfilePageState {
+  isEditing: boolean;
+}
+
 interface ErrorPageProps {
   errorCode: string;
   description: string;

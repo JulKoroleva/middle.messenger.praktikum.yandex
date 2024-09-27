@@ -13,7 +13,6 @@ export default class ChatListHeader extends Block {
       },
       onChangePage: (e: MouseEvent) => {
         e.preventDefault();
-        console.log("ChatListHeader", props);
         props.changePage("profile");
       },
 
@@ -21,7 +20,6 @@ export default class ChatListHeader extends Block {
   }
 
   render() {
-    console.log("ChatListHeader", this.props);
     return this.compile(templateChatListHeader, this.props);
   }
 }

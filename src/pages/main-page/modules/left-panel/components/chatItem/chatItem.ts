@@ -6,7 +6,6 @@ export default class ChatItem extends Block {
   constructor(props: PropsChatItem) {
     const hasNewMessages = props.newMessages !== "0" && props.newMessages !== "";
 
-    console.log('props',props)
     super({
       ...props,
       hasNewMessages,
@@ -15,7 +14,6 @@ export default class ChatItem extends Block {
   }
 
   render() {
-    console.log('this.props',this.props)
     return this.compile(templateChatItem, this.props);
   }
 }
