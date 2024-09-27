@@ -1,25 +1,22 @@
 import Block from "../../framework/Block";
-// import { handleFocusInput, handleFocusoutInput } from "../../utils/handleFocusInput";
-// import { checkInputValidation } from "../../utils/formValidation";
 import templateInput from "./input.hbs";
-
-interface InputProps {
-  inputName: string,
-  inputLabel: string;
-  inputType: string;
-  inputMainClass: string;
-  inputClass: string;
-  labelClass: string;
-  inputValue: unknown,
-  onClick?: () => void;
-  events?: {
-    click: () => void;
-  };
-}
+import { activatePlaceholder, deactivatePlaceholder } from "../../utils/dom/activateInputFocus";
+import { validateInput } from "../../validators/form.validator";
 
 export default class Input extends Block {
   constructor(props: InputProps) {
-    super(props);
+    super({
+      ...props,
+      events: {
+        focus: (e: Event) => {
+          activatePlaceholder(e.target as HTMLInputElement);
+        },
+        focusout: (e: Event) => {
+          deactivatePlaceholder(e.target as HTMLInputElement)
+          validateInput(e.target as HTMLInputElement)
+        }
+      }
+    })
   }
 
   render() {
