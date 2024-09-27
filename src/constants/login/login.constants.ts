@@ -1,8 +1,7 @@
-
-import renderTemplate from "../../utils/dom/render";
 import Button from "../../components/button/button";
 import Input from "../../components/input/input";
-export const inputs = [
+
+export const createInputs = () => [
   new Input({
     inputName: "login",
     inputLabel: "Логин",
@@ -23,7 +22,7 @@ export const inputs = [
   }),
 ];
 
-export const buttons = [
+export const createButtons = (changePage: (page: string) => void) => [
   new Button({
     buttonText: "Авторизоваться",
     buttonClass: "button_primary",
@@ -35,8 +34,7 @@ export const buttons = [
     buttonType: "button",
     onClick: (e: MouseEvent) => {
       e.preventDefault();
-      renderTemplate('signup');
+      changePage('signup'); // Используйте переданную функцию для изменения страницы
     },
   }),
 ];
-

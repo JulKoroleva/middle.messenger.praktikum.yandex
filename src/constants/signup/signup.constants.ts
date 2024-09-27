@@ -1,8 +1,7 @@
-
-import renderTemplate from "../../utils/dom/render";
 import Button from "../../components/button/button";
 import Input from "../../components/input/input";
-export const inputs = [
+
+export const createInputs = () => [
   new Input({
     inputName: "email",
     inputLabel: "Почта",
@@ -68,7 +67,7 @@ export const inputs = [
   }),
 ];
 
-export const buttons = [
+export const createButtons = (changePage: (page: string) => void) => [
   new Button({
     buttonText: "Зарегистрироваться",
     buttonClass: "button_primary",
@@ -80,8 +79,7 @@ export const buttons = [
     buttonType: "button",
     onClick: (e: MouseEvent) => {
       e.preventDefault();
-      renderTemplate('login');
+      changePage("login"); // Используйте переданную функцию для изменения страницы
     },
   }),
 ];
-

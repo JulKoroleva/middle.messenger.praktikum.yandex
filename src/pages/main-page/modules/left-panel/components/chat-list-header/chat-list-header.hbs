@@ -1,0 +1,22 @@
+<div class="chat-list-header">
+  <div class="chat-list-header__button">
+    {{{Button
+      buttonText=button.buttonText
+      buttonType=button.buttonType
+      buttonClass=button.buttonClass
+      onClick=this.onChangePage
+    }}}
+  </div>
+  <div class="chat-list-header__search-container">
+    <input
+      class="chat-list-header__search-input"
+      type="text"
+      placeholder="Поиск"
+    />
+    <img
+      class="chat-list-header__search-icon"
+      src="{{searchIcon}}"
+      alt="Поиск"
+    />
+  </div>
+</div>

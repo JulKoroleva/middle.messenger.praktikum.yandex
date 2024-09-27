@@ -1,12 +1,20 @@
 import pinIcon from "../../../../../../../static/assets/pinIcon.svg";
 import arrowBtn from "../../../../../../../static/assets/arrowBtn.svg";
 
-const InputBar = `
-  <div class="dialog__input-bar">
-    {{> Button buttonImage="${pinIcon}" buttonClass="input-bar__pin-button" imageAlt="file"}}
-    <textarea name="message" class="dialog__input-bar__input" type="textarea" placeholder="Сообщение..."></textarea>
-    {{> Button buttonImage="${arrowBtn}" buttonClass="input-bar__send-button" buttonImageClass="input-bar__send-icon" imageAlt="send"}}
-  </div>
-`;
+import Block from "../../../../../../framework/Block";
+import templateInputBar from "./input-bar.hbs";
 
-export default InputBar;
+// export default MessageItem;
+
+export default class InputBar extends Block {
+  constructor() {
+    super({
+      pinIcon,
+      arrowBtn
+    });
+  }
+
+  render() {
+    return this.compile(templateInputBar, this.props);
+  }
+}

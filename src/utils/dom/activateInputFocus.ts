@@ -21,7 +21,6 @@ function deactivatePlaceholder(input: HTMLElement): void {
 const initializeInputFocusHandlers = (
   inputs: NodeListOf<HTMLElement>
 ): void => {
-  console.log('inputs', inputs)
   inputs.forEach((input: HTMLElement) => {
     const inputData = input.querySelector(
       ".dynamic-input__data"

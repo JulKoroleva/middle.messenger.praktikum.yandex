@@ -58,10 +58,7 @@ class Block {
   _addEvents() {
     const { events = {} } = this.props as { events: Record<string, () => void> };
   
-    console.log("Привязка событий:", events, this._element); 
-    console.log("Привязка событий:", events); // Проверьте, отображаются ли события
     Object.keys(events).forEach(eventName => {
-      console.log(`Привязка события: ${eventName}`); // Проверьте, какие события привязываются
       this._element?.addEventListener(eventName, events[eventName]);
     });
   }

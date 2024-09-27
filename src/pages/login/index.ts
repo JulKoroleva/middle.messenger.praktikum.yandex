@@ -1,18 +1,21 @@
 import Block from "../../framework/Block";
 import templateLogin from "./login.hbs";
-import { inputs, buttons } from "../../constants/login/login.constants";
+import { createInputs, createButtons } from "../../constants/login/login.constants";
+interface LoginPageProps {
+  changePage: (page: string) => void;
+}
 
-const handleFormSubmit = (e: Event) => {
+const handleFormSubmit = (e: Event, changePage: (page: string) => void) => {
   e.preventDefault();
-  console.log("Событие submit сработало!");
+  changePage("mainPage");
 };
 
 export class LoginPage extends Block {
-  constructor() {
+  constructor(props: LoginPageProps) {
     super({
-      buttons,
-      inputs,
-      onSubmitForm: (e: Event) => handleFormSubmit(e),
+      buttons: createButtons(props.changePage),
+      inputs: createInputs(),
+      onSubmitForm: (e: Event) => handleFormSubmit(e, props.changePage),
     });
   }
 

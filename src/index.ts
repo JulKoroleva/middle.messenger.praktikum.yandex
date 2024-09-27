@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputs = document.querySelectorAll(
       ".dynamic-input"
     ) as NodeListOf<HTMLElement>;
-    console.log("inputs", inputs);
     initializeInputFocusHandlers(inputs);
   };
 

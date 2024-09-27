@@ -1,0 +1,31 @@
+<main class="profile">
+  {{{Button buttonLink="/chats" buttonImage=arrowBtn buttonClass="profile__btn-back" buttonImageClass="profile__btn-back-icon" imageAlt="back" onClick=this.onChangePage}}}
+  <div class="profile__form-container">
+    <form class="profile__form">
+      <img class="profile__avatar" src="{{union}}" alt="Аватар">
+      <h3 class="profile__name">{{userData.display_name}}</h3>
+      <div class="profile__inputs-container">
+        {{#each inputs}}
+          {{{Input
+            inputName=this.props.inputName
+            inputLabel=this.props.inputLabel
+            inputType=this.props.inputType
+            inputMainClass=this.props.inputMainClass
+            inputClass=this.props.inputClass
+            labelClass=this.props.labelClass
+          }}}
+        {{/each}}
+      </div>
+      <div class="profile__btn-container">
+        {{#each buttons}}
+          {{{Button
+            buttonText=this.props.buttonText
+            buttonClass=this.props.buttonClass
+            buttonType=this.props.buttonType
+            onClick=this.props.onClick
+          }}}
+        {{/each}}
+      </div>
+    </form>
+  </div>
+</main>

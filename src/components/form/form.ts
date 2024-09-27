@@ -9,8 +9,6 @@ interface FormProps {
 }
 export default class Form extends Block {
   constructor(props: FormProps) {
-    console.log("props",props);
-    console.log("props.onSubmit",props.onSubmit);
     super({
       ...props,
       events: {
