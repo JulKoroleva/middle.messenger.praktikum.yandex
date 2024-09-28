@@ -1,6 +1,6 @@
 import EventBus from "../framework/EventBus";
 import { v4 as uuidv4 } from "uuid";
-class Block {
+abstract class Block<Props extends Record<string, any> = unknown> {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
