@@ -17,7 +17,7 @@ export default class App {
 
   constructor() {
     this.state = {
-      currentPage: "mainPage",
+      currentPage: "login",
       chats: chatData,
       messages: processMessages(messages),
       currentUserData: currentUserData,
