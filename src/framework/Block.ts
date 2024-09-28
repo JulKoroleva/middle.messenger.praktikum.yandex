@@ -1,14 +1,6 @@
 import EventBus from "../framework/EventBus";
 import { v4 as uuidv4 } from "uuid";
-interface BaseProps {
-  events?: Record<string, (e: Event | MouseEvent) => void>; 
-  [key: string]: unknown;
-}
-interface ExtendedProps extends Props {
-  __refs?: Record<string, Block>;
-  __children?: Array<{ embed: (content: DocumentFragment) => void }>;
-}
-abstract class Block<Props extends BaseProps = BaseProps> {
+class Block {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
@@ -29,7 +21,7 @@ abstract class Block<Props extends BaseProps = BaseProps> {
    *
    * @returns {void}
    */
-  constructor(propsWithChildren: Props = {} as Props) {
+  constructor(propsWithChildren: Props = {}) {
     const eventBus = new EventBus();
 
     const { props, children } = this._getChildrenAndProps(propsWithChildren);
@@ -45,22 +37,22 @@ abstract class Block<Props extends BaseProps = BaseProps> {
   }
 
   _getChildrenAndProps(childrenAndProps: Props) {
-    const props: Partial<Props> = {};
+    const props: Record<string, Props> = {};
     const children: Record<string, Block> = {};
 
     Object.entries(childrenAndProps).forEach(([key, value]) => {
       if (value instanceof Block) {
         children[key] = value;
       } else {
-        (props as Record<string, unknown>)[key] = value;
+        props[key] = value;
       }
     });
 
-    return { props: props as Props, children };
+    return { props, children };
   }
 
   _addEvents() {
-    const { events = {} } = this.props as { events: Record<string, (e: Event) => void> };
+    const { events = {} } = this.props as { events: Record<string, () => void> };
   
     Object.keys(events).forEach(eventName => {
       this._element?.addEventListener(eventName, events[eventName]);
@@ -68,7 +60,7 @@ abstract class Block<Props extends BaseProps = BaseProps> {
   }
 
   _removeEvents() {
-    const { events = {} } = this.props as { events: Record<string, (e: Event) => void> };
+    const { events = {} } = this.props as { events: Record<string, () => void> };
 
     Object.keys(events).forEach(eventName => {
       this._element?.removeEventListener(eventName, events[eventName]);
@@ -127,7 +119,7 @@ abstract class Block<Props extends BaseProps = BaseProps> {
   }
 
   private _render() {
-    const { events = {} } = this.props as { events: Record<string, (e: Event) => void> };
+    const { events = {} } = this.props as { events: Record<string, () => void> };
 
     if (Object.keys(events).length > 0) {
       this._removeEvents();
@@ -146,18 +138,18 @@ abstract class Block<Props extends BaseProps = BaseProps> {
     this._addEvents();
   }
 
-  protected compile(template: (context: ExtendedProps) => string, context: Props) {
-    const contextAndStubs: ExtendedProps = { ...context, __refs: this.refs };
-  
+  protected compile(template: (context: Props) => string, context: any) {
+    const contextAndStubs = { ...context, __refs: this.refs };
     const html = template(contextAndStubs);
-  
-    const temp = document.createElement("template");
+
+    const temp = document.createElement('template');
+
     temp.innerHTML = html;
-  
-    contextAndStubs.__children?.forEach(({ embed }) => {
+
+    contextAndStubs.__children?.forEach(({ embed }: Props) => {
       embed(temp.content);
     });
-  
+
     return temp.content;
   }
 
@@ -172,13 +164,13 @@ abstract class Block<Props extends BaseProps = BaseProps> {
   _makePropsProxy(props: Props) {
     return new Proxy(props, {
       get(target, prop: string) {
-        const value = target[prop as keyof Props];
+        const value = target[prop];
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target, prop: string, value) => {
-        const oldTarget = { ...target };
+        const oldTarget = { ...target }
 
-        target[prop as keyof Props] = value;
+        target[prop] = value;
 
         this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
         return true;
