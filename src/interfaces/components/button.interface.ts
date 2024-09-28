@@ -5,8 +5,5 @@ interface PropsButton {
   buttonImage?: string;
   imageAlt?: string;
   buttonImageClass?: string;
-  onClick?: (e: MouseEvent) => void;
-  events?: {
-    click: (e: MouseEvent) => void;
-  };
+  onClick?: (e: Event | MouseEvent) => void;
 }

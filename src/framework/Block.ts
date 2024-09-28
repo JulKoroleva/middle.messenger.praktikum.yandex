@@ -1,7 +1,7 @@
 import EventBus from "../framework/EventBus";
 import { v4 as uuidv4 } from "uuid";
 interface BaseProps {
-  events?: Record<string, () => void>;
+  events?: Record<string, (e: Event | MouseEvent) => void>; 
   [key: string]: unknown;
 }
 interface ExtendedProps extends Props {
@@ -60,7 +60,7 @@ abstract class Block<Props extends BaseProps = BaseProps> {
   }
 
   _addEvents() {
-    const { events = {} } = this.props as { events: Record<string, () => void> };
+    const { events = {} } = this.props as { events: Record<string, (e: Event) => void> };
   
     Object.keys(events).forEach(eventName => {
       this._element?.addEventListener(eventName, events[eventName]);
@@ -68,7 +68,7 @@ abstract class Block<Props extends BaseProps = BaseProps> {
   }
 
   _removeEvents() {
-    const { events = {} } = this.props as { events: Record<string, () => void> };
+    const { events = {} } = this.props as { events: Record<string, (e: Event) => void> };
 
     Object.keys(events).forEach(eventName => {
       this._element?.removeEventListener(eventName, events[eventName]);
@@ -127,7 +127,7 @@ abstract class Block<Props extends BaseProps = BaseProps> {
   }
 
   private _render() {
-    const { events = {} } = this.props as { events: Record<string, () => void> };
+    const { events = {} } = this.props as { events: Record<string, (e: Event) => void> };
 
     if (Object.keys(events).length > 0) {
       this._removeEvents();
