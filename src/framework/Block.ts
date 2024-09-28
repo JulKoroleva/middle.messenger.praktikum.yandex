@@ -1,6 +1,14 @@
 import EventBus from "../framework/EventBus";
 import { v4 as uuidv4 } from "uuid";
-abstract class Block<Props extends Record<string, any> = unknown> {
+interface BaseProps {
+  events?: Record<string, () => void>;
+  [key: string]: unknown;
+}
+interface ExtendedProps extends Props {
+  __refs?: Record<string, Block>;
+  __children?: Array<{ embed: (content: DocumentFragment) => void }>;
+}
+abstract class Block<Props extends BaseProps = BaseProps> {
   static EVENTS = {
     INIT: "init",
     FLOW_CDM: "flow:component-did-mount",
@@ -21,7 +29,7 @@ abstract class Block<Props extends Record<string, any> = unknown> {
    *
    * @returns {void}
    */
-  constructor(propsWithChildren: Props = {}) {
+  constructor(propsWithChildren: Props = {} as Props) {
     const eventBus = new EventBus();
 
     const { props, children } = this._getChildrenAndProps(propsWithChildren);
@@ -37,18 +45,18 @@ abstract class Block<Props extends Record<string, any> = unknown> {
   }
 
   _getChildrenAndProps(childrenAndProps: Props) {
-    const props: Record<string, Props> = {};
+    const props: Partial<Props> = {};
     const children: Record<string, Block> = {};
 
     Object.entries(childrenAndProps).forEach(([key, value]) => {
       if (value instanceof Block) {
         children[key] = value;
       } else {
-        props[key] = value;
+        (props as Record<string, unknown>)[key] = value;
       }
     });
 
-    return { props, children };
+    return { props: props as Props, children };
   }
 
   _addEvents() {
@@ -138,18 +146,18 @@ abstract class Block<Props extends Record<string, any> = unknown> {
     this._addEvents();
   }
 
-  protected compile(template: (context: Props) => string, context: any) {
-    const contextAndStubs = { ...context, __refs: this.refs };
+  protected compile(template: (context: ExtendedProps) => string, context: Props) {
+    const contextAndStubs: ExtendedProps = { ...context, __refs: this.refs };
+  
     const html = template(contextAndStubs);
-
-    const temp = document.createElement('template');
-
+  
+    const temp = document.createElement("template");
     temp.innerHTML = html;
-
-    contextAndStubs.__children?.forEach(({ embed }: Props) => {
+  
+    contextAndStubs.__children?.forEach(({ embed }) => {
       embed(temp.content);
     });
-
+  
     return temp.content;
   }
 
@@ -164,13 +172,13 @@ abstract class Block<Props extends Record<string, any> = unknown> {
   _makePropsProxy(props: Props) {
     return new Proxy(props, {
       get(target, prop: string) {
-        const value = target[prop];
+        const value = target[prop as keyof Props];
         return typeof value === 'function' ? value.bind(target) : value;
       },
       set: (target, prop: string, value) => {
-        const oldTarget = { ...target }
+        const oldTarget = { ...target };
 
-        target[prop] = value;
+        target[prop as keyof Props] = value;
 
         this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
         return true;
