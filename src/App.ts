@@ -1,8 +1,8 @@
 import MainPage from "./pages/main-page/main-page";
 import ProfilePage from "./pages/profile-page/profile-page.tmpl";
 import ErrorPage from "./pages/error-page/error-page";
-import { LoginPage } from "./pages/login/login";
-import { SignupPage } from "./pages/signUp/signUp";
+import  LoginPage from "./pages/login/login";
+import  SignupPage  from "./pages/signUp/signUp";
 
 import chatData from "./mocks/chatsData";
 import messages from "./mocks/messagesData";

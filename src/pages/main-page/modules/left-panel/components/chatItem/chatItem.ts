@@ -4,7 +4,8 @@ import templateChatItem from "./chatItem.hbs";
 
 export default class ChatItem extends Block {
   constructor(props: PropsChatItem) {
-    const hasNewMessages = props.newMessages !== "0" && props.newMessages !== "";
+    const hasNewMessages =
+      props.newMessages !== "0" && props.newMessages !== "";
 
     super({
       ...props,

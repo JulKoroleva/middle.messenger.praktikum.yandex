@@ -1,9 +1,8 @@
-
 interface AppState {
   currentPage: string;
-  chats: any[];
-  messages: any[];
+  chats: Chat[];
+  messages: Message[];
   currentUserData: UserInfo;
-  errorCode: string,
-  description: string,
+  errorCode: string;
+  description: string;
 }
