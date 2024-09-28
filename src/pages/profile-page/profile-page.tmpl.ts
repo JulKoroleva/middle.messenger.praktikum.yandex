@@ -1,29 +1,67 @@
 import union from "../../../static/assets/union.svg";
 import arrowBtn from "../../../static/assets/arrowBtn.svg";
 
-const profilePage = `
-  <main class="profile">
-    {{> Button buttonLink="/chats" buttonImage="${arrowBtn}" buttonClass="profile__btn-back" buttonImageClass="profile__btn-back-icon"  imageAlt="back"}}
-    <div class="profile__form-container">
-      <form class="profile__form">
-        <img class="profile__avatar" src="${union}" alt="Аватар">
-        <h3 class="profile__name">{{userData.display_name}}</h3>
-        <div class="profile__inputs-container">
-          {{> Input inputValue=userData.email inputLabel="Почта" inputName="email" inputType="email" inputMainClass="line-input" inputLabelClass="line-input__placeholder" inputClass="line-input__data" labelClass="line-input__placeholder"}}
-          {{> Input inputValue=userData.login inputLabel="Логин" inputName="login" inputType="text" inputMainClass="line-input" inputLabelClass="line-input__placeholder" inputClass="line-input__data" labelClass="line-input__placeholder"}}
-          {{> Input inputValue=userData.first_name inputLabel="Имя" inputName="first_name" inputType="text" inputMainClass="line-input" inputLabelClass="line-input__placeholder" inputClass="line-input__data" labelClass="line-input__placeholder"}}
-          {{> Input inputValue=userData.second_name inputLabel="Фамилия" inputName="second_name" inputType="text" inputMainClass="line-input" inputLabelClass="line-input__placeholder" inputClass="line-input__data" labelClass="line-input__placeholder"}}
-          {{> Input inputValue=userData.display_name inputLabel="Имя в чате" inputName="display_name" inputType="text" inputMainClass="line-input" inputLabelClass="line-input__placeholder" inputClass="line-input__data" labelClass="line-input__placeholder"}}
-          {{> Input inputValue=userData.phone inputLabel="Телефон" inputName="phone" inputType="tel" inputMainClass="line-input" inputLabelClass="line-input__placeholder" inputClass="line-input__data" labelClass="line-input__placeholder"}}
-        </div>
-        <div class="profile__btn-container">
-            {{> Button buttonText="Изменить данные" buttonClass="button_text button_border"}}
-            {{> Button buttonText="Изменить пароль" buttonClass="button_text button_border"}}
-            {{> Button buttonText="Выйти" buttonClass="button_danger button_border" buttonLink="/login"}}
-        </div>
-      </form>
-    </div>
-  </main>
-`;
+import templateProfilePage from "./profile-page.hbs";
+import Block from "../../framework/Block";
+import { createButtons, createInputs } from "../../constants/profile/profile.constants";
+import Button from "../../components/button/button";
+import { validateForm } from "../../validators/form.validator";
 
-export default profilePage;
+export default class ProfilePage extends Block {
+  constructor(props: PropsProfilePage) {
+    super(props);
+
+    this.props.isEditing = false; 
+
+    this.props.buttons = createButtons(props.changePage, this.toggleEditing.bind(this));
+    this.props.inputs = createInputs(props.currentUserData, this.props.isEditing);
+    this.props.union = union;
+    this.props.arrowBtn = arrowBtn;
+    this.props.saveChanges = this.saveChanges.bind(this);
+
+    this.props.onChangePage = (e: MouseEvent) => {
+      e.preventDefault();
+      props.changePage("mainPage");
+    };
+  }
+
+  toggleEditing() {
+    this.setProps({ isEditing: !this.props.isEditing });
+  }
+
+  saveChanges(e: MouseEvent) {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+
+  const formIsValid = validateForm(form);
+  if (formIsValid) {
+    const formData = new FormData(form);
+    const formDataObject = Object.fromEntries((formData as any).entries());
+    console.log('formDataObject', formDataObject)
+    this.setProps({ isEditing: false });
+  } else {
+    throw new Error('Form is invalid')
+  }
+  }
+
+  render() {
+    const isEditing = this.props.isEditing;
+
+    const buttons = isEditing
+      ? [new Button({
+          buttonText: "Сохранить изменения",
+          buttonClass: "button_primary",
+          buttonType: "submit",
+        })]
+      : this.props.buttons;
+
+    const inputs = createInputs(this.props.currentUserData, isEditing);
+
+    return this.compile(templateProfilePage, {
+      ...this.props,
+      buttons,
+      inputs,
+    });
+  }
+}
+

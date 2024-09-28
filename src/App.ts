@@ -1,17 +1,15 @@
-import Handlebars from "handlebars";
-import Pages from "./pages";
+import MainPage from "./pages/main-page/main-page";
+import ProfilePage from "./pages/profile-page/profile-page.tmpl";
+import ErrorPage from "./pages/error-page/error-page";
+import { LoginPage } from "./pages/login/login";
+import { SignupPage } from "./pages/signUp/signUp";
 
-import chatData from "./utils/mock/chatsData";
-import messages from "./utils/mock/messagesData";
-import currentUserData from "./utils/mock/currentUserData";
+import chatData from "./mocks/chatsData";
+import messages from "./mocks/messagesData";
+import currentUserData from "./mocks/currentUserData";
 
-import processMessages from "./utils/processMessages";
-
-import Button from "./components/button/button.tmpl";
-import Input from "./components/input/input.tmpl";
-
-Handlebars.registerPartial("Button", Button);
-Handlebars.registerPartial("Input", Input);
+import processMessages from "./utils/messages/processMessages";
+import "./utils/dom/registerComponent";
 
 export default class App {
   private state: AppState;
@@ -19,89 +17,63 @@ export default class App {
 
   constructor() {
     this.state = {
-      currentPage: this.getPageFromUrl(),
+      currentPage: "mainPage",
       chats: chatData,
       messages: processMessages(messages),
       currentUserData: currentUserData,
+      errorCode: "404",
+      description: "Такой страницы нет",
     };
     this.appElement = document.getElementById("app");
-
-    window.addEventListener("popstate", () => {
-      this.setState({ currentPage: this.getPageFromUrl() });
-    });
+    this.render();
   }
 
-  render(): void {
-    if (!this.appElement) return;
+  render(): string {
+    if (!this.appElement) return "";
 
-    let template: Handlebars.TemplateDelegate<any>;
-
+    let pageContent;
     switch (this.state.currentPage) {
-      case "/":
+      case "login":
+        pageContent = new LoginPage({
+          changePage: this.changePage.bind(this),
+        }).getContent();
         break;
-        case "/chats":
-          template = Handlebars.compile(Pages.MainPage);
-          this.appElement.innerHTML = template({
-            chats: this.state.chats,
-            messages: this.state.messages,
-          });
-          break;
-      case "/profile":
-        template = Handlebars.compile(Pages.ProfilePage);
-        this.appElement.innerHTML = template({
-          userData: this.state.currentUserData,
-        });
+      case "signup":
+        pageContent = new SignupPage({
+          changePage: this.changePage.bind(this),
+        }).getContent();
         break;
-      case "/login":
-        template = Handlebars.compile(Pages.LoginPage);
-        this.appElement.innerHTML = template({});
+      case "mainPage":
+        pageContent = new MainPage({
+          messages: this.state.messages,
+          chats: this.state.chats,
+          changePage: this.changePage.bind(this),
+        }).getContent();
         break;
-      case "/signup":
-        template = Handlebars.compile(Pages.SignupPage);
-        this.appElement.innerHTML = template({});
-        break;
-      case "/error":
-        const errorCode = "404";
-        const description = "Такой страницы нет";
-        template = Handlebars.compile(Pages.ErrorPage);
-        this.appElement.innerHTML = template({
-          errorCode: errorCode,
-          description: description,
-        });
+      case "profile":
+        pageContent = new ProfilePage({
+          currentUserData: this.state.currentUserData,
+          changePage: this.changePage.bind(this),
+        }).getContent();
         break;
       default:
-        template = Handlebars.compile(Pages.MainPage);
+        pageContent = new ErrorPage({
+          errorCode: this.state.errorCode,
+          description: this.state.description,
+          changePage: this.changePage.bind(this),
+        }).getContent();
     }
 
-    this.addEventListeners();
+    if (pageContent) {
+      this.appElement.innerHTML = "";
+      this.appElement.appendChild(pageContent);
+    }
+
+    return "";
   }
 
-  addEventListeners(): void {
-    const links: NodeListOf<HTMLAnchorElement> =
-      document.querySelectorAll("a[data-page]");
-    links.forEach((link) => {
-      link.addEventListener("click", (event: MouseEvent) => {
-        event.preventDefault();
-        const target = event.currentTarget as HTMLAnchorElement;
-        const page = target.getAttribute("data-page");
-        if (page) {
-          this.navigate(page);
-        }
-      });
-    });
-  }
-
-  navigate(page: string): void {
-    history.pushState({}, "", page);
-    this.setState({ currentPage: page });
-  }
-
-  getPageFromUrl(): string {
-    return window.location.pathname || "/";
-  }
-
-  setState(newState: Partial<AppState>): void {
-    this.state = { ...this.state, ...newState };
+  changePage(page: string): void {
+    this.state.currentPage = page;
     this.render();
   }
 }

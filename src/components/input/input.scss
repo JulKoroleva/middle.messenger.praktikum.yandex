@@ -1,3 +1,9 @@
+input {
+  &:disabled {
+    background-color: transparent;
+  }
+}
+
 .dynamic-input {
   width: 280px;
   position: relative;
@@ -64,4 +70,36 @@
     color: var(--color-text-secondary);
     transition: 0.3s;
   }
+}
+
+.input__error {
+  color: red;
+  display: none;
+}
+
+.input__error_visible {
+  display: block;
+  position: absolute;
+  font-size: 9px;
+  z-index: 1000;
+  opacity: 0.6;
+}
+
+.dynamic-input.error {
+  margin-bottom: 20px;
+  transition: 0.3s ease-in-out;
+}
+
+.dynamic-input.error .dynamic-input__placeholder {
+  color: red;
+}
+
+.line-input.error {
+  margin-bottom: 20px;
+  transition: 0.3s ease-in-out;
+}
+
+.line-input.error .dynamic-input__placeholder {
+  color: red;
+  top: 3px;
 }

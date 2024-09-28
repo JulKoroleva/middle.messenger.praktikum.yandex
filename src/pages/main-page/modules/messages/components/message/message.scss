@@ -1,8 +1,13 @@
+.message-wrapper { 
+  padding: 10px 10px 15px;
+  position: relative;
+}
+
 .message {
+  width: fit-content;
   max-width: 80%;
   padding: 10px 10px 15px;
   position: relative;
-  background-color: var(--color-message-secondary);
 
   &__date {
     width: 10%;
@@ -33,11 +38,13 @@
   &_other {
     align-self: flex-start;
     border-radius: 0 8px 8px 8px;
+    background-color: var(--color-message-secondary);
   }
 
   &_mine {
     align-self: flex-end;
     border-radius: 8px 8px 0;
     background-color: var(--color-message-primary);
+    margin-left: auto;
   }
 }

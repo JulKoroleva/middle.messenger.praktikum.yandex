@@ -1,17 +1,15 @@
 import { defineConfig } from "vite";
-import handlebars from "vite-plugin-handlebars";
 import eslintPlugin from "vite-plugin-eslint";
 import { resolve } from "path";
 import svgr from "vite-plugin-svgr";
+import vitePluginHandlebarsPrecompile from "./vite-plugin-handlebars-precompile";
 
 export default defineConfig({
   plugins: [
     eslintPlugin({
       include: ["/**/*.ts", "/**/*.js", "/**/*.hbs"],
     }),
-    handlebars({
-      partialDirectory: resolve(__dirname, "src/components"),
-    }),
+    vitePluginHandlebarsPrecompile(),
     svgr(),
   ],
   build: {
