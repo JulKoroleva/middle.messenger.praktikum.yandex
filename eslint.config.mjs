@@ -1,22 +1,37 @@
-export default {
-  parser: "@typescript-eslint/parser",
-  extends: [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-  ],
-  plugins: ["@typescript-eslint", "prettier", "jsx-a11y", "import"],
-  env: {
-    browser: true,
-    es2020: true,
-    node: true,
+
+import typescriptEslint from "@typescript-eslint/eslint-plugin";
+import prettierPlugin from "eslint-plugin-prettier";
+import tsParser from "@typescript-eslint/parser";
+
+/** @type {import("eslint").Linter.FlatConfig[]} */
+export default [
+  {
+    files: ["*.ts", "*.tsx"],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
+      },
+    },
+    plugins: {
+      "@typescript-eslint": typescriptEslint,
+      "prettier": prettierPlugin,
+    },
+    rules: {
+      "prettier/prettier": ["error", { endOfLine: "auto" }],
+      "@typescript-eslint/no-unused-vars": "warn",
+      "no-unused-vars": "error",
+      "max-len": ["warn", 100],
+      "max-params": ["error", 3],
+      "no-console": "error",
+    },
+    settings: {
+      "import/resolver": {
+        node: {
+          extensions: [".js", ".jsx", ".ts", ".tsx"],
+        },
+      },
+    },
   },
-  rules: {
-    'prettier/prettier': ['error', { endOfLine: 'auto' }],
-    "@typescript-eslint/no-unused-vars": "warn",
-    "no-unused-vars": 2,
-    "max-len": [1, 100],
-    "max-params": [2, 3],
-    'no-console': 'error',
-  },
-};
+];
