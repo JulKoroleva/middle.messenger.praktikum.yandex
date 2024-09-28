@@ -1,11 +1,10 @@
 declare module "*.hbs" {
-  import { TemplateDelegate } from 'handlebars';
+  import { TemplateDelegate } from "handlebars";
 
   const template: TemplateDelegate;
 
   export default template;
 }
-
 
 declare module "*.hbs?raw" {
   const content: string;
@@ -32,4 +31,4 @@ declare module "*.jpg" {
   export default content;
 }
 
-declare module 'uuid';
+declare module "uuid";

@@ -44,10 +44,10 @@ interface PropsMessageItem {
 }
 
 interface PropsChatItem {
-  chatName: any;
-  chatLastMessage: any;
-  lastMessageDate: any;
-  newMessages: any;
+  chatName: string;
+  chatLastMessage: string;
+  lastMessageDate: string;
+  newMessages: string;
 }
 
 interface PropsLeftPanel {

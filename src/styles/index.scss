@@ -1,6 +1,6 @@
-@import url(../../static/fonts/inter.scss);
-@import url(../components/components.scss);
-@import url(../pages/pages.scss);
+@import "../../static/fonts/inter";
+@import "../components/components";
+@import "../pages/pages";
 
 html {
   overflow-y: hidden;
