@@ -1,7 +1,13 @@
 import Block from "../../framework/Block";
 import templateLogin from "./login.hbs";
-import { createInputs, createButtons } from "../../constants/login/login.constants";
-import { initializeValidationListeners, validateForm } from "../../validators/form.validator";
+import {
+  createInputs,
+  createButtons,
+} from "../../constants/login/login.constants";
+import {
+  initializeValidationListeners,
+  validateForm,
+} from "../../validators/form.validator";
 
 const handleFormSubmit = (e: Event, changePage: (page: string) => void) => {
   e.preventDefault();
@@ -11,11 +17,11 @@ const handleFormSubmit = (e: Event, changePage: (page: string) => void) => {
   if (formIsValid) {
     const formData = new FormData(form);
     const formDataObject = Object.fromEntries((formData as any).entries());
-    console.log('formDataObject', formDataObject)
-    
+    console.log("formDataObject", formDataObject);
+
     changePage("mainPage");
   } else {
-    throw new Error('Form is invalid')
+    throw new Error("Form is invalid");
   }
 };
 

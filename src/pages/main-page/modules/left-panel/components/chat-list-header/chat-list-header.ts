@@ -9,13 +9,12 @@ export default class ChatListHeader extends Block {
       button: {
         buttonText: "Профиль >",
         buttonClass: "button_link",
-        buttonType: "button"
+        buttonType: "button",
       },
       onChangePage: (e: MouseEvent) => {
         e.preventDefault();
         props.changePage("profile");
       },
-
     });
   }
 

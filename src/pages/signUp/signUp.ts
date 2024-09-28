@@ -1,8 +1,10 @@
-import templateSignup from './signup.hbs';
-import Block from '../../framework/Block';
-import { createButtons, createInputs } from '../../constants/signup/signup.constants';
-import { validateForm } from '../../validators/form.validator';
-
+import templateSignup from "./signup.hbs";
+import Block from "../../framework/Block";
+import {
+  createButtons,
+  createInputs,
+} from "../../constants/signup/signup.constants";
+import { validateForm } from "../../validators/form.validator";
 
 const handleFormSubmit = (e: Event, changePage: (page: string) => void) => {
   e.preventDefault();
@@ -12,25 +14,23 @@ const handleFormSubmit = (e: Event, changePage: (page: string) => void) => {
   if (formIsValid) {
     const formData = new FormData(form);
     const formDataObject = Object.fromEntries((formData as any).entries());
-    console.log('formDataObject', formDataObject)
-    
+    console.log("formDataObject", formDataObject);
+
     changePage("mainPage");
   } else {
-    throw new Error('Form is invalid')
+    throw new Error("Form is invalid");
   }
 };
 
-
 export class SignupPage extends Block {
   constructor(props: SignupPageProps) {
-    super({ 
+    super({
       ...props,
       buttons: createButtons(props.changePage),
       inputs: createInputs(),
       onSubmitForm: (e: Event) => handleFormSubmit(e, props.changePage),
     });
   }
-  
 
   render() {
     return this.compile(templateSignup, this.props);
