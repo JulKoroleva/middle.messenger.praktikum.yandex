@@ -12,7 +12,7 @@
     "start": "vite build && node server.cjs",
     "lint": "eslint . --ext .ts,.js,.vue,.hbs",
     "lint:fix": "eslint . --ext .ts,.js,.vue,.hbs --fix",
-    "lint:css": "stylelint '**/*.scss'",
+    "lint:css": "npx stylelint **/*.scss",
     "lint:css:fix": "stylelint '**/*.scss' --fix"
   },
   "engines": {
@@ -26,6 +26,7 @@
     "eslint": "^9.10.0",
     "sass": "^1.78.0",
     "stylelint": "^16.9.0",
+    "stylelint-config-standard": "^36.0.1",
     "stylelint-config-standard-scss": "^13.1.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.6.2",
