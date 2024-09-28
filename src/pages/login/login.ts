@@ -1,5 +1,4 @@
 import Block from "../../framework/Block";
-import templateLogin from "./login.hbs";
 import {
   createInputs,
   createButtons,
@@ -8,6 +7,7 @@ import {
   initializeValidationListeners,
   validateForm,
 } from "../../validators/form.validator";
+import templateLogin from "../login/login.hbs";
 
 const handleFormSubmit = (e: Event, changePage: (page: string) => void) => {
   e.preventDefault();

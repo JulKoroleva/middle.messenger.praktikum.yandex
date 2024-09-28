@@ -1,10 +1,10 @@
-import templateSignup from "./signup.hbs";
 import Block from "../../framework/Block";
 import {
   createButtons,
   createInputs,
 } from "../../constants/signup/signup.constants";
 import { validateForm } from "../../validators/form.validator";
+import templateSignup from "../signUp/signUp.hbs";
 
 const handleFormSubmit = (e: Event, changePage: (page: string) => void) => {
   e.preventDefault();
