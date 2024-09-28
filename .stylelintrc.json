@@ -1,9 +1,14 @@
 {
-    "extends": "stylelint-config-standard",
-    "rules": {
-      "color-hex-case": "lower"
-    },
-    "ignoreFiles": [
-      "dist/*"
+  "extends": "stylelint-config-standard",
+  "rules": {
+    "color-hex-case": "lower",
+
+    "selector-class-pattern": [
+      "^[a-z]+(-[a-z]+|__[a-z]+)*$",
+      {
+        "message": "Имя класса не соответствует заданному паттерну"
+      }
     ]
-  }
+  },
+  "ignoreFiles": ["dist/*"]
+}

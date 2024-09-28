@@ -10,6 +10,7 @@ export const createInputs = () => [
     inputClass: "dynamic-input__data",
     labelClass: "dynamic-input__placeholder",
     inputValue: "",
+    isEditing: true
   }),
   new Input({
     inputName: "password",
@@ -19,6 +20,7 @@ export const createInputs = () => [
     inputClass: "dynamic-input__data",
     labelClass: "dynamic-input__placeholder",
     inputValue: "",
+    isEditing: true
   }),
 ];
 
@@ -34,7 +36,7 @@ export const createButtons = (changePage: (page: string) => void) => [
     buttonType: "button",
     onClick: (e: MouseEvent) => {
       e.preventDefault();
-      changePage('signup'); // Используйте переданную функцию для изменения страницы
+      changePage('signup');
     },
   }),
 ];

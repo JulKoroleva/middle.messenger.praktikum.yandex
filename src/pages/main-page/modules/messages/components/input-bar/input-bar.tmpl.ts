@@ -7,14 +7,14 @@ import templateInputBar from "./input-bar.hbs";
 function handleSubmit(e: Event) {
   e.preventDefault();
   const form = e.target as HTMLFormElement;
-  const message = form.message.value.trim(); // Извлечение значения из textarea с именем "message"
+  const message = form.message.value.trim();
 
   if (message) {
     console.log('Отправленное сообщение:', message);
-    form.reset(); // Очистить поле после отправки сообщения
+    form.reset();
   } else {
-    console.error('Поле сообщения пустое');
     triggerShakeAnimation();
+    throw new Error('Поле сообщения пустое');
   }
 }
 
@@ -24,13 +24,12 @@ function triggerShakeAnimation() {
   
   if (submitButton && textArea) {
     submitButton.classList.add('shake');
-    textArea.classList.add('shake'); // Добавление класса "shake" к textarea
+    textArea.classList.add('shake');
 
-    // Удаление класса "shake" после завершения анимации
     setTimeout(() => {
       submitButton.classList.remove('shake');
-      textArea.classList.remove('shake'); // Удаление класса "shake" с textarea
-    }, 300); // Время должно совпадать с продолжительностью анимации (0.3s)
+      textArea.classList.remove('shake');
+    }, 300);
   }
 }
 

@@ -71,7 +71,7 @@ export const createInputs = (userData: UserInfo, isEditing: boolean) => {
       buttonText: "Изменить данные",
       buttonClass: "button_text button_border",
       buttonType: "button",
-      onClick: toggleEditing, // Привязываем метод переключения
+      onClick: toggleEditing,
     }),
     new Button({
       buttonText: "Изменить пароль",

@@ -1,5 +1,5 @@
 <main class="login-page">
-  {{#Form onSubmit=onSubmitForm class='login-page__form'}}
+  {{#Form onSubmit=onSubmitForm class="login-page__form"}}
     <h1 class="form__title">Вход</h1>
     <div class="form__inputs-container">
       {{#each inputs}}
@@ -10,6 +10,7 @@
           inputMainClass=this.props.inputMainClass
           inputClass=this.props.inputClass
           labelClass=this.props.labelClass
+          isEditing=this.props.isEditing
         }}}
       {{/each}}
     </div>

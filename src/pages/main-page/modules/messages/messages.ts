@@ -1,5 +1,4 @@
 import Block from "../../../../framework/Block";
-// import messages from "../../../../mocks/messagesData";
 import templateMessages from "./messages.hbs";
 import Avatar from "../../../../../static/assets/union.svg"
 

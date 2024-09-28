@@ -27,22 +27,4 @@ document.addEventListener("DOMContentLoaded", () => {
       textarea.style.height = `${Math.min(textarea.scrollHeight, 150)}px`;
     });
   }
-
-  // const forms = document.querySelectorAll(
-  //   "form"
-  // ) as NodeListOf<HTMLFormElement>;
-  // forms.forEach((form) => {
-  //   form.addEventListener("submit", (event) => {
-  //     event.preventDefault();
-  //   });
-  // });
-
-  // const buttons = document.querySelectorAll(
-  //   "button"
-  // ) as NodeListOf<HTMLButtonElement>;
-  // buttons.forEach((button) => {
-  //   button.addEventListener("click", (event) => {
-  //     event.preventDefault();
-  //   });
-  // });
 });

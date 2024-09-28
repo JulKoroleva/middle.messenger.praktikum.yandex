@@ -110,14 +110,11 @@ export const initializeValidationListeners = (form: HTMLFormElement): void => {
   const inputs = Array.from(form.querySelectorAll("input, textarea"));
 
   inputs.forEach((input) => {
-    // Приведение типа к HTMLInputElement
     const typedInput = input as HTMLInputElement;
 
     typedInput.addEventListener("input", () => validateInput(typedInput));
 
-    // Добавление обработчика события focusout
     typedInput.addEventListener("focusout", () => {
-      // Если инпут не заполнен, то вызываем валидацию
       if (typedInput.value.trim() === "") {
         validateInput(typedInput);
       }

@@ -10,6 +10,7 @@ export const createInputs = () => [
     inputClass: "dynamic-input__data",
     labelClass: "dynamic-input__placeholder",
     inputValue: "",
+    isEditing: true
   }),
   new Input({
     inputName: "login",
@@ -19,6 +20,7 @@ export const createInputs = () => [
     inputClass: "dynamic-input__data",
     labelClass: "dynamic-input__placeholder",
     inputValue: "",
+    isEditing: true
   }),
   new Input({
     inputName: "first_name",
@@ -28,6 +30,7 @@ export const createInputs = () => [
     inputClass: "dynamic-input__data",
     labelClass: "dynamic-input__placeholder",
     inputValue: "",
+    isEditing: true
   }),
   new Input({
     inputName: "second_name",
@@ -37,6 +40,7 @@ export const createInputs = () => [
     inputClass: "dynamic-input__data",
     labelClass: "dynamic-input__placeholder",
     inputValue: "",
+    isEditing: true
   }),
   new Input({
     inputName: "phone",
@@ -46,6 +50,7 @@ export const createInputs = () => [
     inputClass: "dynamic-input__data",
     labelClass: "dynamic-input__placeholder",
     inputValue: "",
+    isEditing: true
   }),
   new Input({
     inputName: "password",
@@ -55,6 +60,7 @@ export const createInputs = () => [
     inputClass: "dynamic-input__data",
     labelClass: "dynamic-input__placeholder",
     inputValue: "",
+    isEditing: true
   }),
   new Input({
     inputName: "confirmPassword",
@@ -79,7 +85,7 @@ export const createButtons = (changePage: (page: string) => void) => [
     buttonType: "button",
     onClick: (e: MouseEvent) => {
       e.preventDefault();
-      changePage("login"); // Используйте переданную функцию для изменения страницы
+      changePage("login"); 
     },
   }),
 ];
