@@ -22,7 +22,7 @@ const handleFormSubmit = (e: Event, changePage: (page: string) => void) => {
   }
 };
 
-export class SignupPage extends Block {
+export default  class SignupPage extends Block {
   constructor(props: SignupPageProps) {
     super({
       ...props,
