@@ -1,0 +1,18 @@
+<div class="dialog">
+  {{{DialogHeader
+    avatar=this.avatar
+    chatName="John Doe"
+    changePage=this.changePage
+  }}}
+  <div class="dialog__messages-container">
+    {{#each this.messages}}
+      {{{MessageItem
+        showDate=this.showDate
+        isCurrentUser=this.isCurrentUser
+        text=this.text
+        time=this.time
+      }}}
+    {{/each}}
+    {{{InputBar}}}
+  </div>
+</div>

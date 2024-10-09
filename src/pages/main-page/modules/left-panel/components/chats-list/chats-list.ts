@@ -1,19 +1,14 @@
-import Handlebars from "handlebars";
-import СhatItem from "../chatItem/chatItem.tmpl";
+import Block from "../../../../../../framework/Block";
+import templateСhatList from "./chats-list.hbs";
 
-Handlebars.registerPartial("СhatItem", СhatItem);
+export default class СhatList extends Block {
+  constructor(props: PropsСhatList) {
+    super({
+      ...props,
+    });
+  }
 
-const СhatList = `
-  <div class="chat-list">    
-    {{#each chats}}
-    {{> СhatItem
-      chatName=this.chatUserName
-      chatLastMessage=this.chatLastMessage
-      lastMessageDate=this.lastMessageDate
-      newMessages=this.newMessages
-    }}
-    {{/each}}
-  </div>
-`;
-
-export default СhatList;
+  render() {
+    return this.compile(templateСhatList, this.props);
+  }
+}

@@ -1,12 +1,48 @@
 import pinIcon from "../../../../../../../static/assets/pinIcon.svg";
 import arrowBtn from "../../../../../../../static/assets/arrowBtn.svg";
 
-const InputBar = `
-  <div class="dialog__input-bar">
-    {{> Button buttonImage="${pinIcon}" buttonClass="input-bar__pin-button" imageAlt="file"}}
-    <textarea name="message" class="dialog__input-bar__input" type="textarea" placeholder="Сообщение..."></textarea>
-    {{> Button buttonImage="${arrowBtn}" buttonClass="input-bar__send-button" buttonImageClass="input-bar__send-icon" imageAlt="send"}}
-  </div>
-`;
+import Block from "../../../../../../framework/Block";
+import templateInputBar from "./input-bar.hbs";
 
-export default InputBar;
+function handleSubmit(e: Event) {
+  e.preventDefault();
+  const form = e.target as HTMLFormElement;
+  const message = form.message.value.trim();
+
+  if (message) {
+    console.log('Отправленное сообщение:', message);
+    form.reset();
+  } else {
+    triggerShakeAnimation();
+    throw new Error('Поле сообщения пустое');
+  }
+}
+
+function triggerShakeAnimation() {
+  const submitButton = document.querySelector('.input-bar__send-button');
+  const textArea = document.querySelector('.dialog__input-bar__input');
+  
+  if (submitButton && textArea) {
+    submitButton.classList.add('shake');
+    textArea.classList.add('shake');
+
+    setTimeout(() => {
+      submitButton.classList.remove('shake');
+      textArea.classList.remove('shake');
+    }, 300);
+  }
+}
+
+export default class InputBar extends Block {
+  constructor() {
+    super({
+      pinIcon,
+      arrowBtn,
+      handleSubmit: (e: Event) => handleSubmit(e),
+    });
+  }
+
+  render() {
+    return this.compile(templateInputBar, this.props);
+  }
+}

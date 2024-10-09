@@ -7,15 +7,16 @@
   text-decoration: none;
 
   &_primary {
-    width: 280px;
+    width: 100%;
+    min-width: 280px;
     height: 37px;
     border-radius: 8px;
     font-size: 13px;
     line-height: 13px;
-    text-align: center;
     color: var(--color-white);
     background-color: var(--color-text-primary);
     padding: 12px;
+    text-align: center;
 
     &:hover {
       cursor: pointer;
