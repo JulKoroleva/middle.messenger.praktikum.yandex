@@ -1,6 +1,8 @@
 import Block from "../../../../../../framework/Block";
 import templateChatListHeader from "./chat-list-header.hbs";
 import searchIcon from "../../../../../../../static/assets/searchIcon.svg";
+import { Routes } from "../../../../../../utils/Routes";
+import Router from "../../../../../../framework/Router";
 
 export default class ChatListHeader extends Block {
   constructor(props: PropsChatListHeader) {
@@ -13,7 +15,7 @@ export default class ChatListHeader extends Block {
       },
       onChangePage: (e: MouseEvent) => {
         e.preventDefault();
-        props.changePage("profile");
+        Router.go(Routes.Settings)
       },
     });
   }
