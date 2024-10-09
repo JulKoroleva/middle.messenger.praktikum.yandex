@@ -5,21 +5,12 @@ import {
 } from "../../constants/signup/signup.constants";
 import { validateForm } from "../../validators/form.validator";
 import templateSignup from "../signUp/signUp.hbs";
+import UserAuthController from "../../controllers/auth.controller";
 
-const handleFormSubmit = (e: Event, changePage: (page: string) => void) => {
+const handleFormSubmit = (e: Event) => {
   e.preventDefault();
   const form = e.target as HTMLFormElement;
-
-  const formIsValid = validateForm(form);
-  if (formIsValid) {
-    const formData = new FormData(form);
-    const formDataObject = Object.fromEntries((formData as any).entries());
-    console.log("formDataObject", formDataObject);
-
-    changePage("mainPage");
-  } else {
-    throw new Error("Form is invalid");
-  }
+  UserAuthController.signup(form);
 };
 
 export default  class SignupPage extends Block {
@@ -28,7 +19,7 @@ export default  class SignupPage extends Block {
       ...props,
       buttons: createButtons(props.changePage),
       inputs: createInputs(),
-      onSubmitForm: (e: Event) => handleFormSubmit(e, props.changePage),
+      onSubmitForm: (e: Event) => handleFormSubmit(e),
     });
   }
 

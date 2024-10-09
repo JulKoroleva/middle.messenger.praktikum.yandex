@@ -72,6 +72,7 @@ export const createInputs = () => [
     inputClass: "dynamic-input__data",
     labelClass: "dynamic-input__placeholder",
     inputValue: "",
+    isEditing: true
   }),
 ];
 

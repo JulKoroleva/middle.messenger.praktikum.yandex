@@ -3,14 +3,20 @@ import arrowBtn from "../../../static/assets/arrowBtn.svg";
 
 import templateProfilePage from "./profile-page.hbs";
 import Block from "../../framework/Block";
-import {
-  createButtons,
-  createInputs,
-} from "../../constants/profile/profile.constants";
+import { createButtons, createInputs } from "../../constants/profile/profile.constants";
 import Button from "../../components/button/button";
 import { validateForm } from "../../validators/form.validator";
+import { User } from "../../utils/api/auth-api"; 
+import { withStore } from "../../framework/Store";
+import { Routes } from "../../utils/Routes";
+import Router from "../../framework/Router";
 
-export default class ProfilePage extends Block {
+interface PropsProfilePage {
+  changePage: (page: string) => void;
+  currentUserData: User;
+}
+
+class ProfilePage extends Block {
   constructor(props: PropsProfilePage) {
     super(props);
 
@@ -30,7 +36,7 @@ export default class ProfilePage extends Block {
 
     this.props.onChangePage = (e: MouseEvent) => {
       e.preventDefault();
-      props.changePage("mainPage");
+      Router.go(Routes.MainPage)
     };
   }
 
@@ -75,3 +81,13 @@ export default class ProfilePage extends Block {
     });
   }
 }
+
+// Функция для получения данных пользователя из стора
+const mapStateToProps = (state: { user: User }) => {
+  return {
+    currentUserData: state.user,
+  };
+};
+
+// Оборачиваем компонент с помощью withStore
+export default withStore(mapStateToProps)(ProfilePage);

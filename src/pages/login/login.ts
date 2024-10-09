@@ -8,29 +8,20 @@ import {
   validateForm,
 } from "../../validators/form.validator";
 import templateLogin from "../login/login.hbs";
+import UserAuthController from "../../controllers/auth.controller";
 
-const handleFormSubmit = (e: Event, changePage: (page: string) => void) => {
+const handleFormSubmit = (e: Event) => {
   e.preventDefault();
   const form = e.target as HTMLFormElement;
-
-  const formIsValid = validateForm(form);
-  if (formIsValid) {
-    const formData = new FormData(form);
-    const formDataObject = Object.fromEntries((formData as any).entries());
-    console.log("formDataObject", formDataObject);
-
-    changePage("mainPage");
-  } else {
-    throw new Error("Form is invalid");
-  }
+  UserAuthController.login(form);
 };
 
-export default  class LoginPage extends Block {
+export default class LoginPage extends Block {
   constructor(props: LoginPageProps) {
     super({
       buttons: createButtons(props.changePage),
       inputs: createInputs(),
-      onSubmitForm: (e: Event) => handleFormSubmit(e, props.changePage),
+      onSubmitForm: (e: Event) => handleFormSubmit(e),
     });
   }
 
