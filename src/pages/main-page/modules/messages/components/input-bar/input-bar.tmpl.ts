@@ -3,17 +3,25 @@ import arrowBtn from "../../../../../../../static/assets/arrowBtn.svg";
 
 import Block from "../../../../../../framework/Block";
 import templateInputBar from "./input-bar.hbs";
+import messagesController from "../../../../../../controllers/message.controller";
 
-function handleSubmit(e: Event) {
+function handleSendMessage(e: Event, block: Block) {
   e.preventDefault();
   const form = e.target as HTMLFormElement;
   const message = form.message.value.trim();
 
   if (message) {
-    console.log('Отправленное сообщение:', message);
-    form.reset();
+    const selectedChat = block.getProps('selectedChat');
+    
+    if (selectedChat) {
+      messagesController.sendMessage(selectedChat, message); // Отправляем сообщение через контроллер
+      const chatWindow = document.querySelector('.conversation__messages-container');
+      chatWindow?.scrollTo(0, chatWindow.scrollHeight); // Прокручиваем окно чата вниз
+    }
+
+    form.reset(); // Сбрасываем форму после отправки
   } else {
-    triggerShakeAnimation();
+    triggerShakeAnimation(); // Анимация ошибки, если сообщение пустое
     throw new Error('Поле сообщения пустое');
   }
 }
@@ -38,7 +46,7 @@ export default class InputBar extends Block {
     super({
       pinIcon,
       arrowBtn,
-      handleSubmit: (e: Event) => handleSubmit(e),
+      handleSubmit: (e: Event) => handleSendMessage(e, this), // Передаем блок в handleSendMessage
     });
   }
 

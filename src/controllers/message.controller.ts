@@ -23,23 +23,32 @@ class MessagesController {
   private sockets: Map<number, WSTransport> = new Map();
 
   async connect(id: number, token: string) {
+    console.log('Connecting to chat with ID:', id, 'and token:', token);
     try {
       if (this.sockets.has(id)) {
+        console.log('Already connected to chat:', id);
         return;
       }
-
+  console.log('store', store)
+  console.log('store.getState().user.id', store.getState().user.id)
       const userId = store.getState().user.id;
-
+  
+      if (!userId || !token) {
+        console.error('User ID or token is missing');
+        throw new Error('User ID or token is missing');
+      }
+  
       const wsTransport = new WSTransport(`wss://ya-praktikum.tech/ws/chats/${userId}/${id}/${token}`);
-
+  
       this.sockets.set(id, wsTransport);
-
+  
       await wsTransport.connect();
-
+      console.log('WebSocket connected for chat:', id);
+  
       this.subscribe(wsTransport, id);
       this.fetchOldMessages(id);
     } catch (e) {
-      console.error(e);
+      console.error('Failed to connect to chat', e);
     }
   }
 
@@ -116,12 +125,27 @@ class MessagesController {
 
   private subscribe(transport: WSTransport, id: number) {
     try {
-      transport.on(WSTransportEvents.Message, (message: Message) => this.onMessage(id, message));
+      transport.on(WSTransportEvents.Message, (rawData: unknown) => {
+        try {
+          // Предполагаем, что сообщение приходит в формате JSON
+          const parsedData = JSON.parse(rawData as string) as Message;
+  
+          // Обрабатываем сообщение
+          this.onMessage(id, parsedData);
+        } catch (e) {
+          console.error("Failed to parse incoming message:", e);
+        }
+      });
+  
       transport.on(WSTransportEvents.Close, () => this.onClose(id));
+      transport.on(WSTransportEvents.Error, (error) => {
+        console.error(`WebSocket error in chat ${id}`, error);
+      });
     } catch (e) {
-       console.error(e);
+      console.error(e);
     }
   }
+  
 }
 
 

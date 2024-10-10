@@ -1,0 +1,30 @@
+.modal {
+  position: absolute;
+  left: 47%;
+  top: 35%;
+  width: 340px;
+  min-height: 250px;
+  border-radius: 12px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: #494141;
+
+  &__title {
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px;
+    align-self: center;
+  }
+  .visible {
+    opacity: 1;
+    z-index: 1000;
+  }
+
+  .hidden {
+    display: none;
+    opacity: 0;
+  }
+}

@@ -116,6 +116,10 @@ class Block {
     Object.assign(this.props, nextProps);
   };
 
+  public getProps(key: string) {
+    return this.props[key];
+  }
+  
   get element() {
     return this._element;
   }

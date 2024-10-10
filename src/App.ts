@@ -1,5 +1,7 @@
 import Router from "./framework/Router";
 import { Routes } from "./utils/Routes";
+import chatController from "./controllers/chat.controller";
+import UserAuthController from "./controllers/auth.controller";
 
 import MainPage from "./pages/main-page/main-page";
 import ProfilePage from "./pages/profile-page/profile-page.tmpl";
@@ -20,8 +22,8 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   try {
     Router.start();
-    // await userAuthController.getUser();
-    // await chatController.fetchChats();
+    await UserAuthController.getUser();
+    await chatController.fetchChats();
   } catch (e) {
     console.log(e);
     Router.start();

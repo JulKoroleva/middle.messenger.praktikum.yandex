@@ -1,6 +1,11 @@
 interface Chat {
-  chatUserName: string;
-  chatLastMessage: string;
-  lastMessageDate: string;
-  newMessages: string;
+  id: number;
+  first_name: string;
+  second_name: string;
+  login: string;
+  email: string;
+  password: string;
+  phone: string;
+  avatar: string;
+  [key: string]: string | number
 }

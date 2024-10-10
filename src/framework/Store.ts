@@ -5,6 +5,7 @@ import { ChatInfo } from "../utils/api/chat-api";
 import { User } from "../utils/api/auth-api";
 import { set } from "../helpers/store.helper";
 import isEqual from "../utils/isEqual";
+import { Message } from "../controllers/message.controller";
 
 interface State {
   user: User;

@@ -10,6 +10,7 @@ import { User } from "../../utils/api/auth-api";
 import { withStore } from "../../framework/Store";
 import { Routes } from "../../utils/Routes";
 import Router from "../../framework/Router";
+import UserAuthController from "../../controllers/auth.controller";
 
 interface PropsProfilePage {
   changePage: (page: string) => void;
@@ -57,6 +58,11 @@ class ProfilePage extends Block {
     } else {
       throw new Error("Form is invalid");
     }
+  }
+
+  init() {
+    console.log('Messages component initialized, fetching chats...');
+    UserAuthController.getUser(); // Вызов метода для получения чатов
   }
 
   render() {

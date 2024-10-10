@@ -6,6 +6,8 @@ import {HelperOptions} from "handlebars";
 import Button from '../../components/button/button';
 import Form from '../../components/form/form';
 import Input from '../../components/input/input';
+import Popup from '../../components/popup/popup';
+import Modal from '../../components/modal/modal';
 import LeftPanel from '../../pages/main-page/modules/left-panel/left-panel';
 import ChatListHeader from '../../pages/main-page/modules/left-panel/components/chat-list-header/chat-list-header';
 import ChatItem from '../../pages/main-page/modules/left-panel/components/chatItem/chatItem';
@@ -53,6 +55,8 @@ export function registerComponent(name: string, Component: typeof Block) {
 registerComponent('Form', Form);
 registerComponent('Button', Button);
 registerComponent('Input', Input);
+registerComponent('Popup', Popup);
+registerComponent('Modal', Modal);
 registerComponent('LeftPanel', LeftPanel);
 registerComponent('СhatList', СhatList);
 registerComponent('ChatListHeader', ChatListHeader);
