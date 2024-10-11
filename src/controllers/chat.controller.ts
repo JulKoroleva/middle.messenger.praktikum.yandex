@@ -24,30 +24,48 @@ console.log('try1')
   }
 
   async fetchChats() {
-    console.log('fetchChats');
     try {
-      console.log('fetchChats try');
-      const chats = await this.api.read();
+        const chats = await this.api.read();
+
+        if (Array.isArray(chats)) {
+            chats.map(async (chat) => {
+                const token = await this.getToken(chat.id);
+                
+                // Соединяемся с веб-сокетом для получения сообщений
+                await MessagesController.connect(chat.id, token);
+                
+                // Получаем только последнее сообщение для каждого чата
+                await MessagesController.fetchLastMessage(chat.id);
+            });
+
+            // Сохраняем чаты в store
+            store.set('chats', chats);
+        } else {
+            console.error('Unexpected response format:', chats);
+        }
+    } catch (e) {
+        console.error('fetchChats error:', e);
+    }
+}
+
+  async fetchLastMessage(id: number) {
+    try {
+      const socket = this.sockets.get(id);
   
-      if (Array.isArray(chats)) {
-        console.log('fetchChats chats', chats);
-        chats.map(async (chat) => {
-          console.log('chat.id', chat.id);
-          const token = await this.getToken(chat.id) as string;
+      if (!socket) {
+        throw new Error(`Chat ${id} is not connected`);
+      }
   
-          await MessagesController.connect(chat.id, token);
-        });
-  
-        store.set('chats', chats);
+      // Если WebSocket открыт, запрашиваем последнее сообщение (1 сообщение)
+      if (socket.readyState === WebSocket.OPEN) {
+        socket.send({ type: 'get old', content: '1' }); // Запрашиваем только одно сообщение
       } else {
-        console.error('Unexpected response format:', chats);
+        console.error('WebSocket is not open, current state:', socket.readyState);
       }
     } catch (e) {
-      console.log('fetchChats e');
       console.error(e);
     }
   }
-
   addUserToChat(id: number, userId: number) {
     try {
       this.api.addUsers(id, [userId]);
@@ -86,10 +104,8 @@ console.log('try1')
   }
 
   selectChat(id: number) {
-    // Проверяем, существует ли объект messages в store
     const messagesState = store.getState().messages || {};
   
-    // Инициализируем пустой массив сообщений для чата, если его нет
     if (!messagesState[id]) {
       messagesState[id] = [];
       store.set('messages', messagesState);
@@ -98,10 +114,9 @@ console.log('try1')
     // Устанавливаем выбранный чат
     store.set('selectedChat', id);
   
-    // Загружаем старые сообщения для чата
+    // Загружаем все сообщения для чата
     MessagesController.fetchOldMessages(id);
   }
-  
 }
 
 const chatController = new ChatsController();

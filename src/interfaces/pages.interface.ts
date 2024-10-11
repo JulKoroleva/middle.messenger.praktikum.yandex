@@ -46,7 +46,6 @@ interface PropsMessageItem {
 interface PropsChatItem {
   chatId: any;
   chatName: string;
-  chatLastMessage: string;
   lastMessageDate: string;
   newMessages: number;
 }

@@ -4,23 +4,21 @@ import Block from "../../../../../../framework/Block";
 import store, { withStore } from "../../../../../../framework/Store"; // Импорт store для получения сообщений
 import templateChatItem from "./chatItem.hbs";
 
-class ChatItemBase extends Block {
+export class ChatItem extends Block {
   constructor(props: PropsChatItem) {
+    // Вызываем родительский конструктор и передаем props
+    super(props);
+
+    // Инициализация переменных
     const hasNewMessages = props.newMessages !== 0;
-
-    const messagesState = store.getState().messages || {};
-
-    const chatMessages = messagesState[props.chatId] || [];
-
-    const lastMessage = chatMessages.length > 0 ? chatMessages[chatMessages.length - 1].content : ""; // Берем последнее сообщение
-
-    super({
+    // Устанавливаем свойства через super и setProps
+    this.setProps({
       ...props,
       hasNewMessages,
-      lastMessage,
       icon: union,
     });
 
+    // Добавляем обработчик событий
     this.setProps({
       events: {
         click: this.onChatClick.bind(this),
@@ -37,19 +35,5 @@ class ChatItemBase extends Block {
   }
 }
 
-// Используем withStore для подписки на изменения в store
-const withChatData = withStore((state) => {
-  const messagesState = state.messages || {};
-  
-  // Используем this.props для получения chatId из пропсов, которые были переданы в Block
-  return (ownProps: PropsChatItem) => {
-    const chatMessages = messagesState[ownProps.chatId] || [];
-
-    return {
-      lastMessage: chatMessages.length > 0 ? chatMessages[chatMessages.length - 1].content : "", // Обновляем последнее сообщение
-    };
-  };
-});
 
 
-export const ChatItem = withChatData(ChatItemBase);

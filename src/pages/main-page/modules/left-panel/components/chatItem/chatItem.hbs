@@ -3,11 +3,11 @@
     <img class="chat__avatar" src="{{icon}}" alt="Аватар">
     <div class="chat__details">
       <h6 class="chat__title">{{chatName}}</h6>
-      <p class="chat__last-message">{{lastMessage}}</p>
+      <p class="chat__last-message">{{chatLastMessage}}</p>
     </div>
   </div>
   <div class="chat__date-info">
-    <p class="chat__date">{{lastMessageDate}}</p>
+    <p class="chat__date">{{formatTime lastMessageDate}}</p>
     {{#if hasNewMessages}}
       <div class="chat__unviewed">
         <p class="chat__unviewed-count">{{newMessages}}</p>
