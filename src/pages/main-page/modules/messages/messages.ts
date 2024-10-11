@@ -33,14 +33,23 @@ class MessagesBase extends Block {
 const withChats = withStore((state) => {
   const selectedChatId = state.selectedChat || 0;
   const selectedChat = state.chats?.find(chat => chat.id === selectedChatId);
+  const userId = state?.user?.id;
+
+  const messages = (state.messages || {})[selectedChatId] || [];
+
+  // Добавляем флаг isMine для каждого сообщения
+  const updatedMessages = messages.map((message: Message) => ({
+    ...message,
+    isMine: message.user_id === userId,  // Проверяем, принадлежит ли сообщение текущему пользователю
+  }));
 
   return {
     chats: [...(state.chats || [])],
     selectedChat: state.selectedChat,
-    messages: (state.messages || {})[selectedChatId] || [],
+    messages: updatedMessages,  // Передаем обновленные сообщения с isMine
     userId: state?.user?.id,
-    chatName: selectedChat ? selectedChat.title : "Чат"  // Получаем название чата или используем дефолтное значение
-  }
+    chatName: selectedChat ? selectedChat.title : "Чат",  // Получаем название чата или используем дефолтное значение
+  };
 });
 
 export const Messages = withChats(MessagesBase);
