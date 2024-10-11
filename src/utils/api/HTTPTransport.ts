@@ -82,9 +82,15 @@ interface Options {
         }
   
         xhr.onload = function() {
-          console.log(`Response: ${xhr.response}`);
-          resolve(xhr.response);
+          if (xhr.status >= 200 && xhr.status < 300) {
+            console.log(`Response: ${xhr.response}`);
+            resolve(xhr.response);
+          } else {
+            console.error(`Error: ${xhr.status} - ${xhr.statusText}`);
+            reject(new Error(`Request failed with status ${xhr.status}: ${xhr.statusText}`));
+          }
         };
+        
         
         xhr.onerror = function() {
           console.error(`Error: ${xhr.status} - ${xhr.statusText}`);

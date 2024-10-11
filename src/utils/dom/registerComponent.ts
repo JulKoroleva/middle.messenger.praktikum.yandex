@@ -10,7 +10,7 @@ import Popup from '../../components/popup/popup';
 import Modal from '../../components/modal/modal';
 import LeftPanel from '../../pages/main-page/modules/left-panel/left-panel';
 import ChatListHeader from '../../pages/main-page/modules/left-panel/components/chat-list-header/chat-list-header';
-import ChatItem from '../../pages/main-page/modules/left-panel/components/chatItem/chatItem';
+import {ChatItem} from '../../pages/main-page/modules/left-panel/components/chatItem/chatItem';
 import СhatList from '../../pages/main-page/modules/left-panel/components/chats-list/chats-list';
 import DialogHeader from '../../pages/main-page/modules/messages/components/dialog-header/dialog-header.tmpl';
 import InputBar from '../../pages/main-page/modules/messages/components/input-bar/input-bar.tmpl';
