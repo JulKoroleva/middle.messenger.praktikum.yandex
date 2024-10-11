@@ -11,7 +11,7 @@ interface PropsMessages {
   avatar: string;
 }
 
-class Messages extends Block {
+class MessagesBase extends Block {
   constructor(props: PropsMessages) {
     super({
       ...props,
@@ -30,15 +30,17 @@ class Messages extends Block {
     return this.compile(templateMessages, this.props);
   }
 }
-
-// Функция для получения сообщений из стора
-const mapStateToProps = (state: { messages: Record<number, Message[]>; selectedChat?: number }) => {
-  const selectedChatId = state.selectedChat;
+const withChats = withStore((state) => {
+  const selectedChatId = state.selectedChat || 0;
+  const selectedChat = state.chats?.find(chat => chat.id === selectedChatId);
 
   return {
-    messages: selectedChatId !== undefined ? state.messages[selectedChatId] || [] : [],
-  };
-};
+    chats: [...(state.chats || [])],
+    selectedChat: state.selectedChat,
+    messages: (state.messages || {})[selectedChatId] || [],
+    userId: state?.user?.id,
+    chatName: selectedChat ? selectedChat.title : "Чат"  // Получаем название чата или используем дефолтное значение
+  }
+});
 
-// Оборачиваем компонент с помощью withStore и передаем ID выбранного чата
-export default withStore(mapStateToProps)(Messages);
+export const Messages = withChats(MessagesBase);

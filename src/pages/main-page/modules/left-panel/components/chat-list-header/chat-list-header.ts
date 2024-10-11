@@ -34,8 +34,8 @@ export default class ChatListHeader extends Block {
 
   toggleCreateChatPopup() {
     const newPopupState =
-      this.props.createChatPopup === "hidden" ? "visible" : "hidden";
-    this.setProps({ createChatPopup: newPopupState });
+      this.props.showChatPopup === "hidden" ? "visible" : "hidden";
+    this.setProps({ showChatPopup: newPopupState });
   }
 
   handleCreateChat = (e: Event) => {

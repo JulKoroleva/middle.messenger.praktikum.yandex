@@ -15,12 +15,17 @@ export default class WSTransport extends EventBus {
     super();
   }
 
+  // Добавляем геттер для readyState
+  public get readyState(): number | undefined {
+    return this.socket?.readyState;
+  }
+
   public send(data: unknown) {
     if (!this.socket) {
       throw new Error('Socket is not connected');
     }
 
-    this.socket.send(JSON.stringify(data))
+    this.socket.send(JSON.stringify(data));
   }
 
   public connect(): Promise<void> {
@@ -44,25 +49,24 @@ export default class WSTransport extends EventBus {
   private setupPing() {
     this.pingInterval = setInterval(() => {
       this.send({ type: 'ping' });
-    }, 5000)
+    }, 5000);
 
     this.on(WSTransportEvents.Close, () => {
       clearInterval(this.pingInterval);
-
       this.pingInterval = 0;
-    })
+    });
   }
 
   private subscribe(socket: WebSocket) {
     socket.addEventListener('open', () => {
-      this.emit(WSTransportEvents.Connected)
+      this.emit(WSTransportEvents.Connected);
     });
     socket.addEventListener('close', () => {
-      this.emit(WSTransportEvents.Close)
+      this.emit(WSTransportEvents.Close);
     });
 
     socket.addEventListener('error', (e) => {
-      this.emit(WSTransportEvents.Error, e)
+      this.emit(WSTransportEvents.Error, e);
     });
 
     socket.addEventListener('message', (message) => {
@@ -73,10 +77,11 @@ export default class WSTransport extends EventBus {
           return;
         }
 
-        this.emit(WSTransportEvents.Message, data)
+        this.emit(WSTransportEvents.Message, data);
       } catch (e) {
         console.error(e);
       }
     });
   }
 }
+

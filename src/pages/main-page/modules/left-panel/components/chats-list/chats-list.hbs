@@ -2,10 +2,10 @@
   {{#each chats}}
     {{{ChatItem
       chatId=id
-      chatName=chatUserName
-      chatLastMessage=chatLastMessage
+      chatName=title
+      chatLastMessage=last_message
       lastMessageDate=lastMessageDate
-      newMessages=newMessages
+      newMessages=unread_count
     }}}
   {{/each}}
 </div>

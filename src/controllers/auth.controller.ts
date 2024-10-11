@@ -9,27 +9,37 @@ class UserAuthController {
   public async login(form: HTMLFormElement) {
     try {
       const formIsValid = validateForm(form);
-
+  
       if (!formIsValid) {
         throw new Error('Login data is invalid');
       }
-
+  
       const formData = new FormData(form);
-
+  
       const data = {
         login: formData.get('login') as string,
         password: formData.get('password') as string,
+      };
+  
+      // Выполняем запрос к API и получаем результат
+      const response = await authApi.signin(data);
+  
+      // Проверяем, есть ли в ответе ошибка
+      if (response.reason) {
+        throw new Error(response.reason); // Генерируем ошибку, если логин или пароль неверные
       }
-
-      await authApi.signin(data)
+  
+      // Если всё прошло успешно, запрашиваем пользователя и перенаправляем
       await this.getUser();
-
       Router.go(Routes.MainPage);
-
+  
     } catch (e) {
+      // Обрабатываем ошибку
       console.error(e);
+      alert(e.message); // Показываем сообщение об ошибке пользователю
     }
   }
+  
 
   public async signup(form: HTMLFormElement) {
     try {

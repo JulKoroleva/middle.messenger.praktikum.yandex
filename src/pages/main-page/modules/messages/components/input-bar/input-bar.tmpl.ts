@@ -8,10 +8,14 @@ import messagesController from "../../../../../../controllers/message.controller
 function handleSendMessage(e: Event, block: Block) {
   e.preventDefault();
   const form = e.target as HTMLFormElement;
+  console.log('form', form)
   const message = form.message.value.trim();
 
+  console.log('message', message)
   if (message) {
+    console.log('message', message)
     const selectedChat = block.getProps('selectedChat');
+    console.log('selectedChat', selectedChat)
     
     if (selectedChat) {
       messagesController.sendMessage(selectedChat, message); // Отправляем сообщение через контроллер
@@ -42,11 +46,12 @@ function triggerShakeAnimation() {
 }
 
 export default class InputBar extends Block {
-  constructor() {
+  constructor(props: any) {
     super({
+      ...props,
       pinIcon,
       arrowBtn,
-      handleSubmit: (e: Event) => handleSendMessage(e, this), // Передаем блок в handleSendMessage
+      handleSubmit: (e: Event) => handleSendMessage(e, this),
     });
   }
 

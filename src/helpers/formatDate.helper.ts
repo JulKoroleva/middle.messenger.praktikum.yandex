@@ -1,35 +1,22 @@
 import Handlebars from "handlebars";
 
+// Регистрация хелпера formatDate
 Handlebars.registerHelper("formatDate", function (time: string) {
-  const messageDate = new Date(time.split(" ")[0]);
-  const now = new Date();
-  const yesterday = new Date();
-  const dayBeforeYesterday = new Date(now);
+    const date = new Date(time);
+    const currentYear = new Date().getFullYear();
+    const year = date.getFullYear();
+    const day = date.getDate();
+    const monthNames = [
+        "января", "февраля", "марта", "апреля", "мая", "июня", 
+        "июля", "августа", "сентября", "октября", "ноября", "декабря"
+    ];
+    const month = monthNames[date.getMonth()];
 
-  const options: Intl.DateTimeFormatOptions = { day: "numeric", month: "long" };
-  const optionsWithYear: Intl.DateTimeFormatOptions = {
-    ...options,
-    year: "numeric",
-  };
-
-  const isSameDay = (date1: Date, date2: Date): boolean =>
-    date1.getDate() === date2.getDate() &&
-    date1.getMonth() === date2.getMonth() &&
-    date1.getFullYear() === date2.getFullYear();
-
-  yesterday.setDate(now.getDate() - 1);
-
-  dayBeforeYesterday.setDate(now.getDate() - 2);
-
-  if (isSameDay(messageDate, now)) {
-    return "сегодня";
-  } else if (isSameDay(messageDate, yesterday)) {
-    return "вчера";
-  } else if (isSameDay(messageDate, dayBeforeYesterday)) {
-    return "позавчера";
-  } else if (messageDate.getFullYear() === now.getFullYear()) {
-    return messageDate.toLocaleDateString("ru-RU", options);
-  } else {
-    return messageDate.toLocaleDateString("ru-RU", optionsWithYear);
-  }
+    // Если год текущий, не выводим его
+    if (year === currentYear) {
+        return `${day} ${month}`;
+    } else {
+        // Если год предыдущий, выводим год
+        return `${day} ${month} ${year}`;
+    }
 });

@@ -15,7 +15,7 @@ import СhatList from '../../pages/main-page/modules/left-panel/components/chats
 import DialogHeader from '../../pages/main-page/modules/messages/components/dialog-header/dialog-header.tmpl';
 import InputBar from '../../pages/main-page/modules/messages/components/input-bar/input-bar.tmpl';
 import MessageItem from '../../pages/main-page/modules/messages/components/message/message.tmpl';
-import Messages from '../../pages/main-page/modules/messages/messages';
+import {Messages} from '../../pages/main-page/modules/messages/messages';
 
 export function registerComponent(name: string, Component: typeof Block) {
   if (name in Handlebars.helpers) {
