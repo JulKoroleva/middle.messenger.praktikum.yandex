@@ -22,4 +22,4 @@ SPA проект мессенджера, реализованный с испо�
 
 В проекте использован макет из [Figma](https://www.figma.com/design/tCvsODs4cNW3eaZC2yvwjL/Web-messenger?m=auto&t=imLjJtGYzIJs0KJk-6).
 
-Проект развернут на платформе [Netlify](https://deploy--julia-koroleva-middle-44.netlify.app/)
+Проект развернут на платформе [Netlify](https://julia-koroleva-middle-44.netlify.app/)
