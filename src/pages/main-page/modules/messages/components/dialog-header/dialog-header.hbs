@@ -8,6 +8,73 @@
     buttonImage=this.ellipseIcon
     buttonClass="header__ellipse"
     imageAlt="settings"
-    onClick=this.onSettingsClick
+    onClick=onOptionsClick
   }}}
+  {{#Modal
+    visibility=chatOptionsVisibility
+    modalClassName="modal_min modal_min-top-right"
+  }}
+
+    {{{Button
+      buttonType="button"
+      buttonText="Добавить участника"
+      buttonClass="button_text"
+      onClick=this.onAddUserPopupClick
+    }}}
+
+    {{{Button
+      buttonType="button"
+      buttonText="Удалить чат"
+      buttonClass="button_text"
+      onClick=this.onRemoveUserClick
+    }}}
+  {{/Modal}}
+
+  {{#Popup visibility=addUserPopupVisibility onClick=this.onAddUserPopupClick}}
+    {{#Modal}}
+      {{#Form onSubmit=handleAddUser class="profile__form"}}
+        <h1 class="form__title">Добавить пользователя</h1>
+        <div style="position: relative; margin-bottom: 40px">{{{Input
+            inputName="login"
+            inputType="text"
+            labelName="login"
+            inputLabel="Логин пользователя"
+            isEditing="true"
+            inputMainClass="dynamic-input"
+            inputClass="dynamic-input__data"
+            labelClass="dynamic-input__placeholder"
+          }}}</div>
+        {{{Button
+          buttonType="submit"
+          buttonText="Добавить"
+          buttonClass="button_primary"
+        }}}
+      {{/Form}}
+    {{/Modal}}
+  {{/Popup}}
+
+  {{#Popup visibility=deleteUserPopupVisibility onClick=this.onRemoveUserClick}}
+    {{#Modal}}
+      {{#Form onSubmit=handleDeleteUser class="profile__form"}}
+        <h1 class="form__title">Удалить пользователя из чата?</h1>
+        <div style="position: relative; margin-bottom: 40px">
+          {{{Input
+            inputName="login"
+            inputType="text"
+            labelName="login"
+            inputLabel="Логин пользователя"
+            isEditing="true"
+            inputMainClass="dynamic-input"
+            inputClass="dynamic-input__data"
+            labelClass="dynamic-input__placeholder"
+          }}}</div>
+        {{{Button
+          buttonType="submit"
+          buttonText="Удалить"
+          buttonClass="button_primary"
+        }}}
+      {{/Form}}
+    {{/Modal}}
+  {{/Popup}}
+
 </div>

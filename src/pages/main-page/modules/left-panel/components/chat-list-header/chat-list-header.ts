@@ -16,7 +16,7 @@ export default class ChatListHeader extends Block {
         buttonType: "button",
       },
       createChatButton: {
-        buttonText: "+",
+        buttonText: "Новый чат",
         buttonClass: "button_link",
         buttonType: "button",
       },
@@ -29,6 +29,7 @@ export default class ChatListHeader extends Block {
         this.toggleCreateChatPopup();
       },
       handleChatCreate: (e: Event) => this.handleCreateChat(e),
+      toggleChatCreate: () => this.toggleCreateChatPopup(),
     });
   }
 
@@ -46,7 +47,7 @@ export default class ChatListHeader extends Block {
 
     chatController.create(title as string);
   };
-  
+
   render() {
     return this.compile(templateChatListHeader, this.props);
   }

@@ -5,7 +5,7 @@
       chatName=this.chatName
       changePage=this.changePage
     }}}
-    <div class="dialog__messages-container">
+    <div id="chat" class="dialog__messages-container">
       {{#each this.messages}}
         {{{MessageItem
           showDate=this.showDate
@@ -17,6 +17,6 @@
       {{{InputBar selectedChat=selectedChat}}}
     </div>
   {{else}}
-    <div>Выберите чат</div>
+    <div class="dialog_not-selected">Выберите чат</div>
   {{/if}}
 </div>

@@ -25,7 +25,6 @@ window.addEventListener("DOMContentLoaded", async () => {
     await UserAuthController.getUser();
     await chatController.fetchChats();
   } catch (e) {
-    console.log(e);
     Router.start();
   }
 

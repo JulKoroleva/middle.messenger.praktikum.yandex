@@ -16,8 +16,8 @@ export interface SignupData {
 }
 
 export interface ChangePassword {
-  oldPassword: string,
-  newPassword: string,
+  oldPassword: string;
+  newPassword: string;
 }
 
 export interface UserInfoToUpdate {
@@ -31,30 +31,44 @@ export interface UserInfoToUpdate {
 
 class UsersApi extends BaseApi {
   constructor() {
-    super('/user')
+    super("/user");
   }
   update(data: UserInfoToUpdate): Promise<User> {
-    return this.http.put('/profile', data)
+    return this.http.put("/profile", data);
   }
 
   updateAvatar(data: FormData) {
-    return this.http.put('/profile/avatar', data)
+    return this.http
+      .put("/profile/avatar", data)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        if (error.message.includes("Request timed out")) {
+          console.error(
+            "Запрос на обновление аватара превысил время ожидания."
+          );
+        } else {
+          console.error("Ошибка при обновлении аватара:", error);
+        }
+        throw error;
+      });
   }
 
   changePassword(data: ChangePassword) {
-    return this.http.put('/password', data)
+    return this.http.put("/password", data);
   }
 
   getUser(): Promise<User> {
-    return this.http.get('/user')
+    return this.http.get("/user");
   }
 
   searchUsers(login: string): Promise<User[]> {
-    return this.http.post('/search', {login: login})
+    return this.http.post("/search", { login: login });
   }
 
   logout() {
-    return this.http.post('/logout', {});
+    return this.http.post("/logout", {});
   }
   create = undefined;
   delete = undefined;

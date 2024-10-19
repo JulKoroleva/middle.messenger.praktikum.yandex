@@ -5,7 +5,6 @@ import {
 } from "../../constants/login/login.constants";
 import {
   initializeValidationListeners,
-  validateForm,
 } from "../../validators/form.validator";
 import templateLogin from "../login/login.hbs";
 import UserAuthController from "../../controllers/auth.controller";

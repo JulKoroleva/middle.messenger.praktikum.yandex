@@ -3,7 +3,7 @@ import templateMessages from "./messages.hbs";
 import Avatar from "../../../../../static/assets/union.svg";
 import { withStore } from "../../../../framework/Store";
 import { Message } from "../../../../controllers/message.controller";
-import chatController from "../../../../controllers/chat.controller"; // Импорт chatController
+import chatController from "../../../../controllers/chat.controller"; 
 
 interface PropsMessages {
   messages: Message[];
@@ -22,8 +22,7 @@ class MessagesBase extends Block {
   }
 
   componentDidMount() {
-    console.log('MainPage mounted, fetching chats...');
-    chatController.fetchChats(); // Вызов метода для получения чатов
+    chatController.fetchChats();
   }
 
   render() {
@@ -37,18 +36,17 @@ const withChats = withStore((state) => {
 
   const messages = (state.messages || {})[selectedChatId] || [];
 
-  // Добавляем флаг isMine для каждого сообщения
   const updatedMessages = messages.map((message: Message) => ({
     ...message,
-    isMine: message.user_id === userId,  // Проверяем, принадлежит ли сообщение текущему пользователю
+    isMine: message.user_id === userId,  
   }));
 
   return {
     chats: [...(state.chats || [])],
     selectedChat: state.selectedChat,
-    messages: updatedMessages,  // Передаем обновленные сообщения с isMine
+    messages: updatedMessages,  
     userId: state?.user?.id,
-    chatName: selectedChat ? selectedChat.title : "Чат",  // Получаем название чата или используем дефолтное значение
+    chatName: selectedChat ? selectedChat.title : "Чат",  
   };
 });
 

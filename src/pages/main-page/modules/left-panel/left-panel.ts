@@ -1,6 +1,6 @@
 import Block from "../../../../framework/Block";
 import templateLeftPanel from "./left-panel.hbs";
-import { ChatInfo } from "../../../../utils/api/chat-api"; // Импорт интерфейса чата
+import { ChatInfo } from "../../../../utils/api/chat-api";
 import { withStore } from "../../../../framework/Store";
 
 interface PropsLeftPanel {
@@ -22,12 +22,10 @@ class LeftPanel extends Block {
   }
 }
 
-// Функция для получения списка чатов из стора
 const mapStateToProps = (state: { chats: ChatInfo[] }) => {
   return {
     chats: state.chats,
   };
 };
 
-// Оборачиваем компонент с помощью withStore
 export default withStore(mapStateToProps)(LeftPanel);

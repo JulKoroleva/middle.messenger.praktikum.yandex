@@ -1,6 +1,8 @@
 import Button from "../../components/button/button";
 import Input from "../../components/input/input";
 
+import userAuthController from "../../controllers/auth.controller";
+
 export const createInputs = (userData: UserInfo, isEditing: boolean) => {
   return [
     new Input({
@@ -67,8 +69,8 @@ export const createInputs = (userData: UserInfo, isEditing: boolean) => {
 };
 
 export const createButtons = (
-  changePage: (page: string) => void,
-  toggleEditing: () => void
+  toggleEditing: () => void,
+  handleChangePasswordClick: () => void
 ) => [
   new Button({
     buttonText: "Изменить данные",
@@ -80,14 +82,14 @@ export const createButtons = (
     buttonText: "Изменить пароль",
     buttonClass: "button_text button_border",
     buttonType: "button",
+    onClick: handleChangePasswordClick,
   }),
   new Button({
     buttonText: "Выйти",
     buttonClass: "button_danger button_border",
     buttonType: "button",
     onClick: (e: MouseEvent) => {
-      e.preventDefault();
-      changePage("login");
+      userAuthController.logout();
     },
   }),
 ];

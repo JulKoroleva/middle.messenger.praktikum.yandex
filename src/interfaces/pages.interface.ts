@@ -50,6 +50,12 @@ interface PropsChatItem {
   newMessages: number;
 }
 
+interface PropsMainPage {
+  chats: ChatInfo[];
+  messages: Record<number, Message[]>;
+  changePage: (page: string) => void;
+}
+
 interface PropsLeftPanel {
   chats: Chat[];
   changePage: (page: string) => void;

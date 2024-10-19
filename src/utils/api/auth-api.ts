@@ -40,6 +40,7 @@ class AuthApi extends BaseApi {
   }
 
   getUser(): Promise<User> {
+    console.log('this.http.get(user)')
     return this.http.get('/user')
   }
 

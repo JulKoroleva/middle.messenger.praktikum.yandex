@@ -18,14 +18,11 @@ type Indexed<T = unknown> = {
       const key = keys[i];
   
       if (i === keys.length - 1) {
-        // Если это последний ключ, устанавливаем значение
         (currentObject as Indexed)[key] = value;
       } else {
-        // Если ключ не существует, создаем пустой объект
         if (!(key in (currentObject as Indexed))) {
           (currentObject as Indexed)[key] = {};
         }
-        // Переходим к следующему уровню вложенности
         currentObject = (currentObject as Indexed)[key];
       }
     }

@@ -1,10 +1,10 @@
 import { EventBus } from "../../framework/EventBus";
 
 export enum WSTransportEvents {
-  Connected = 'connected',
-  Error = 'error',
-  Message = 'message',
-  Close = 'close',
+  Connected = "connected",
+  Error = "error",
+  Message = "message",
+  Close = "close",
 }
 
 export default class WSTransport extends EventBus {
@@ -15,14 +15,13 @@ export default class WSTransport extends EventBus {
     super();
   }
 
-  // Добавляем геттер для readyState
   public get readyState(): number | undefined {
     return this.socket?.readyState;
   }
 
   public send(data: unknown) {
     if (!this.socket) {
-      throw new Error('Socket is not connected');
+      throw new Error("Socket is not connected");
     }
 
     this.socket.send(JSON.stringify(data));
@@ -48,7 +47,7 @@ export default class WSTransport extends EventBus {
 
   private setupPing() {
     this.pingInterval = setInterval(() => {
-      this.send({ type: 'ping' });
+      this.send({ type: "ping" });
     }, 5000);
 
     this.on(WSTransportEvents.Close, () => {
@@ -58,28 +57,28 @@ export default class WSTransport extends EventBus {
   }
 
   private subscribe(socket: WebSocket) {
-    socket.addEventListener('open', () => {
+    socket.addEventListener("open", () => {
       this.emit(WSTransportEvents.Connected);
     });
-    socket.addEventListener('close', () => {
+    socket.addEventListener("close", () => {
       this.emit(WSTransportEvents.Close);
     });
 
-    socket.addEventListener('error', (e) => {
+    socket.addEventListener("error", (e) => {
       this.emit(WSTransportEvents.Error, e);
     });
 
-    socket.addEventListener('message', (message) => {
+    socket.addEventListener("message", (message) => {
       try {
         const data = JSON.parse(message.data);
 
-        if (data.type && data.type === 'pong') {
+        if (data.type && data.type === "pong") {
           return;
         }
 
         this.emit(WSTransportEvents.Message, data);
       } catch (e) {
-        console.error(e);
+        // console.error(e);
       }
     });
   }

@@ -1,4 +1,5 @@
 interface Message {
+  id: number;
   chat_id: number;
   time: string;
   type: string;
