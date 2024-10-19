@@ -1,8 +1,8 @@
 import Block from "../../framework/Block";
 import templateMainPage from "./main-page.hbs";
-import { ChatInfo } from "../../utils/api/chat-api";
 import { withStore } from "../../framework/Store";
 import chatController from "../../controllers/chat.controller";
+import { ChatInfo } from "../../interfaces/chat.interface";
 
 
 class MainPage extends Block {

@@ -1,9 +1,9 @@
 import EventBus from "./EventBus";
 import Block from "./Block";
-import { ChatInfo } from "../utils/api/chat-api";
 import { User } from "../utils/api/auth-api";
 import { set } from "../helpers/store.helper";
 import isEqual from "../utils/isEqual";
+import { ChatInfo } from "../interfaces/chat.interface";
 
 interface State {
   user: User;

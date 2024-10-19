@@ -28,7 +28,7 @@ class ChatsController {
 
           await MessagesController.connect(chat.id, token);
 
-          await MessagesController.fetchLastMessage(chat.id);
+          await this.fetchLastMessage(chat.id);
         });
 
         store.set("chats", chats);

@@ -2,7 +2,6 @@ import Block from "../../../../framework/Block";
 import templateMessages from "./messages.hbs";
 import Avatar from "../../../../../static/assets/union.svg";
 import { withStore } from "../../../../framework/Store";
-import { Message } from "../../../../controllers/message.controller";
 import chatController from "../../../../controllers/chat.controller"; 
 
 interface PropsMessages {
@@ -33,14 +32,12 @@ const withChats = withStore((state) => {
   const selectedChatId = state.selectedChat || 0;
   const selectedChat = state.chats?.find(chat => chat.id === selectedChatId);
   const userId = state?.user?.id;
-
   const messages = (state.messages || {})[selectedChatId] || [];
 
   const updatedMessages = messages.map((message: Message) => ({
     ...message,
     isMine: message.user_id === userId,  
   }));
-
   return {
     chats: [...(state.chats || [])],
     selectedChat: state.selectedChat,

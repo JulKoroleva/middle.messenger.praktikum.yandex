@@ -8,7 +8,7 @@ interface Pages {
 
 interface PropsMainPage {
   messages: Message[];
-  chats: Chat[];
+  chats: ChatInfo[];
   changePage: (page: string) => void;
 }
 
