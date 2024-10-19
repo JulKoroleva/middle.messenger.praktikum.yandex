@@ -19,8 +19,7 @@
 
   &_not-selected {
     display: flex;
-    align-self: center;
-    justify-self: center;
+    place-self: center;
     margin: 30% 50%;
     width: 30%;
   }
