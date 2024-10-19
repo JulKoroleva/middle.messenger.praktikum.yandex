@@ -52,7 +52,9 @@
     left: 10px;
     transform: translateY(-50%);
     color: var(--color-text-secondary);
-    transition: top 0.3s, font-size 0.3s;
+    transition:
+      top 0.3s,
+      font-size 0.3s;
   }
 }
 

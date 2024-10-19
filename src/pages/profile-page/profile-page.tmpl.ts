@@ -178,7 +178,7 @@ class ProfilePage extends Block {
 
 const mapStateToProps = (state: { user: User }) => {
   return {
-    currentUserData: state.user || {}, // Защита от отсутствия данных
+    currentUserData: state.user || {},
   };
 };
 

@@ -1,7 +1,7 @@
 import Block from "../../../../framework/Block";
 import templateLeftPanel from "./left-panel.hbs";
-import { ChatInfo } from "../../../../utils/api/chat-api";
 import { withStore } from "../../../../framework/Store";
+import { ChatInfo } from "../../../../interfaces/chat.interface";
 
 interface PropsLeftPanel {
   chats: ChatInfo[];

@@ -23,14 +23,13 @@ export default class WSTransport extends EventBus {
     if (!this.socket) {
       throw new Error("Socket is not connected");
     }
-  
+
     if (this.socket.readyState !== WebSocket.OPEN) {
-      return;  
+      return;
     }
-  
+
     this.socket.send(JSON.stringify(data));
   }
-  
 
   public connect(): Promise<void> {
     this.socket = new WebSocket(this.url);
@@ -88,4 +87,3 @@ export default class WSTransport extends EventBus {
     });
   }
 }
-

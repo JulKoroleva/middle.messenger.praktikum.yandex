@@ -3,7 +3,6 @@ import {
   createButtons,
   createInputs,
 } from "../../constants/signup/signup.constants";
-import { validateForm } from "../../validators/form.validator";
 import templateSignup from "../signUp/signUp.hbs";
 import UserAuthController from "../../controllers/auth.controller";
 
@@ -13,7 +12,7 @@ const handleFormSubmit = (e: Event) => {
   UserAuthController.signup(form);
 };
 
-export default  class SignupPage extends Block {
+export default class SignupPage extends Block {
   constructor(props: SignupPageProps) {
     super({
       ...props,

@@ -27,13 +27,14 @@ export default class DialogHeader extends Block {
   }
 
   handleOptionsClick = (block: Block) => {
-      block.setProps({ chatOptionsVisibility: this.props.chatOptionsVisibility === "visible"
-        ? "hidden"
-        : "visible", });
+    block.setProps({
+      chatOptionsVisibility:
+        this.props.chatOptionsVisibility === "visible" ? "hidden" : "visible",
+    });
   };
 
   toggleDeleteUserPopup = (block: Block) => {
-    console.log('toggleDeleteUserPopup')
+    console.log("toggleDeleteUserPopup");
     block.setProps({
       deleteUserPopupVisibility:
         this.props.deleteUserPopupVisibility === "visible"
@@ -43,7 +44,7 @@ export default class DialogHeader extends Block {
   };
 
   toggleAddUserPopup = (block: Block) => {
-    console.log('toggleAddUserPopup')
+    console.log("toggleAddUserPopup");
     block.setProps({
       addUserPopupVisibility:
         this.props.addUserPopupVisibility === "visible" ? "hidden" : "visible",
@@ -80,6 +81,7 @@ export default class DialogHeader extends Block {
 
     block.setProps({ deleteUserPopupVisibility: "hidden" });
   };
+  
   render() {
     return this.compile(templateDialogHeader, this.props);
   }

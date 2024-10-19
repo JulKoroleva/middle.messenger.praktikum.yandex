@@ -2,7 +2,7 @@ import { BaseApi } from "./base-api";
 
 class ResourcesApi extends BaseApi {
   constructor() {
-    super('/resources')
+    super("/resources");
   }
   getAvatar(data: string): Promise<string> {
     return this.http.get(`${data}`);

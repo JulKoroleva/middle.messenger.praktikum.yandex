@@ -3,9 +3,7 @@ import {
   createInputs,
   createButtons,
 } from "../../constants/login/login.constants";
-import {
-  initializeValidationListeners,
-} from "../../validators/form.validator";
+import { initializeValidationListeners } from "../../validators/form.validator";
 import templateLogin from "../login/login.hbs";
 import UserAuthController from "../../controllers/auth.controller";
 
