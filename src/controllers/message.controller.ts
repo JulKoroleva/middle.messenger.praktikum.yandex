@@ -166,13 +166,19 @@ class MessagesController {
   private onClose(id: number) {
     try {
       this.sockets.delete(id);
-
-      const token = chatController.getToken(id);
-      this.connect(id, token);
+  
+      chatController.getToken(id).then((token) => {
+        if (token) {
+          this.connect(id, token);
+        } else {
+          console.error("Token is undefined");
+        }
+      });
     } catch (e) {
-      // console.error(e);
+      console.error("Failed to reconnect", e);
     }
   }
+  
   private subscribe(transport: WSTransport, id: number) {
     try {
       transport.on(WSTransportEvents.Message, (rawData: unknown) => {

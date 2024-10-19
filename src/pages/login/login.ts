@@ -14,9 +14,9 @@ const handleFormSubmit = (e: Event) => {
 };
 
 export default class LoginPage extends Block {
-  constructor(props: LoginPageProps) {
+  constructor() {
     super({
-      buttons: createButtons(props.changePage),
+      buttons: createButtons(),
       inputs: createInputs(),
       onSubmitForm: (e: Event) => handleFormSubmit(e),
     });

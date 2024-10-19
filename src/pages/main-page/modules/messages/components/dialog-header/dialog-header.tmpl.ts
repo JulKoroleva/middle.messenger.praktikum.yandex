@@ -7,14 +7,9 @@ import usersController from "../../../../../../controllers/edit-settings.control
 import store from "../../../../../../framework/Store";
 
 export default class DialogHeader extends Block {
-  constructor(props: PropsDialogHeader) {
+  constructor() {
     super({
-      ...props,
       ellipseIcon,
-      onSettingsClick: (e: Event) => {
-        e.preventDefault();
-        props.changePage("");
-      },
       chatOptionsVisibility: "hidden",
       onOptionsClick: () => this.handleOptionsClick(this),
       addUserPopupVisibility: "hidden",

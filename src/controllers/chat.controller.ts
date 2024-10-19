@@ -1,12 +1,14 @@
-import API, { ChatsAPI } from "../utils/api/chat-api";
+import API, { ChatsAPI } from "../utils/api/chat-api"; 
 import MessagesController from "../controllers/message.controller";
 import store from "../framework/Store";
 
 class ChatsController {
   private readonly api: ChatsAPI;
+  private sockets: Map<number, WebSocket>;
 
   constructor() {
     this.api = API;
+    this.sockets = new Map();
   }
 
   async create(title: string) {
@@ -26,9 +28,10 @@ class ChatsController {
         chats.map(async (chat) => {
           const token = await this.getToken(chat.id);
 
-          await MessagesController.connect(chat.id, token);
-
-          await this.fetchLastMessage(chat.id);
+          if (token) {
+            await MessagesController.connect(chat.id, token);
+            await this.fetchLastMessage(chat.id);
+          }
         });
 
         store.set("chats", chats);
@@ -43,23 +46,21 @@ class ChatsController {
   async fetchLastMessage(id: number) {
     try {
       const socket = this.sockets.get(id);
-
+  
       if (!socket) {
         throw new Error(`Chat ${id} is not connected`);
       }
-
+  
       if (socket.readyState === WebSocket.OPEN) {
-        socket.send({ type: "get old", content: "1" }); 
+        socket.send(JSON.stringify({ type: "get old", content: "1" })); 
       } else {
-        console.error(
-          "WebSocket is not open, current state:",
-          socket.readyState
-        );
+        console.error("WebSocket is not open, current state:", socket.readyState);
       }
     } catch (e) {
       // console.error(e);
     }
   }
+
   addUserToChat(id: number, userId: number) {
     try {
       this.api.addUsers(id, [userId]);
@@ -79,19 +80,19 @@ class ChatsController {
   async delete(id: number) {
     try {
       await this.api.delete(id);
-
       this.fetchChats();
     } catch (e) {
       // console.error(e);
     }
   }
 
-  async getToken(id: number) {
+  async getToken(id: number): Promise<string | undefined> {
     try {
       const token = await this.api.getToken(id);
       return token;
     } catch (e) {
       // console.error('Failed to get token for chat', e);
+      return undefined;
     }
   }
 
@@ -104,7 +105,6 @@ class ChatsController {
     }
 
     store.set("selectedChat", id);
-
     MessagesController.fetchOldMessages(id);
   }
 }

@@ -34,7 +34,7 @@ class UsersController {
     try {
       const formData = new FormData(form);
 
-      const response = await usersApi.updateAvatar(formData);
+      const response = await usersApi.updateAvatar(formData) as User;
       if (response) {
         if (response && response.avatar) {
           store.set("user.avatar", response.avatar);

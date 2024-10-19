@@ -3,6 +3,7 @@ import templateMainPage from "./main-page.hbs";
 import { withStore } from "../../framework/Store";
 import chatController from "../../controllers/chat.controller";
 import { ChatInfo } from "../../interfaces/chat.interface";
+import { PropsMainPage } from "../../interfaces/pages.interface";
 
 
 class MainPage extends Block {
@@ -11,7 +12,6 @@ class MainPage extends Block {
       ...props,
       chats: props.chats,
       messages: props.messages,
-      changePage: props.changePage,
     });
   }
 

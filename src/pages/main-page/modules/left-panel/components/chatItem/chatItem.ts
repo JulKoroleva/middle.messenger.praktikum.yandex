@@ -1,6 +1,7 @@
 import union from "../../../../../../../static/assets/union.svg";
 import chatController from "../../../../../../controllers/chat.controller";
 import Block from "../../../../../../framework/Block";
+import { PropsChatItem } from "../../../../../../interfaces/pages.interface";
 import templateChatItem from "./chatItem.hbs";
 
 export class ChatItem extends Block {

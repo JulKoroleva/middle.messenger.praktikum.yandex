@@ -88,7 +88,7 @@ export const createButtons = (
     buttonText: "Выйти",
     buttonClass: "button_danger button_border",
     buttonType: "button",
-    onClick: (e: MouseEvent) => {
+    onClick: () => {
       userAuthController.logout();
     },
   }),

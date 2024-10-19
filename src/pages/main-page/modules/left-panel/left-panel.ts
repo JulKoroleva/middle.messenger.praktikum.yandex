@@ -2,18 +2,13 @@ import Block from "../../../../framework/Block";
 import templateLeftPanel from "./left-panel.hbs";
 import { withStore } from "../../../../framework/Store";
 import { ChatInfo } from "../../../../interfaces/chat.interface";
-
-interface PropsLeftPanel {
-  chats: ChatInfo[];
-  changePage: (page: string) => void;
-}
+import { PropsLeftPanel } from "../../../../interfaces/pages.interface";
 
 class LeftPanel extends Block {
   constructor(props: PropsLeftPanel) {
     super({
       ...props,
-      chats: props.chats,
-      changePage: props.changePage,
+      chats: props.chats
     });
   }
 

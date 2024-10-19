@@ -26,7 +26,7 @@ export const createInputs = () => [
   }),
 ];
 
-export const createButtons = (changePage: (page: string) => void) => [
+export const createButtons  = () => [
   new Button({
     buttonText: "Авторизоваться",
     buttonClass: "button_primary",

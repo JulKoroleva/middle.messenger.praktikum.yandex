@@ -3,19 +3,13 @@ import templateMessages from "./messages.hbs";
 import Avatar from "../../../../../static/assets/union.svg";
 import { withStore } from "../../../../framework/Store";
 import chatController from "../../../../controllers/chat.controller";
-
-interface PropsMessages {
-  messages: Message[];
-  changePage: (page: string) => void;
-  avatar: string;
-}
+import { PropsMessages } from "../../../../interfaces/pages.interface";
 
 class MessagesBase extends Block {
   constructor(props: PropsMessages) {
     super({
       ...props,
       avatar: Avatar,
-      changePage: props.changePage,
       messages: props.messages,
     });
   }
