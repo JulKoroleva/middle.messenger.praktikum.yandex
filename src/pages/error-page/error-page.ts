@@ -1,5 +1,6 @@
 import Block from "../../framework/Block";
 import Router from "../../framework/Router";
+import { ErrorPageProps } from "../../interfaces/pages.interface";
 import { Routes } from "../../utils/Routes";
 import templateErrorPage from "./error-page.hbs";
 
