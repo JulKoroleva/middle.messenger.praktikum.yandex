@@ -4,10 +4,10 @@
   {{/if}}
   <div
     class="message
-      {{#if isMine}}
-        message_member
-      {{else}}
+      {{#if isCurrentUser}}
         message_mine
+      {{else}}
+        message_other
       {{/if}}"
   >
     <p class="message__text">{{text}}</p>
