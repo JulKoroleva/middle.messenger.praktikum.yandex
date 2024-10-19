@@ -1,5 +1,7 @@
 import Button from "../../components/button/button";
 import Input from "../../components/input/input";
+import Router from "../../framework/Router";
+import { Routes } from "../../utils/Routes";
 
 export const createInputs = () => [
   new Input({
@@ -10,7 +12,7 @@ export const createInputs = () => [
     inputClass: "dynamic-input__data",
     labelClass: "dynamic-input__placeholder",
     inputValue: "",
-    isEditing: true
+    isEditing: true,
   }),
   new Input({
     inputName: "password",
@@ -20,7 +22,7 @@ export const createInputs = () => [
     inputClass: "dynamic-input__data",
     labelClass: "dynamic-input__placeholder",
     inputValue: "",
-    isEditing: true
+    isEditing: true,
   }),
 ];
 
@@ -35,8 +37,8 @@ export const createButtons = (changePage: (page: string) => void) => [
     buttonClass: "button_text",
     buttonType: "button",
     onClick: (e: MouseEvent) => {
-      e.preventDefault();
-      changePage('signup');
+      e.preventDefault();      
+      Router.go(Routes.Signup)
     },
   }),
 ];

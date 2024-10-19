@@ -6,14 +6,16 @@ import {HelperOptions} from "handlebars";
 import Button from '../../components/button/button';
 import Form from '../../components/form/form';
 import Input from '../../components/input/input';
+import Popup from '../../components/popup/popup';
+import Modal from '../../components/modal/modal';
 import LeftPanel from '../../pages/main-page/modules/left-panel/left-panel';
 import ChatListHeader from '../../pages/main-page/modules/left-panel/components/chat-list-header/chat-list-header';
-import ChatItem from '../../pages/main-page/modules/left-panel/components/chatItem/chatItem';
+import {ChatItem} from '../../pages/main-page/modules/left-panel/components/chatItem/chatItem';
 import СhatList from '../../pages/main-page/modules/left-panel/components/chats-list/chats-list';
 import DialogHeader from '../../pages/main-page/modules/messages/components/dialog-header/dialog-header.tmpl';
 import InputBar from '../../pages/main-page/modules/messages/components/input-bar/input-bar.tmpl';
 import MessageItem from '../../pages/main-page/modules/messages/components/message/message.tmpl';
-import Messages from '../../pages/main-page/modules/messages/messages';
+import {Messages} from '../../pages/main-page/modules/messages/messages';
 
 export function registerComponent(name: string, Component: typeof Block) {
   if (name in Handlebars.helpers) {
@@ -53,6 +55,8 @@ export function registerComponent(name: string, Component: typeof Block) {
 registerComponent('Form', Form);
 registerComponent('Button', Button);
 registerComponent('Input', Input);
+registerComponent('Popup', Popup);
+registerComponent('Modal', Modal);
 registerComponent('LeftPanel', LeftPanel);
 registerComponent('СhatList', СhatList);
 registerComponent('ChatListHeader', ChatListHeader);

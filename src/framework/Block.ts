@@ -1,5 +1,7 @@
-import EventBus from "../framework/EventBus";
+
 import { v4 as uuidv4 } from "uuid";
+import EventBus from "./EventBus";
+
 class Block {
   static EVENTS = {
     INIT: "init",
@@ -114,6 +116,10 @@ class Block {
     Object.assign(this.props, nextProps);
   };
 
+  public getProps(key: string) {
+    return this.props[key];
+  }
+  
   get element() {
     return this._element;
   }

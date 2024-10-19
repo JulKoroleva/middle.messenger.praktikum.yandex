@@ -1,9 +1,15 @@
 <div class="chat-list-header">
   <div class="chat-list-header__button">
     {{{Button
-      buttonText=button.buttonText
-      buttonType=button.buttonType
-      buttonClass=button.buttonClass
+      buttonText=createChatButton.buttonText
+      buttonType=createChatButton.buttonType
+      buttonClass=createChatButton.buttonClass
+      onClick=this.onOpenCreateChat
+    }}}
+    {{{Button
+      buttonText=profileButton.buttonText
+      buttonType=profileButton.buttonType
+      buttonClass=profileButton.buttonClass
       onClick=this.onChangePage
     }}}
   </div>
@@ -19,4 +25,27 @@
       alt="Поиск"
     />
   </div>
+  {{#Popup visibility=showChatPopup onClick=toggleChatCreate}}
+    {{#Modal visibility=showChatPopup}}
+      {{#Form onSubmit=handleChatCreate}}
+        <h1 class="form__title">Новый чат</h1>
+        <div style="position: relative; margin-bottom: 40px">
+          {{{Input
+            inputName="title"
+            inputType="text"
+            inputMainClass="dynamic-input"
+            inputClass="dynamic-input__data"
+            inputLabel="Название"
+            labelClass="dynamic-input__placeholder"
+            isEditing=true
+          }}}
+        </div>
+        {{{Button
+          buttonType="submit"
+          buttonText="Создать"
+          buttonClass="button_primary"
+        }}}
+      {{/Form}}
+    {{/Modal}}
+  {{/Popup}}
 </div>

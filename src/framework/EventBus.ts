@@ -1,6 +1,6 @@
 type EventCallback = (...args: unknown[]) => void
 
-export default class EventBus {
+export default  class EventBus {
   private listeners: Record<string, EventCallback[]> = {}
 
   on (event: string, callback: EventCallback): void {
@@ -31,3 +31,4 @@ export default class EventBus {
   }
 }
 
+export { EventBus }

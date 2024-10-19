@@ -1,10 +1,22 @@
-
-  <div class="dialog">
-    {{{DialogHeader avatar=this.avatar chatName="John Doe"  changePage=this.changePage}}}
-    <div class="dialog__messages-container">
+<div class="dialog">
+  {{#if selectedChat}}
+    {{{DialogHeader
+      avatar=this.avatar
+      chatName=this.chatName
+      changePage=this.changePage
+    }}}
+    <div id="chat" class="dialog__messages-container">
       {{#each this.messages}}
-        {{{MessageItem showDate=this.showDate isCurrentUser=this.isCurrentUser text=this.text time=this.time}}}
+        {{{MessageItem
+          showDate=this.showDate
+          isCurrentUser=this.isMine
+          text=this.content
+          time=this.time
+        }}}
       {{/each}}
-    {{{InputBar}}}
+      {{{InputBar selectedChat=selectedChat}}}
     </div>
-  </div>
+  {{else}}
+    <div class="dialog_not-selected">Выберите чат</div>
+  {{/if}}
+</div>
