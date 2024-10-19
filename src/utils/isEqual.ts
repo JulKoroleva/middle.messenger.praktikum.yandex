@@ -29,3 +29,4 @@ function isEqual(a: object, b: object): boolean {
 }
 
 export default isEqual;
+
