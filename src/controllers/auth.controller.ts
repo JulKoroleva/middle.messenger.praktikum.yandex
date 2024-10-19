@@ -1,4 +1,4 @@
-import authApi from "../utils/api/auth-api";
+import authApi, { User } from "../utils/api/auth-api";
 import Router from "../framework/Router";
 import Store from "../framework/Store";
 import { Routes } from "../utils/Routes";
@@ -64,14 +64,16 @@ class UserAuthController {
     }
   }
 
-  async getUser() {
+  async getUser(): Promise<User | undefined> {
     try {
       const user = await authApi.getUser();
       Store.set("user", user);
+      return user;
     } catch (e) {
-      console.error(e);
+      return undefined;
     }
   }
+  
 }
 
 export default new UserAuthController();

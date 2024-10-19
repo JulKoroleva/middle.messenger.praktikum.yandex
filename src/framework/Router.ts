@@ -72,8 +72,10 @@ class Router {
   }
 
   private _onRoute(pathname: string) {
+    console.log("Navigating to:", pathname);
     const route = this.getRoute(pathname);
     if (!route) {
+      console.log("Route not found, rendering ErrorPage");
       const notFoundRoute = this.getRoute(Routes.Error);
       notFoundRoute?.render();
       return;

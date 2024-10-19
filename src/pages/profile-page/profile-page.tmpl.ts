@@ -9,24 +9,24 @@ import {
 import Button from "../../components/button/button";
 import { validateForm } from "../../validators/form.validator";
 import { User } from "../../utils/api/auth-api";
-import { withStore } from "../../framework/Store";
+import Store, { withStore } from "../../framework/Store";
 import { Routes } from "../../utils/Routes";
 import Router from "../../framework/Router";
 import UsersController from "../../controllers/edit-settings.controller";
 import UserAuthController from "../../controllers/auth.controller";
+import store from "../../framework/Store";
 
 const avatarPath = "https://ya-praktikum.tech/api/v2/resources/";
-interface PropsProfilePage {
-  changePage: (page: string) => void;
-  currentUserData: User;
-}
-
 class ProfilePage extends Block {
-  constructor(props: PropsProfilePage) {
+  constructor() {
+    const state = Store.getState();
+
+    const currentUserData = state.user || {};
+
     super({
-      ...props,
-      avatar: props.currentUserData.avatar
-        ? `${avatarPath}${props.currentUserData.avatar}`
+      currentUserData: currentUserData,
+      avatar: currentUserData.avatar
+        ? `${avatarPath}${currentUserData.avatar}`
         : union,
       avatarChangeVisibility: "hidden",
       passwordChangeVisibility: "hidden",
@@ -41,10 +41,7 @@ class ProfilePage extends Block {
       this.toggleEditing.bind(this),
       this.handleChangePasswordClick.bind(this)
     );
-    this.props.inputs = createInputs(
-      props.currentUserData,
-      this.props.isEditing
-    );
+    this.props.inputs = createInputs(currentUserData, this.props.isEditing);
     this.props.union = union;
     this.props.arrowBtn = arrowBtn;
     this.props.saveChanges = this.saveChanges.bind(this);
@@ -54,6 +51,7 @@ class ProfilePage extends Block {
       Router.go(Routes.MainPage);
     };
   }
+
   toggleEditing() {
     this.setProps({ isEditing: !this.props.isEditing });
   }
@@ -143,13 +141,20 @@ class ProfilePage extends Block {
     }
   }
 
-  init() {
-    UserAuthController.getUser();
+  async init() {
+    try {
+      const userState = await UserAuthController.getUser();
+      if (userState) {
+        store.set("user", userState);
+        this.setProps({ avatar: `${avatarPath}${userState.avatar}` });
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
   }
 
   render() {
     const isEditing = this.props.isEditing;
-
     const buttons = isEditing
       ? [
           new Button({
@@ -160,7 +165,7 @@ class ProfilePage extends Block {
         ]
       : this.props.buttons;
 
-    const inputs = createInputs(this.props.currentUserData, isEditing);
+    const inputs = createInputs(this.props.currentUserData || {}, isEditing);
 
     return this.compile(templateProfilePage, {
       ...this.props,
@@ -173,7 +178,7 @@ class ProfilePage extends Block {
 
 const mapStateToProps = (state: { user: User }) => {
   return {
-    currentUserData: state.user,
+    currentUserData: state.user || {}, // Защита от отсутствия данных
   };
 };
 

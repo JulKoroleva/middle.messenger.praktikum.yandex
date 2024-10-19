@@ -24,28 +24,27 @@ export interface User {
   password: string;
   phone: string;
   avatar: string;
-  [key: string]: string | number
+  [key: string]: string | number;
 }
 
 class AuthApi extends BaseApi {
   constructor() {
-    super('/auth')
+    super("/auth");
   }
   signin(data: LoginData) {
-    return this.http.post('/signin', data)
+    return this.http.post("/signin", data);
   }
 
   signup(data: SignupData) {
-    return this.http.post('/signup', { ...data })
+    return this.http.post("/signup", { ...data });
   }
 
   getUser(): Promise<User> {
-    console.log('this.http.get(user)')
-    return this.http.get('/user')
+    return this.http.get("/user");
   }
 
   logout() {
-    return this.http.post('/logout', {});
+    return this.http.post("/logout", {});
   }
 
   create = undefined;
