@@ -37,4 +37,8 @@ const initializeInputFocusHandlers = (
   });
 };
 
-export { initializeInputFocusHandlers, activatePlaceholder, deactivatePlaceholder };
+export {
+  initializeInputFocusHandlers,
+  activatePlaceholder,
+  deactivatePlaceholder,
+};

@@ -1,4 +1,6 @@
-interface Pages {
+import { ChatInfo } from "./chat.interface";
+
+export interface Pages {
   MainPage: string;
   LoginPage: string;
   SignupPage: string;
@@ -6,67 +8,54 @@ interface Pages {
   ErrorPage: string;
 }
 
-interface PropsMainPage {
+export interface PropsMainPage {
   messages: Message[];
-  chats: Chat[];
-  changePage: (page: string) => void;
+  chats: ChatInfo[];
 }
 
-interface LoginPageProps {
-  changePage: (page: string) => void;
-}
-
-interface SignupPageProps {
-  changePage: (page: string) => void;
-}
-
-interface PropsProfilePage {
+export interface PropsProfilePage {
   currentUserData: UserInfo;
-  changePage: (page: string) => void;
 }
 
-interface ProfilePageState {
+export interface ProfilePageState {
   isEditing: boolean;
 }
 
-interface ErrorPageProps {
+export interface ErrorPageProps {
   errorCode: string;
   description: string;
-  changePage: (page: string) => void;
 }
 
 ////////// Components
-interface PropsMessageItem {
+export interface PropsMessageItem {
   text: string;
   time: string;
   showDate: boolean;
   isCurrentUser: boolean;
 }
 
-interface PropsChatItem {
+export interface PropsChatItem {
+  chatId: any;
   chatName: string;
-  chatLastMessage: string;
   lastMessageDate: string;
-  newMessages: string;
+  newMessages: number;
 }
 
-interface PropsLeftPanel {
-  chats: Chat[];
-  changePage: (page: string) => void;
-}
-interface PropsChatListHeader {
-  changePage: (page: string) => void;
-}
-interface PropsMessages {
+export interface PropsMainPage {
+  chats: ChatInfo[];
   messages: Message[];
-  changePage: (page: string) => void;
 }
 
-interface PropsСhatList {
-  chats: Chat[];
+export interface PropsLeftPanel {
+  chats: ChatInfo[];
 }
-interface PropsDialogHeader {
+export interface PropsChatListHeader {}
+
+export interface PropsСhatList {
+  chats: ChatInfo[];
+}
+
+export  interface PropsMessages {
+  messages: Message[];
   avatar: string;
-  chatName: string;
-  changePage: (page: string) => void;
 }

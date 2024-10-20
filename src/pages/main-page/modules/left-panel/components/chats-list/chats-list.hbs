@@ -1,10 +1,11 @@
 <div class="chat-list">
   {{#each chats}}
     {{{ChatItem
-      chatName=chatUserName
-      chatLastMessage=chatLastMessage
-      lastMessageDate=lastMessageDate
-      newMessages=newMessages
+      chatId=id
+      chatName=title
+      chatLastMessage=last_message.content
+      lastMessageDate=last_message.time
+      newMessages=unread_count
     }}}
   {{/each}}
 </div>

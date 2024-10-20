@@ -8,7 +8,9 @@
   gap: 25px;
 
   &__button {
-    align-self: flex-end;
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
     color: var(--color-text-secondary);
     font-size: 12px;
     font-weight: 500;

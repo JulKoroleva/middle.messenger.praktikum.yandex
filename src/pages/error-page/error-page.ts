@@ -1,4 +1,7 @@
 import Block from "../../framework/Block";
+import Router from "../../framework/Router";
+import { ErrorPageProps } from "../../interfaces/pages.interface";
+import { Routes } from "../../utils/Routes";
 import templateErrorPage from "./error-page.hbs";
 
 export default class ErrorPage extends Block {
@@ -7,7 +10,7 @@ export default class ErrorPage extends Block {
       ...props,
       onButtonClick: (e: Event) => {
         e.preventDefault();
-        props.changePage("mainPage");
+        Router.go(Routes.MainPage)
       },
     });
   }

@@ -1,5 +1,7 @@
 import Button from "../../components/button/button";
 import Input from "../../components/input/input";
+import Router from "../../framework/Router";
+import { Routes } from "../../utils/Routes";
 
 export const createInputs = () => [
   new Input({
@@ -70,10 +72,11 @@ export const createInputs = () => [
     inputClass: "dynamic-input__data",
     labelClass: "dynamic-input__placeholder",
     inputValue: "",
+    isEditing: true
   }),
 ];
 
-export const createButtons = (changePage: (page: string) => void) => [
+export const createButtons  = () => [
   new Button({
     buttonText: "Зарегистрироваться",
     buttonClass: "button_primary",
@@ -85,7 +88,7 @@ export const createButtons = (changePage: (page: string) => void) => [
     buttonType: "button",
     onClick: (e: MouseEvent) => {
       e.preventDefault();
-      changePage("login"); 
+      Router.go(Routes.Login)
     },
   }),
 ];

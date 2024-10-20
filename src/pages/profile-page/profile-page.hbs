@@ -8,8 +8,15 @@
     onClick=this.onChangePage
   }}}
   <div class="profile__form-container">
+    {{{Button
+      buttonType="button"
+      buttonClass="profile__avatar-btn"
+      buttonImageClass="profile__avatar"
+      imageAlt="avatar"
+      buttonImage=this.avatar
+      onClick=this.onAvatarClick
+    }}}
     {{#Form onSubmit=this.saveChanges class="profile__form"}}
-      <img class="profile__avatar" src="{{union}}" alt="Аватар" />
       <h3 class="profile__name">{{userData.display_name}}</h3>
       <div class="profile__inputs-container">
         {{#each inputs}}
@@ -37,4 +44,64 @@
       </div>
     {{/Form}}
   </div>
+
+  {{#Popup visibility=avatarChangeVisibility onClick=this.onAvatarClick}}
+    {{#Modal title="Загрузите файл"}}
+      {{#Form onSubmit=onAvatarChange class="profile__form"}}
+        <h1 class="form__title">Загрузите файл</h1>
+        <div>
+          {{{Input
+            inputName="avatar"
+            inputType="file"
+            labelName="avatar"
+            inputLabel="Выбрать файл на компьютере"
+            isEditing="true"
+          }}}
+          <p class="file">{{fileName}}</p>
+        </div>
+        {{{Button
+          buttonType="submit"
+          buttonText="Поменять"
+          buttonClass="button_primary"
+        }}}
+      {{/Form}}
+    {{/Modal}}
+  {{/Popup}}
+
+  {{#Popup visibility=passwordChangeVisibility onClick=this.onPasswordToggle}}
+    {{#Modal title="Загрузите файл"}}
+      {{#Form onSubmit=this.saveChanges class="profile__form"}}
+        <h1 class="form__title">Новый пароль</h1>
+        <div class="passwords__container">
+          {{{Input
+            inputName="oldPassword"
+            inputType="password"
+            labelName="oldPassword"
+            inputLabel="Старый пароль"
+            inputValue=""
+            inputMainClass="dynamic-input"
+            inputClass="dynamic-input__data"
+            labelClass="dynamic-input__placeholder"
+            isEditing="true"
+          }}}
+          {{{Input
+            inputName="newPassword"
+            inputType="password"
+            labelName="newPassword"
+            inputLabel="Новый пароль"
+            inputMainClass="dynamic-input"
+            inputClass="dynamic-input__data"
+            labelClass="dynamic-input__placeholder"
+            inputValue=""
+            isEditing="true"
+          }}}
+        </div>
+        {{{Button
+          buttonType="submit"
+          buttonText="Сохранить изменения"
+          buttonClass="button_primary"
+        }}}
+      {{/Form}}
+    {{/Modal}}
+  {{/Popup}}
 </main>

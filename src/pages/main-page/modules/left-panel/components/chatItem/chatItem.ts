@@ -1,17 +1,29 @@
 import union from "../../../../../../../static/assets/union.svg";
+import chatController from "../../../../../../controllers/chat.controller";
 import Block from "../../../../../../framework/Block";
+import { PropsChatItem } from "../../../../../../interfaces/pages.interface";
 import templateChatItem from "./chatItem.hbs";
 
-export default class ChatItem extends Block {
+export class ChatItem extends Block {
   constructor(props: PropsChatItem) {
-    const hasNewMessages =
-      props.newMessages !== "0" && props.newMessages !== "";
+    super(props);
 
-    super({
+    const hasNewMessages = props.newMessages !== 0;
+    this.setProps({
       ...props,
       hasNewMessages,
       icon: union,
     });
+
+    this.setProps({
+      events: {
+        click: this.onChatClick.bind(this),
+      },
+    });
+  }
+
+  onChatClick() {
+    chatController.selectChat(this.props.chatId);
   }
 
   render() {

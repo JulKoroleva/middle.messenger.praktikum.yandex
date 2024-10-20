@@ -1,5 +1,7 @@
 import Button from "../../components/button/button";
 import Input from "../../components/input/input";
+import Router from "../../framework/Router";
+import { Routes } from "../../utils/Routes";
 
 export const createInputs = () => [
   new Input({
@@ -24,7 +26,7 @@ export const createInputs = () => [
   }),
 ];
 
-export const createButtons = (changePage: (page: string) => void) => [
+export const createButtons  = () => [
   new Button({
     buttonText: "Авторизоваться",
     buttonClass: "button_primary",
@@ -35,8 +37,8 @@ export const createButtons = (changePage: (page: string) => void) => [
     buttonClass: "button_text",
     buttonType: "button",
     onClick: (e: MouseEvent) => {
-      e.preventDefault();
-      changePage("signup");
+      e.preventDefault();      
+      Router.go(Routes.Signup)
     },
   }),
 ];

@@ -1,79 +1,52 @@
+import Router from "./framework/Router";
+import { Routes } from "./utils/Routes";
+import chatController from "./controllers/chat.controller";
+import UserAuthController from "./controllers/auth.controller";
+
 import MainPage from "./pages/main-page/main-page";
 import ProfilePage from "./pages/profile-page/profile-page.tmpl";
 import ErrorPage from "./pages/error-page/error-page";
-import  LoginPage from "./pages/login/login";
-import  SignupPage  from "./pages/signUp/signUp";
+import LoginPage from "./pages/login/login";
+import SignupPage from "./pages/signUp/signUp";
 
-import chatData from "./mocks/chatsData";
-import messages from "./mocks/messagesData";
-import currentUserData from "./mocks/currentUserData";
-
-import processMessages from "./utils/messages/processMessages";
 import "./utils/dom/registerComponent";
+import "./styles/index.scss";
+import { initializeInputFocusHandlers } from "./utils/dom/activateInputFocus";
 
-export default class App {
-  private state: AppState;
-  private appElement: HTMLElement | null;
+window.addEventListener("DOMContentLoaded", async () => {
+  Router.use(Routes.Login, LoginPage)
+    .use(Routes.Signup, SignupPage)
+    .use(Routes.MainPage, MainPage)
+    .use(Routes.Settings, ProfilePage)
+    .use(Routes.Error, ErrorPage);
 
-  constructor() {
-    this.state = {
-      currentPage: "login",
-      chats: chatData,
-      messages: processMessages(messages),
-      currentUserData: currentUserData,
-      errorCode: "404",
-      description: "Такой страницы нет",
-    };
-    this.appElement = document.getElementById("app");
-    this.render();
+  try {
+    Router.start();
+    await UserAuthController.getUser();
+    await chatController.fetchChats();
+  } catch (e) {
+    Router.start();
   }
 
-  render(): string {
-    if (!this.appElement) return "";
+  const initializeInputs = () => {
+    const inputs = document.querySelectorAll(
+      ".dynamic-input"
+    ) as NodeListOf<HTMLElement>;
+    initializeInputFocusHandlers(inputs);
+  };
 
-    let pageContent;
-    switch (this.state.currentPage) {
-      case "login":
-        pageContent = new LoginPage({
-          changePage: this.changePage.bind(this),
-        }).getContent();
-        break;
-      case "signup":
-        pageContent = new SignupPage({
-          changePage: this.changePage.bind(this),
-        }).getContent();
-        break;
-      case "mainPage":
-        pageContent = new MainPage({
-          messages: this.state.messages,
-          chats: this.state.chats,
-          changePage: this.changePage.bind(this),
-        }).getContent();
-        break;
-      case "profile":
-        pageContent = new ProfilePage({
-          currentUserData: this.state.currentUserData,
-          changePage: this.changePage.bind(this),
-        }).getContent();
-        break;
-      default:
-        pageContent = new ErrorPage({
-          errorCode: this.state.errorCode,
-          description: this.state.description,
-          changePage: this.changePage.bind(this),
-        }).getContent();
-    }
+  initializeInputs();
 
-    if (pageContent) {
-      this.appElement.innerHTML = "";
-      this.appElement.appendChild(pageContent);
-    }
+  const observer = new MutationObserver(initializeInputs);
+  observer.observe(document.body, { childList: true, subtree: true });
 
-    return "";
+  const textarea = document.querySelector<HTMLTextAreaElement>(
+    ".dialog__input-bar__input"
+  );
+  if (textarea) {
+    textarea.addEventListener("input", () => {
+      textarea.style.height = "auto";
+      textarea.style.height = `${Math.min(textarea.scrollHeight, 150)}px`;
+    });
   }
-
-  changePage(page: string): void {
-    this.state.currentPage = page;
-    this.render();
-  }
-}
+});

@@ -1,5 +1,6 @@
-import EventBus from "../framework/EventBus";
 import { v4 as uuidv4 } from "uuid";
+import EventBus from "./EventBus";
+
 class Block {
   static EVENTS = {
     INIT: "init",
@@ -52,17 +53,21 @@ class Block {
   }
 
   _addEvents() {
-    const { events = {} } = this.props as { events: Record<string, () => void> };
-  
-    Object.keys(events).forEach(eventName => {
+    const { events = {} } = this.props as {
+      events: Record<string, () => void>;
+    };
+
+    Object.keys(events).forEach((eventName) => {
       this._element?.addEventListener(eventName, events[eventName]);
     });
   }
 
   _removeEvents() {
-    const { events = {} } = this.props as { events: Record<string, () => void> };
+    const { events = {} } = this.props as {
+      events: Record<string, () => void>;
+    };
 
-    Object.keys(events).forEach(eventName => {
+    Object.keys(events).forEach((eventName) => {
       this._element?.removeEventListener(eventName, events[eventName]);
     });
   }
@@ -80,20 +85,20 @@ class Block {
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
-  protected init() {
-  }
+  protected init() {}
 
   _componentDidMount() {
     this.componentDidMount();
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   public dispatchComponentDidMount() {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 
-    Object.values(this.children).forEach(child => child.dispatchComponentDidMount());
+    Object.values(this.children).forEach((child) =>
+      child.dispatchComponentDidMount()
+    );
   }
 
   private _componentDidUpdate() {
@@ -114,12 +119,18 @@ class Block {
     Object.assign(this.props, nextProps);
   };
 
+  public getProps(key: string) {
+    return this.props[key];
+  }
+
   get element() {
     return this._element;
   }
 
   private _render() {
-    const { events = {} } = this.props as { events: Record<string, () => void> };
+    const { events = {} } = this.props as {
+      events: Record<string, () => void>;
+    };
 
     if (Object.keys(events).length > 0) {
       this._removeEvents();
@@ -142,7 +153,7 @@ class Block {
     const contextAndStubs = { ...context, __refs: this.refs };
     const html = template(contextAndStubs);
 
-    const temp = document.createElement('template');
+    const temp = document.createElement("template");
 
     temp.innerHTML = html;
 
@@ -165,10 +176,10 @@ class Block {
     return new Proxy(props, {
       get(target, prop: string) {
         const value = target[prop];
-        return typeof value === 'function' ? value.bind(target) : value;
+        return typeof value === "function" ? value.bind(target) : value;
       },
       set: (target, prop: string, value) => {
-        const oldTarget = { ...target }
+        const oldTarget = { ...target };
 
         target[prop] = value;
 
@@ -176,17 +187,17 @@ class Block {
         return true;
       },
       deleteProperty() {
-        throw new Error('Нет доступа');
-      }
+        throw new Error("Нет доступа");
+      },
     });
   }
 
   show() {
-    this.getContent()!.style.display = 'block';
+    this.getContent()!.style.display = "block";
   }
 
   hide() {
-    this.getContent()!.style.display = 'none';
+    this.getContent()!.style.display = "none";
   }
 }
 

@@ -6,14 +6,9 @@ const PORT = 3000;
 
 app.use(express.static(path.join(__dirname, "dist")));
 
-const allowedPaths = ["/"]; 
-
 app.get("*", (req, res) => {
-  if (allowedPaths.includes(req.path)) {
-    res.sendFile(path.join(__dirname, "./dist/index.html"));
-  } else {
-    res.status(404).send(`Page ${req.path} not found`);
-  }
+  res.sendFile(path.join(__dirname, "./dist/index.html"));
 });
+
 
 app.listen(PORT, () => console.log(`Server started at port ${PORT}`));
