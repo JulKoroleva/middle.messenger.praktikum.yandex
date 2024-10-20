@@ -5,6 +5,7 @@ import { User } from "../../../../../../utils/api/auth-api";
 import chatController from "../../../../../../controllers/chat.controller";
 import usersController from "../../../../../../controllers/edit-settings.controller";
 import store from "../../../../../../framework/Store";
+import union from "../../../../../../../static/assets/union.svg";
 
 export default class DialogHeader extends Block {
   constructor() {
@@ -18,6 +19,7 @@ export default class DialogHeader extends Block {
       deleteUserPopupVisibility: "hidden",
       onRemoveUserClick: () => this.toggleDeleteUserPopup(this),
       handleDeleteUser: (e: Event) => this.handleDeleteUser(e, this),
+      avatar: union
     });
   }
 

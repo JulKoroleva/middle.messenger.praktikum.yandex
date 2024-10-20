@@ -1,25 +1,25 @@
-{{#if buttonLink}}
+{{#if buttonLink}} 
   <a
-    href={{buttonLink}}
+    href="{{buttonLink}}"
     class="button {{buttonClass}}"
-    data-page={{buttonLink}}
+    data-page="{{buttonLink}}"
   >
     {{#if buttonImage}}
       <img
-        src={{buttonImage}}
-        alt={{imageAlt}}
-        class={{buttonImageClass}}
+        src="{{buttonImage}}"
+        alt="{{imageAlt}}"
+        class="{{buttonImageClass}}"
       />
     {{/if}}
     {{buttonText}}
   </a>
 {{else}}
-  <button type={{buttonType}} class="button {{buttonClass}}">
+  <button type="{{buttonType}}" class="button {{buttonClass}}">
     {{#if buttonImage}}
       <img
-        src={{buttonImage}}
-        alt={{imageAlt}}
-        class={{buttonImageClass}}
+        src="{{buttonImage}}"
+        alt="{{imageAlt}}"
+        class="{{buttonImageClass}}"
       />
     {{/if}}
     {{buttonText}}

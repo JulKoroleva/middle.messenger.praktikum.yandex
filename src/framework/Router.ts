@@ -1,6 +1,7 @@
 import Block from "./Block";
 import { Routes } from "../utils/Routes";
 import { render } from "../utils/dom/render";
+import AuthApi from "../utils/api/auth-api";
 
 function isEqual(lhs: string, rhs: string): boolean {
   return lhs === rhs;
@@ -72,21 +73,42 @@ class Router {
   }
 
   private _onRoute(pathname: string) {
-    console.log("Navigating to:", pathname);
-    const route = this.getRoute(pathname);
-    if (!route) {
-      console.log("Route not found, rendering ErrorPage");
-      const notFoundRoute = this.getRoute(Routes.Error);
-      notFoundRoute?.render();
-      return;
-    }
+    AuthApi.getUser()
+      .then((user) => {
+        if (user && (pathname === "/sign-up" || pathname === "/")) {
+          this.go("/messenger");
+          return;
+        }
 
-    if (this._currentRoute && this._currentRoute !== route) {
-      this._currentRoute.leave();
-    }
+        const route = this.getRoute(pathname);
+        if (!route) {
+          const notFoundRoute = this.getRoute(Routes.Error);
+          notFoundRoute?.render();
+          return;
+        }
 
-    this._currentRoute = route;
-    route.navigate(pathname);
+        if (this._currentRoute && this._currentRoute !== route) {
+          this._currentRoute.leave();
+        }
+
+        this._currentRoute = route;
+        route.navigate(pathname);
+      })
+      .catch(() => {
+        const route = this.getRoute(pathname);
+        if (!route) {
+          const notFoundRoute = this.getRoute(Routes.Error);
+          notFoundRoute?.render();
+          return;
+        }
+
+        if (this._currentRoute && this._currentRoute !== route) {
+          this._currentRoute.leave();
+        }
+
+        this._currentRoute = route;
+        route.navigate(pathname);
+      });
   }
 
   public go(pathname: string) {
