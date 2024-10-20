@@ -6,6 +6,7 @@ import chatController from "../../../../../../controllers/chat.controller";
 import usersController from "../../../../../../controllers/edit-settings.controller";
 import store from "../../../../../../framework/Store";
 import union from "../../../../../../../static/assets/union.svg";
+import showErrorModal from "../../../../../../components/modal/showErrorModal";
 
 export default class DialogHeader extends Block {
   constructor() {
@@ -94,7 +95,7 @@ export default class DialogHeader extends Block {
         .deleteUserFromChat(chatId, userId)
         .then(() => this.loadUsers())
         .catch((error) =>
-          console.error("Ошибка при удалении пользователя:", error)
+          showErrorModal(`Ошибка при удалении пользователя`)
         );
     }
   };

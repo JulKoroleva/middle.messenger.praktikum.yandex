@@ -1,41 +1,32 @@
 import showErrorModal from "../../components/modal/showErrorModal";
 
 interface Options {
-  headers?: {
-    [key: string]: string;
-  };
+  headers?: Record<string, string>;
   data?: any;
-  method: "GET" | "PUT" | "POST" | "DELETE";
+  method: keyof typeof METHODS;
   timeout?: number;
 }
 
-const METHODS: Record<string, "GET" | "PUT" | "POST" | "DELETE"> = {
+const METHODS = {
   GET: "GET",
   PUT: "PUT",
   POST: "POST",
   DELETE: "DELETE",
-};
+} as const;
 
 type StringKeyObject = {
   [key: string]: string | StringKeyObject;
 };
-function queryStringify(obj: StringKeyObject) {
-  const queryString = [];
 
-  for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      let value = obj[key];
-
-      if (Array.isArray(value)) {
-        value = value.join(",");
-      } else if (typeof value === "object" && value !== null) {
-        value = "[object Object]";
-      }
-
-      queryString.push(`${key}=${value}`);
+function queryStringify(obj: StringKeyObject): string {
+  const queryString = Object.entries(obj).map(([key, value]) => {
+    if (Array.isArray(value)) {
+      return `${encodeURIComponent(key)}=${encodeURIComponent(value.join(","))}`;
+    } else if (typeof value === "object" && value !== null) {
+      return `${encodeURIComponent(key)}=${encodeURIComponent("[object Object]")}`;
     }
-  }
-
+    return `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`;
+  });
   return queryString.join("&");
 }
 
@@ -47,9 +38,60 @@ class HTTPTransport {
     this.endpoint = `${HTTPTransport.API_URL}${endpoint}`;
   }
 
-  get<Response>(url: string, options?: Options): Promise<Response> {
+  request<Response>(
+    url: string,
+    options: Options,
+    timeout = 5000
+  ): Promise<Response> {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open(options.method, url);
+
+      if (options.headers) {
+        Object.entries(options.headers).forEach(([header, value]) => {
+          xhr.setRequestHeader(header, value);
+        });
+      }
+
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(xhr.response);
+        } else {
+          reject(
+            new Error(`Request failed with status ${xhr.status}: ${xhr.statusText}`)
+          );
+        }
+      };
+
+      xhr.onerror = function () {
+        reject(new Error(`Request failed with status ${xhr.status}`));
+        showErrorModal(`Request failed with status ${xhr.status}`);
+      };
+
+      xhr.timeout = timeout;
+      xhr.withCredentials = true;
+      xhr.responseType = "json";
+
+      xhr.ontimeout = function () {
+        reject(new Error("Request timed out"));
+      };
+
+      if (options.method === METHODS.GET) {
+        xhr.send();
+      } else {
+        if (options.data instanceof FormData) {
+          xhr.send(options.data);
+        } else {
+          xhr.setRequestHeader("Content-Type", "application/json");
+          xhr.send(JSON.stringify(options.data));
+        }
+      }
+    });
+  }
+
+  get<Response>(url: string, options?: Omit<Options, "method">): Promise<Response> {
     let query = "";
-    if (options && options.data) {
+    if (options?.data) {
       query += `?${queryStringify(options.data)}`;
     }
     return this.request<Response>(this.endpoint + `${url}${query}`, {
@@ -76,63 +118,6 @@ class HTTPTransport {
     return this.request<Response>(this.endpoint + path, {
       data,
       method: METHODS.DELETE,
-    });
-  }
-
-  request<Response>(
-    url: string,
-    options: Options,
-    timeout = 5000
-  ): Promise<Response> {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.open(options.method, url);
-
-      if (options.headers) {
-        for (const header in options.headers) {
-          if (Object.prototype.hasOwnProperty.call(options.headers, header)) {
-            xhr.setRequestHeader(header, options.headers[header]);
-          }
-        }
-      }
-
-      xhr.onload = function () {
-        if (xhr.status >= 200 && xhr.status < 300) {
-          resolve(xhr.response);
-        } else {
-          // console.error(`Error: ${xhr.status} - ${xhr.statusText}`);
-          reject(
-            new Error(
-              `Request failed with status ${xhr.status}: ${xhr.statusText}`
-            )
-          );
-        }
-      };
-
-      xhr.onerror = function () {
-        // console.error(`Error: ${xhr.status} - ${xhr.statusText}`);
-        reject(new Error(`Request failed with status ${xhr.status}`));
-        showErrorModal(`Request failed with status ${xhr.status}`)
-      };
-
-      xhr.timeout = timeout;
-      xhr.withCredentials = true;
-      xhr.responseType = "json";
-
-      xhr.ontimeout = function () {
-        reject(new Error("Request timed out"));
-      };
-
-      if (options.method === METHODS.GET) {
-        xhr.send();
-      } else {
-        if (options.data instanceof FormData) {
-          xhr.send(options.data);
-        } else {
-          xhr.setRequestHeader("Content-Type", "application/json");
-          xhr.send(JSON.stringify(options.data));
-        }
-      }
     });
   }
 }

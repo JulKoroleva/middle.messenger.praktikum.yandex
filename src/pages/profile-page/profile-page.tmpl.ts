@@ -15,6 +15,7 @@ import Router from "../../framework/Router";
 import UsersController from "../../controllers/edit-settings.controller";
 import UserAuthController from "../../controllers/auth.controller";
 import store from "../../framework/Store";
+import showErrorModal from "../../components/modal/showErrorModal";
 
 const avatarPath = "https://ya-praktikum.tech/api/v2/resources/";
 class ProfilePage extends Block {
@@ -69,14 +70,14 @@ class ProfilePage extends Block {
 
       const MAX_FILE_SIZE = 5 * 1024 * 1024;
       if (avatarFile.size > MAX_FILE_SIZE) {
-        // console.error("Размер файла слишком велик. Максимальный размер 5 МБ.");
+          showErrorModal(`Размер файла слишком велик. Максимальный размер 5 МБ.`)
         return;
       }
 
       await UsersController.updateUserAvatar(form);
       this.setProps({ avatarChangeVisibility: "hidden" });
     } else {
-      // console.error("Файл для аватара не выбран");
+          showErrorModal(`Файл для аватара не выбран`)
     }
   };
 
@@ -155,7 +156,7 @@ class ProfilePage extends Block {
         });
       }
     } catch (error) {
-      console.error("Error fetching user data:", error);
+      // console.error("Error fetching user data:", error);
     }
   }
 

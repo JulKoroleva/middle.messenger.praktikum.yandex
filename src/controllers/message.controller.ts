@@ -82,10 +82,10 @@ class MessagesController {
       if (socket.readyState === WebSocket.OPEN) {
         socket.send({ type: "get old", content: "0" });
       } else {
-        console.error(
-          "WebSocket is not open, current state:",
-          socket.readyState
-        );
+        // console.error(
+        //   "WebSocket is not open, current state:",
+        //   socket.readyState
+        // );
       }
     } catch (e) {
       // showErrorModal(`Ошибка:  ${e}`);
@@ -175,11 +175,11 @@ class MessagesController {
         if (token) {
           this.connect(id, token);
         } else {
-          console.error("Token is undefined");
+          // console.error("Token is undefined");
         }
       });
     } catch (e) {
-      console.error("Failed to reconnect", e);
+      // console.error("Failed to reconnect", e);
     }
   }
   
@@ -195,16 +195,16 @@ class MessagesController {
           } else if (parsedData) {
             this.onMessage(id, parsedData as Message);
           } else {
-            console.error("Received invalid message format:", rawData);
+            // console.error("Received invalid message format:", rawData);
           }
         } catch (e) {
-          console.error("Failed to parse incoming message:", e);
+          // console.error("Failed to parse incoming message:", e);
         }
       });
 
       transport.on(WSTransportEvents.Close, () => this.onClose(id));
       transport.on(WSTransportEvents.Error, (error) => {
-        console.error(`WebSocket error in chat ${id}`, error);
+        // console.error(`WebSocket error in chat ${id}`, error);
       });
     } catch (e) {
       // console.error(e);

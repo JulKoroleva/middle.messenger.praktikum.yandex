@@ -1,5 +1,6 @@
 import { BaseApi } from "./base-api";
 import { User } from "./auth-api";
+import showErrorModal from "../../components/modal/showErrorModal";
 
 export interface LoginData {
   login: string;
@@ -45,11 +46,11 @@ class UsersApi extends BaseApi {
       })
       .catch((error) => {
         if (error.message.includes("Request timed out")) {
-          console.error(
-            "Запрос на обновление аватара превысил время ожидания."
-          );
+          // console.error(
+          //   "Запрос на обновление аватара превысил время ожидания."
+          // );
         } else {
-          console.error("Ошибка при обновлении аватара:", error);
+          showErrorModal(`Ошибка при обновлении аватара`)
         }
         throw error;
       });
