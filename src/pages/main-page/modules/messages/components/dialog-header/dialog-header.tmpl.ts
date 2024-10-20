@@ -94,7 +94,7 @@ export default class DialogHeader extends Block {
       chatController
         .deleteUserFromChat(chatId, userId)
         .then(() => this.loadUsers())
-        .catch((error) =>
+        .catch(() =>
           showErrorModal(`Ошибка при удалении пользователя`)
         );
     }

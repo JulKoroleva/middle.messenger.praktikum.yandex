@@ -26,7 +26,7 @@ class UserAuthController {
 
       await authApi
         .signin(data)
-        .then( async (response) => {
+        .then( async () => {
           await this.getUser(); 
           await chatController.fetchChats(); 
           Router.go(Routes.MainPage);
@@ -63,7 +63,7 @@ class UserAuthController {
       };
 
       await authApi.signup(data)
-      .then( async (response) => {
+      .then( async () => {
         await this.getUser();  
         Router.go(Routes.MainPage);
       })

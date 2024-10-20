@@ -203,7 +203,7 @@ class MessagesController {
       });
 
       transport.on(WSTransportEvents.Close, () => this.onClose(id));
-      transport.on(WSTransportEvents.Error, (error) => {
+      transport.on(WSTransportEvents.Error, () => {
         // console.error(`WebSocket error in chat ${id}`, error);
       });
     } catch (e) {
