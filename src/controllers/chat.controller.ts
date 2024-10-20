@@ -1,6 +1,8 @@
 import API, { ChatsAPI } from "../utils/api/chat-api"; 
 import MessagesController from "../controllers/message.controller";
 import store from "../framework/Store";
+import showErrorModal from "../components/modal/showErrorModal";
+import { User } from "../utils/api/auth-api";
 
 class ChatsController {
   private readonly api: ChatsAPI;
@@ -16,7 +18,7 @@ class ChatsController {
       await this.api.create(title);
       this.fetchChats();
     } catch (e) {
-      // console.error(e);
+      showErrorModal(`${e}`);
     }
   }
 
@@ -35,11 +37,9 @@ class ChatsController {
         });
 
         store.set("chats", chats);
-      } else {
-        console.error("Unexpected response format:", chats);
-      }
+      } 
     } catch (e) {
-      console.error("fetchChats error:", e);
+      // showErrorModal(`${e}`);
     }
   }
 
@@ -54,10 +54,10 @@ class ChatsController {
       if (socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify({ type: "get old", content: "1" })); 
       } else {
-        console.error("WebSocket is not open, current state:", socket.readyState);
+        // console.error("WebSocket is not open, current state:", socket.readyState);
       }
     } catch (e) {
-      // console.error(e);
+      // showErrorModal(`${e}`);
     }
   }
 
@@ -65,15 +65,16 @@ class ChatsController {
     try {
       this.api.addUsers(id, [userId]);
     } catch (e) {
-      // console.error(e);
+      showErrorModal(`${e}`);
     }
   }
 
-  deleteUserFromChat(id: number, userId: number) {
+  async deleteUserFromChat(id: number, userId: number): Promise<void> {
     try {
-      this.api.deleteUsers(id, [userId]);
+      await this.api.deleteUsers(id, [userId]);
     } catch (e) {
-      // console.error(e);
+      showErrorModal(`${e}`);
+      throw new Error(`Ошибка при удалении пользователя из чата: ${e}`);
     }
   }
 
@@ -82,7 +83,7 @@ class ChatsController {
       await this.api.delete(id);
       this.fetchChats();
     } catch (e) {
-      // console.error(e);
+      showErrorModal(`${e}`);
     }
   }
 
@@ -107,6 +108,17 @@ class ChatsController {
     store.set("selectedChat", id);
     MessagesController.fetchOldMessages(id);
   }
+
+  async getUsers(chatId: number): Promise<User[]> {
+    try {
+      const users = await this.api.getUsers(chatId);
+      return users;
+    } catch (e) {
+      showErrorModal(`${e}`);
+      return [];
+    }
+  }
+  
 }
 
 const chatController = new ChatsController();

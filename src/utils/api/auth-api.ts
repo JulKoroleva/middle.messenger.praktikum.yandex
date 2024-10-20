@@ -31,19 +31,19 @@ class AuthApi extends BaseApi {
   constructor() {
     super("/auth");
   }
-  signin(data: LoginData) {
+  async signin(data: LoginData) {
     return this.http.post("/signin", data);
   }
 
-  signup(data: SignupData) {
+  async signup(data: SignupData) {
     return this.http.post("/signup", { ...data });
   }
 
-  getUser(): Promise<User> {
+  async getUser(): Promise<User> {
     return this.http.get("/user");
   }
 
-  logout() {
+  async logout() {
     return this.http.post("/logout", {});
   }
 

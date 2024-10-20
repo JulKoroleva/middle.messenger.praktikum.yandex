@@ -3,6 +3,7 @@ import usersApi from "../utils/api/users-api";
 import { validateForm } from "../validators/form.validator";
 import { User } from "../utils/api/auth-api";
 import store from "../framework/Store";
+import showErrorModal from "../components/modal/showErrorModal";
 
 class UsersController {
   public async updateUserInfo(form: HTMLFormElement) {
@@ -26,7 +27,7 @@ class UsersController {
       const user = await usersApi.update(data);
       store.set("user", user);
     } catch (e) {
-      // console.error(e);
+      showErrorModal(`${e}`);
     }
   }
 
@@ -41,7 +42,7 @@ class UsersController {
         }
       }
     } catch (e) {
-      console.error("Ошибка при обновлении аватара:", e);
+      showErrorModal(`${e}`);
     }
   }
 
@@ -50,7 +51,7 @@ class UsersController {
       const avatarPath = await resourcesApi.getAvatar(id);
       store.set("user.avatar", avatarPath);
     } catch (e) {
-      console.error(e);
+      showErrorModal(`${e}`);
     }
   }
 
@@ -70,7 +71,7 @@ class UsersController {
 
       await usersApi.changePassword(data);
     } catch (e) {
-      // console.error(e);
+      showErrorModal(`${e}`);
     }
   }
 
@@ -79,7 +80,7 @@ class UsersController {
       const res = await usersApi.searchUsers(login);
       return res;
     } catch (e) {
-      // console.error(e);
+      showErrorModal(`${e}`);
       throw e;
     }
   }

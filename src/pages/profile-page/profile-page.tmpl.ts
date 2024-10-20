@@ -25,9 +25,10 @@ class ProfilePage extends Block {
 
     super({
       currentUserData: currentUserData,
-      avatar: currentUserData.avatar
-        ? `${avatarPath}${currentUserData.avatar}`
-        : union,
+      avatar:
+        currentUserData.avatar !== null
+          ? `${avatarPath}${currentUserData.avatar}`
+          : union,
       avatarChangeVisibility: "hidden",
       passwordChangeVisibility: "hidden",
       onAvatarChange: (e: Event) => this.handleChangeAvatar(e),
@@ -146,7 +147,12 @@ class ProfilePage extends Block {
       const userState = await UserAuthController.getUser();
       if (userState) {
         store.set("user", userState);
-        this.setProps({ avatar: `${avatarPath}${userState.avatar}` });
+        this.setProps({
+          avatar:
+            userState.avatar !== null
+              ? `${avatarPath}${userState.avatar}`
+              : union,
+        });
       }
     } catch (error) {
       console.error("Error fetching user data:", error);

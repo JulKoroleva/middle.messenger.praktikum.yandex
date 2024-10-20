@@ -1,3 +1,4 @@
+import showErrorModal from "../components/modal/showErrorModal";
 import store from "../framework/Store";
 import WSTransport, { WSTransportEvents } from "../utils/api/WSTransport";
 import processMessages from "../utils/messages/processMessages";
@@ -15,8 +16,8 @@ class MessagesController {
       const userId = store.getState().user.id;
 
       if (!userId || !token) {
-        console.error("User ID or token is missing");
-        throw new Error("User ID or token is missing");
+        showErrorModal(`User ID or token is missing`);
+        // throw new Error("User ID or token is missing");
       }
 
       const wsTransport = new WSTransport(
@@ -29,7 +30,8 @@ class MessagesController {
       this.subscribe(wsTransport, id);
       this.fetchOldMessages(id);
     } catch (e) {
-      console.error("Failed to connect to chat", e);
+      // console.error("Failed to connect to chat", e);
+      // showErrorModal(`${e}`);
     }
   }
 
@@ -51,16 +53,17 @@ class MessagesController {
       }
 
       if (socket.readyState !== WebSocket.OPEN) {
-        console.error(
-          "WebSocket is not open, current state:",
-          socket.readyState
-        );
+        // console.error(
+        //   "WebSocket is not open, current state:",
+        //   socket.readyState
+        // );
+        // showErrorModal(`Ошибка: WebSocket is not open, current state: ${socket.readyState}`);
         return;
       }
 
       socket.send({ type: "message", content: message });
     } catch (e) {
-      // console.error(e);
+      showErrorModal(`${e}`);
     }
   }
 
@@ -85,7 +88,7 @@ class MessagesController {
         );
       }
     } catch (e) {
-      // console.error(e);
+      // showErrorModal(`Ошибка:  ${e}`);
     }
   }
 
@@ -104,7 +107,7 @@ class MessagesController {
     try {
       Array.from(this.sockets.values()).forEach((socket) => socket.close());
     } catch (e) {
-      // console.error(e);
+      // showErrorModal(`Ошибка:  ${e}`);
     }
   }
 
@@ -160,6 +163,7 @@ class MessagesController {
       store.set("chats", updatedChats);
     } catch (e) {
       // console.error("Failed to update messages for chat", e);
+      // showErrorModal(`Ошибка:  ${e}`);
     }
   }
 

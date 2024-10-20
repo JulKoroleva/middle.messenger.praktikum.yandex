@@ -10,6 +10,7 @@ import union from "../../../../../../../static/assets/union.svg";
 export default class DialogHeader extends Block {
   constructor() {
     super({
+      currentUserId: store.getState().user.id,
       ellipseIcon,
       chatOptionsVisibility: "hidden",
       onOptionsClick: () => this.handleOptionsClick(this),
@@ -18,8 +19,24 @@ export default class DialogHeader extends Block {
       handleAddUser: (e: Event) => this.handleAddUser(e, this),
       deleteUserPopupVisibility: "hidden",
       onRemoveUserClick: () => this.toggleDeleteUserPopup(this),
-      handleDeleteUser: (e: Event) => this.handleDeleteUser(e, this),
-      avatar: union
+      avatar: union,
+      users: [],
+      handleDeleteUser: (e: Event) => this.handleDeleteUser(e),
+    });
+  }
+
+  async loadUsers() {
+    const chatId = store.getState().selectedChat;
+    const users = await chatController.getUsers(chatId);
+    this.setProps({ users });
+
+    this.bindDeleteUserButtons();
+  }
+
+  bindDeleteUserButtons() {
+    const deleteButtons = document.querySelectorAll(".button_delete");
+    deleteButtons.forEach((button) => {
+      button.addEventListener("click", this.handleDeleteUser);
     });
   }
 
@@ -31,21 +48,23 @@ export default class DialogHeader extends Block {
   };
 
   toggleDeleteUserPopup = (block: Block) => {
-    console.log("toggleDeleteUserPopup");
+    this.loadUsers();
     block.setProps({
       deleteUserPopupVisibility:
         this.props.deleteUserPopupVisibility === "visible"
           ? "hidden"
           : "visible",
     });
+    this.handleOptionsClick(block);
   };
 
   toggleAddUserPopup = (block: Block) => {
-    console.log("toggleAddUserPopup");
+    this.loadUsers();
     block.setProps({
       addUserPopupVisibility:
         this.props.addUserPopupVisibility === "visible" ? "hidden" : "visible",
     });
+    this.handleOptionsClick(block);
   };
 
   handleAddUser = async (e: Event, block: Block) => {
@@ -56,30 +75,33 @@ export default class DialogHeader extends Block {
     const userList: User[] = await usersController.searchUsers(
       formData.get("login") as string
     );
+    console.log("userList", userList);
     const user = userList[0];
-
-    chatController.addUserToChat(chatId, user.id);
-
+    console.log("user", user);
+    await chatController.addUserToChat(chatId, user.id);
     block.setProps({ addUserPopupVisibility: "hidden" });
   };
+  handleDeleteUser = (e: Event) => {
+    console.log("handleDeleteUser");
+    const button = e.target as HTMLElement;
+    const userIdString = button.getAttribute("data-user-id");
 
-  handleDeleteUser = async (e: Event, block: Block) => {
-    const form = e.target as HTMLFormElement;
-    const formData = new FormData(form);
-    block.setProps({ deleteUserPopup: "hidden" });
-    const chatId = store.getState().selectedChat;
+    if (userIdString) {
+      const userId = parseInt(userIdString, 10);
+      const chatId = store.getState().selectedChat;
 
-    const userList: User[] = await usersController.searchUsers(
-      formData.get("login") as string
-    );
-    const user = userList[0];
-
-    chatController.deleteUserFromChat(chatId, user.id);
-
-    block.setProps({ deleteUserPopupVisibility: "hidden" });
+      chatController
+        .deleteUserFromChat(chatId, userId)
+        .then(() => this.loadUsers())
+        .catch((error) =>
+          console.error("Ошибка при удалении пользователя:", error)
+        );
+    }
   };
-  
   render() {
     return this.compile(templateDialogHeader, this.props);
+  }
+  componentDidMount() {
+    this.loadUsers();
   }
 }

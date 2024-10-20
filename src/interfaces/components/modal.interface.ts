@@ -1,4 +1,6 @@
+
 interface ModalProps {
-  style: string;
-  visibility: string;
+  visibility: string; 
+  modalClassName?: string;
+  errorMessage?: string; 
 }

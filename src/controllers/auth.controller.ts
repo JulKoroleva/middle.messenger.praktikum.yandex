@@ -3,6 +3,8 @@ import Router from "../framework/Router";
 import Store from "../framework/Store";
 import { Routes } from "../utils/Routes";
 import { validateForm } from "../validators/form.validator";
+import showErrorModal from "../components/modal/showErrorModal";
+import chatController from "./chat.controller";
 
 class UserAuthController {
   public async login(form: HTMLFormElement) {
@@ -10,7 +12,9 @@ class UserAuthController {
       const formIsValid = validateForm(form);
 
       if (!formIsValid) {
-        throw new Error("Login data is invalid");
+        // throw new Error("Login data is invalid");
+        showErrorModal(`Login data is invalid`);
+        return;
       }
 
       const formData = new FormData(form);
@@ -20,10 +24,22 @@ class UserAuthController {
         password: formData.get("password") as string,
       };
 
-      await authApi.signin(data);
-      Router.go(Routes.MainPage);
+      await authApi
+        .signin(data)
+        .then( async (response) => {
+          await this.getUser(); 
+          await chatController.fetchChats(); 
+          Router.go(Routes.MainPage);
+        })
+        .catch((error) => {
+          if (error.reason) {
+            showErrorModal(error.reason);
+          } else {
+            showErrorModal("Неправильный логин или пароль");
+          }
+        });
     } catch (e) {
-      console.error(e);
+      showErrorModal(`${e}`);
     }
   }
 
@@ -32,7 +48,8 @@ class UserAuthController {
       const formIsValid = validateForm(form);
 
       if (!formIsValid) {
-        throw new Error("Signup data is invalid");
+        showErrorModal(`Signup data is invalid`);
+        return;
       }
 
       const formData = new FormData(form);
@@ -45,12 +62,20 @@ class UserAuthController {
         password: formData.get("password") as string,
       };
 
-      await authApi.signup(data);
-      await this.getUser();
-
-      Router.go(Routes.MainPage);
+      await authApi.signup(data)
+      .then( async (response) => {
+        await this.getUser();  
+        Router.go(Routes.MainPage);
+      })
+      .catch((error) => {
+        if (error.reason) {
+          showErrorModal(error.reason);
+        } else {
+          showErrorModal("Некорректные данные: логин или email уже используются");
+        }
+      });
     } catch (e) {
-      // console.error(e);
+      showErrorModal(`${e}`);
     }
   }
 
@@ -60,7 +85,7 @@ class UserAuthController {
       Store.set("user", "");
       Router.go("/");
     } catch (e) {
-      // console.error(e);
+      showErrorModal(`${e}`);
     }
   }
 
@@ -73,7 +98,6 @@ class UserAuthController {
       return undefined;
     }
   }
-  
 }
 
 export default new UserAuthController();

@@ -1,3 +1,5 @@
+import showErrorModal from "../../components/modal/showErrorModal";
+
 interface Options {
   headers?: {
     [key: string]: string;
@@ -98,7 +100,7 @@ class HTTPTransport {
         if (xhr.status >= 200 && xhr.status < 300) {
           resolve(xhr.response);
         } else {
-          console.error(`Error: ${xhr.status} - ${xhr.statusText}`);
+          // console.error(`Error: ${xhr.status} - ${xhr.statusText}`);
           reject(
             new Error(
               `Request failed with status ${xhr.status}: ${xhr.statusText}`
@@ -108,8 +110,9 @@ class HTTPTransport {
       };
 
       xhr.onerror = function () {
-        console.error(`Error: ${xhr.status} - ${xhr.statusText}`);
+        // console.error(`Error: ${xhr.status} - ${xhr.statusText}`);
         reject(new Error(`Request failed with status ${xhr.status}`));
+        showErrorModal(`Request failed with status ${xhr.status}`)
       };
 
       xhr.timeout = timeout;

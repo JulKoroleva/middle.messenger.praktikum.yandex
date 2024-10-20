@@ -3,17 +3,20 @@
   min-height: 250px;
   border-radius: 12px;
   padding: 40px 30px;
-  background: #fff;
+  background: var(--color-bg-default);
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: space-between;
+  box-shadow: var(--box-shadow);
 
   &.visible {
     opacity: 1;
+    box-shadow: var(--box-shadow);
+    align-items: start;
   }
 
   &.hidden {
+    display: none;
     opacity: 0;
   }
 
@@ -28,7 +31,7 @@
       position: absolute;
       top: 60px;
       right: 10px;
-      z-index: 10;
+      z-index: 10000;
     }
   }
 
@@ -38,5 +41,22 @@
     font-weight: 500;
     line-height: 20px;
     align-self: center;
+  }
+
+  &__error {
+    background-color: var(--bg-error);
+    box-shadow: var(--box-shadow);
+
+    &-message {
+      color: var(--color-err-message);
+      font-size: 14px;
+      text-align: left;
+      margin-bottom: 10px;
+    }
+
+    &-title {
+      text-align: left;
+      color: var(--color-err-title);
+    }
   }
 }
