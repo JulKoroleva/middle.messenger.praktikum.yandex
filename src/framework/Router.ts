@@ -7,7 +7,7 @@ function isEqual(lhs: string, rhs: string): boolean {
 }
 
 class Route {
-  private block: Block | null;
+  private block: Block | null = null;
 
   constructor(
     private pathname: string,
