@@ -1,24 +1,24 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "target": "ESNext",
-    "module": "ESNext",
-    "esModuleInterop": true,
-    "strict": true,
-    "moduleResolution": "node",
-    "useDefineForClassFields": true,
-    "lib": ["ESNext", "DOM"],
-    "resolveJsonModule": true,
-    "isolatedModules": true,
     "noEmit": true,
+    "outDir": "dist",
+    "declaration": false,
+    "module": "ESNext",
+    "target": "ESNext",
+    "moduleResolution": "Node",
+    "allowImportingTsExtensions": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitReturns": true,
     "skipLibCheck": true,
-    "noImplicitAny": true,
-    "sourceMap": true,
-    "strictNullChecks": true
   },
-  "include": ["src/**/*", "src/types/**/*", "custom.d.ts"]
+  "exclude": [
+    "node_modules",
+    "./node_modules",
+    "./node_modules/*",
+    "./node_modules/@types/node/index.d.ts",
+  ]
 }
