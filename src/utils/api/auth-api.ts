@@ -1,4 +1,4 @@
-import { BaseApi } from "./base-api.ts";
+import { BaseApi } from "./base-api";
 
 export interface LoginData {
   login: string;

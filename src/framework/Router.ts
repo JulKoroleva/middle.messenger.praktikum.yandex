@@ -1,6 +1,6 @@
 import Block from "./Block";
-import { Routes } from "../utils/Routes.ts";
-import { render } from "../utils/dom/render.ts";
+import { Routes } from "../utils/Routes";
+import { render } from "../utils/dom/render";
 
 function isEqual(lhs: string, rhs: string): boolean {
   return lhs === rhs;
@@ -67,7 +67,7 @@ export class Router {
     const instance = Router.__instance;
     if (instance) {
       instance.routes = [];
-      instance._currentRoute = null;
+      instance.currentRoute = null;
       instance.history.replaceState({}, "", "/");
     }
   }

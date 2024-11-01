@@ -1,7 +1,7 @@
-import Block from "../../framework/Block.ts";
+import Block from "../../framework/Block";
 import templateInput from "./input.hbs";
-import { activatePlaceholder, deactivatePlaceholder } from "../../utils/dom/activateInputFocus.ts";
-import { validateInput } from "../../validators/form.validator.ts";
+import { activatePlaceholder, deactivatePlaceholder } from "../../utils/dom/activateInputFocus";
+import { validateInput } from "../../validators/form.validator";
 
 export default class Input extends Block {
   constructor(props: InputProps) {

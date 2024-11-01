@@ -4,12 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "test": "mocha",
-    "start": "npm run build && node ./src/server/index.js",
+    "start": "vite build && node server.cjs",
     "dev": "vite",
     "build": "vite build && tsc",
     "preview": "vite preview",
-    "start": "npm run build && node dist/server.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "check": "tsc --noEmit",

@@ -1,4 +1,4 @@
-import Block from "../../framework/Block.ts";
+import Block from "../../framework/Block";
 import modal from "./modal.hbs";
 
 export default class Modal extends Block {
