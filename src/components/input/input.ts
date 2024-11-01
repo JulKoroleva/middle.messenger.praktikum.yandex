@@ -19,6 +19,10 @@ export default class Input extends Block {
     })
   }
 
+  getEvents() {
+    return this.props.events;
+  }
+
   render() {
     return this.compile(templateInput, this.props)
   }

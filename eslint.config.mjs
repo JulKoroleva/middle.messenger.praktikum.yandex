@@ -1,4 +1,3 @@
-
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import prettierPlugin from "eslint-plugin-prettier";
 import tsParser from "@typescript-eslint/parser";
@@ -14,9 +13,23 @@ export default [
         sourceType: "module",
       },
     },
+    ignores: [
+      "eslint.config.js",
+      "stylelint.config.js",
+      "loader-css.js",
+      "mochaSetup.js",
+    ],
+    globals: {
+      ...globals.browser, 
+      describe: "readonly",
+      it: "readonly",
+      beforeEach: "readonly",
+      afterEach: "readonly",
+      global: "readonly",
+    },
     plugins: {
       "@typescript-eslint": typescriptEslint,
-      "prettier": prettierPlugin,
+      prettier: prettierPlugin,
     },
     rules: {
       "prettier/prettier": ["error", { endOfLine: "auto" }],

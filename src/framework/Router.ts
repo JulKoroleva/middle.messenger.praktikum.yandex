@@ -63,6 +63,15 @@ class Router {
     return this;
   }
 
+  public reset() {
+    const instance = Router.__instance;
+    if (instance) {
+      instance.routes = [];
+      instance._currentRoute = null;
+      instance.history.replaceState({}, "", "/");
+    }
+  }
+
   public start() {
     window.onpopstate = (event: PopStateEvent) => {
       const target = event.currentTarget as Window;
@@ -122,7 +131,7 @@ class Router {
   public forward() {
     this.history.forward();
   }
-  private getRoute(pathname: string) {
+  public getRoute(pathname: string) {
     return this.routes.find((route) => route.match(pathname));
   }
 }
