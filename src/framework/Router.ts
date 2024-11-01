@@ -1,14 +1,13 @@
 import Block from "./Block";
-import { Routes } from "../utils/Routes";
-import { render } from "../utils/dom/render";
-import AuthApi from "../utils/api/auth-api";
+import { Routes } from "../utils/Routes.ts";
+import { render } from "../utils/dom/render.ts";
 
 function isEqual(lhs: string, rhs: string): boolean {
   return lhs === rhs;
 }
 
 class Route {
-  private _block: Block | null = null;
+  private block: Block | null = null;
 
   constructor(
     private pathname: string,
@@ -24,7 +23,7 @@ class Route {
   }
 
   leave() {
-    this._block = null;
+    this.block = null;
   }
 
   match(pathname: string) {
@@ -32,34 +31,35 @@ class Route {
   }
 
   render() {
-    if (!this._block) {
-      this._block = new this.blockClass({});
-      render(this.query, this._block as Block);
+    if (!this.block) {
+      this.block = new this.blockClass({});
+
+      render(this.query, this.block as Block);
       return;
     }
   }
 }
 
-class Router {
-  private static __instance: Router;
+export class Router {
+  private static __instance?: Router;
   private routes: Route[] = [];
-  private _currentRoute: Route | null = null;
-  private history: typeof window.history = window.history;
-  private _query: string = "";
+  private currentRoute: Route | null = null;
+  private history = window.history;
 
-  constructor(query: string) {
+  constructor(private readonly rootQuery: string) {
     if (Router.__instance) {
       return Router.__instance;
     }
 
-    this._query = query;
     this.routes = [];
+
     Router.__instance = this;
   }
 
   public use(pathname: string, block: typeof Block) {
-    const route = new Route(pathname, block, this._query);
+    const route = new Route(pathname, block, this.rootQuery);
     this.routes.push(route);
+
     return this;
   }
 
@@ -82,52 +82,32 @@ class Router {
   }
 
   private _onRoute(pathname: string) {
-    AuthApi.getUser()
-      .then((user) => {
-        if (user && (pathname === "/sign-up" || pathname === "/")) {
-          this.go("/messenger");
-          return;
-        }
+    const route = this.getRoute(pathname);
+    if (!route) {
+      const notFoundRoute = this.getRoute(Routes.Error);
+      notFoundRoute?.render();
+      return;
+    }
 
-        const route = this.getRoute(pathname);
-        if (!route) {
-          const notFoundRoute = this.getRoute(Routes.Error);
-          notFoundRoute?.render();
-          return;
-        }
+    if (this.currentRoute && this.currentRoute !== route) {
+      this.currentRoute.leave();
+    }
 
-        if (this._currentRoute && this._currentRoute !== route) {
-          this._currentRoute.leave();
-        }
+    this.currentRoute = route;
 
-        this._currentRoute = route;
-        route.navigate(pathname);
-      })
-      .catch(() => {
-        const route = this.getRoute(pathname);
-        if (!route) {
-          const notFoundRoute = this.getRoute(Routes.Error);
-          notFoundRoute?.render();
-          return;
-        }
-
-        if (this._currentRoute && this._currentRoute !== route) {
-          this._currentRoute.leave();
-        }
-
-        this._currentRoute = route;
-        route.navigate(pathname);
-      });
+    route.render();
   }
 
   public go(pathname: string) {
     this.history.pushState({}, "", pathname);
+
     this._onRoute(pathname);
   }
 
   public back() {
     this.history.back();
   }
+
   public forward() {
     this.history.forward();
   }
@@ -135,5 +115,4 @@ class Router {
     return this.routes.find((route) => route.match(pathname));
   }
 }
-
 export default new Router("#app");

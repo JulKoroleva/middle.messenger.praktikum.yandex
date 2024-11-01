@@ -4,6 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "test": "mocha",
+    "start": "npm run build && node ./src/server/index.js",
     "dev": "vite",
     "build": "vite build && tsc",
     "preview": "vite preview",
