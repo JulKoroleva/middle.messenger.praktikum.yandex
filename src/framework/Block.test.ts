@@ -9,7 +9,7 @@ describe("Block", () => {
 
   beforeEach(() => {
     eventBus = sinon.createStubInstance(EventBus);
-    instance = new Block({});
+    instance = new Block({}, eventBus);
   });
 
   afterEach(() => {
