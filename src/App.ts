@@ -21,7 +21,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     .use(Routes.Error, ErrorPage);
 
   try {
-    Router.start();
+    // Router.start();
     await UserAuthController.getUser();
     await chatController.fetchChats();
   } catch (e) {
@@ -49,4 +49,6 @@ window.addEventListener("DOMContentLoaded", async () => {
       textarea.style.height = `${Math.min(textarea.scrollHeight, 150)}px`;
     });
   }
+  
+  Router.start();
 });

@@ -1,6 +1,8 @@
 import Block from "./Block.ts";
 import { Routes } from "../utils/Routes.ts";
 import { render } from "../utils/dom/render.ts";
+// import UserAuthController  from "../controllers/auth.controller.ts";
+import store from "./Store.ts";
 
 function isEqual(lhs: string, rhs: string): boolean {
   return lhs === rhs;
@@ -82,6 +84,11 @@ export class Router {
   }
 
   private _onRoute(pathname: string) {
+    const isAuthRoute = [Routes.Login, Routes.Signup].includes(pathname);
+  if (store.isUserAuthorized() && isAuthRoute) {
+    this.go(Routes.MainPage);
+    return;
+  }
     const route = this.getRoute(pathname);
     if (!route) {
       const notFoundRoute = this.getRoute(Routes.Error);
@@ -94,9 +101,9 @@ export class Router {
     }
 
     this.currentRoute = route;
-
     route.render();
   }
+
 
   public go(pathname: string) {
     this.history.pushState({}, "", pathname);

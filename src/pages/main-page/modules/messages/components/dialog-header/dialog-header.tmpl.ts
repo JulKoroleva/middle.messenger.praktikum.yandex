@@ -76,14 +76,11 @@ export default class DialogHeader extends Block {
     const userList: User[] = await usersController.searchUsers(
       formData.get("login") as string
     );
-    console.log("userList", userList);
     const user = userList[0];
-    console.log("user", user);
     await chatController.addUserToChat(chatId, user.id);
     block.setProps({ addUserPopupVisibility: "hidden" });
   };
   handleDeleteUser = (e: Event) => {
-    console.log("handleDeleteUser");
     const button = e.target as HTMLElement;
     const userIdString = button.getAttribute("data-user-id");
 

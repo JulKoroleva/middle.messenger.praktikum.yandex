@@ -57,9 +57,11 @@ class HTTPTransport {
         if (xhr.status >= 200 && xhr.status < 300) {
           resolve(xhr.response);
         } else {
-          reject(
-            new Error(`Request failed with status ${xhr.status}: ${xhr.statusText}`)
-          );
+          if (xhr.status === 400) {
+            reject(xhr.response); 
+          } else {
+            reject(new Error(`Request failed with status ${xhr.status}: ${xhr.statusText}`));
+          }
         }
       };
 
