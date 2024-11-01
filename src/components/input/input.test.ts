@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import sinon, { SinonStub } from "sinon";
-import Input from "./input";
+import Input from "./input.ts";
 
 const defaultInputProps = {
   inputName: "testInput",

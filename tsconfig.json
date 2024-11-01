@@ -1,35 +1,24 @@
 {
   "compilerOptions": {
-    "typeRoots": ["./node_modules/@types", "./types"],
-    "rootDir": "./src",
-    "outDir": "./dist",
-    "noEmit": false,
-    "baseUrl": "./",
-    "paths": {
-      "@/*": ["src/*"]
-    },
-    "target": "ES2022",
-    "useDefineForClassFields": true,
-    "module": "es2022",
-    "esModuleInterop": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "skipLibCheck": true,
+    "noEmit": true,
+    "outDir": "dist",
+    "target": "es2016",
+    "declaration": false,
+    "module": "ES6",
     "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "strict": true,
+    "allowImportingTsExtensions": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "sourceMap": true,
-    "strictNullChecks": true,
-    "noFallthroughCasesInSwitch": true
+    "skipLibCheck": true,
   },
-  "ts-node": {
-    "esm": true,
-    "experimentalSpecifierResolution": "node",
-    "transpileOnly": true
-  },
-  "include": ["src", "src/server.ts"],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "./node_modules",
+    "./node_modules/*",
+    "./node_modules/@types/node/index.d.ts",
+  ]
 }

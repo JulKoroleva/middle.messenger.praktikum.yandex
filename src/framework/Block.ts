@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import EventBus from "./EventBus";
+import EventBus from "./EventBus.ts";
 
 class Block {
   static EVENTS = {

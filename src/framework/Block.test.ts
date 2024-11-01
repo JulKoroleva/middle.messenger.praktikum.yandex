@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import sinon from "sinon";
-import Block from "./Block";
-import EventBus from "./EventBus";
+import Block from "./Block.ts";
+import EventBus from "./EventBus.ts";
 
 describe("Block", () => {
   let instance: Block;

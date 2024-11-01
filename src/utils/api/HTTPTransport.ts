@@ -1,4 +1,4 @@
-import showErrorModal from "../../components/modal/showErrorModal";
+import showErrorModal from "../../components/modal/showErrorModal.ts";
 
 interface Options {
   headers?: Record<string, string>;

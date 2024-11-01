@@ -1,8 +1,8 @@
-import Router from "./Router";
-import Block from "./Block";
+import Router from "./Router.ts";
+import Block from "./Block.ts";
 import { expect } from "chai";
 import sinon from "sinon";
-import { Routes } from "../utils/Routes";
+import { Routes } from "../utils/Routes.ts";
 import { describe, beforeEach, it } from "node:test";
 
 const getContentFake = sinon.fake.returns(document.createElement("div"));

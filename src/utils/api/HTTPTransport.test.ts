@@ -2,7 +2,7 @@ import sinon, {
   SinonFakeXMLHttpRequest,
   SinonFakeXMLHttpRequestStatic,
 } from "sinon";
-import { HTTPTransport } from "./HTTPTransport";
+import { HTTPTransport } from "./HTTPTransport.ts";
 import { expect } from "chai";
 
 describe("HTTPTransport", () => {
