@@ -120,9 +120,9 @@ class ChatsController {
     }
   }
 
-  async addChatAvatar(id: number, formData: FormData) {
+  async addChatAvatar(formData: FormData) {
     try {
-      await this.api.addChatAvatar(id, formData);
+      await this.api.addChatAvatar(formData);
     } catch (e) {
       showErrorModal(`Ошибка при добавлении аватара: ${e}`);
     }
