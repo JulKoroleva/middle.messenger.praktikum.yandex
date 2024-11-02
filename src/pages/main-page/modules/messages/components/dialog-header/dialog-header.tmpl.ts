@@ -139,7 +139,7 @@ export default class DialogHeader extends Block {
     console.log("Проверка formData перед отправкой", formData);
 
     try {
-      await chatController.addChatAvatar(chatId, formData);
+      await chatController.addChatAvatar(formData);
 
       await chatController.fetchChats();
 
