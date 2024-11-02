@@ -35,12 +35,12 @@ export class ChatsAPI extends BaseApi {
     return this.http.put("/avatar", formData);
   }
 
-  async getToken(id: number): Promise<string> {
+  async getToken(chatId: number): Promise<string> {
     const response = await this.http.post<{ token: string }>(
-      `/token/${id}`,
+      `/token/${chatId}`,
       {}
     );
-
+  
     return response.token;
   }
 
