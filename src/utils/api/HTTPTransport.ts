@@ -58,8 +58,11 @@ class HTTPTransport {
           resolve(xhr.response);
         } else {
           if (xhr.status === 400) {
+            console.log('xhr.response',xhr.response)
             reject(xhr.response); 
           } else {
+            console.log('xhr.response',xhr.response)
+            console.log('xhr.statusText',xhr.statusText)
             reject(new Error(`Request failed with status ${xhr.status}: ${xhr.statusText}`));
           }
         }

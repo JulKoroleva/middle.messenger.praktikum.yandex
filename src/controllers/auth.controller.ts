@@ -31,6 +31,7 @@ class UserAuthController {
           Router.go(Routes.MainPage);
         })
         .catch((error) => {
+          console.log('error', error)
           if (error.reason === "User already in system") {
             Router.go(Routes.MainPage); // Редирект к чатам
           } else if (error.reason) {
