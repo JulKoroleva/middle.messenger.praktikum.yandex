@@ -1,9 +1,9 @@
-import EventBus from "./EventBus";
-import Block from "./Block";
-import { User } from "../utils/api/auth-api";
-import { set } from "../helpers/store.helper";
-import isEqual from "../utils/isEqual";
-import { ChatInfo } from "../interfaces/chat.interface";
+import EventBus from "./EventBus.ts";
+import Block from "./Block.ts";
+import { User } from "../utils/api/auth-api.ts";
+import { set } from "../helpers/store.helper.ts";
+import isEqual from "../utils/isEqual.ts";
+import { ChatInfo } from "../interfaces/chat.interface.ts";
 
 interface State {
   user: User;
@@ -26,6 +26,10 @@ class Store extends EventBus {
   public set(path: string, value: unknown) {
     set(this.state, path, value);
     this.emit(StoreEvents.Updated);
+  }
+
+  public isUserAuthorized(): boolean {
+    return !!this.state.user;
   }
 }
 

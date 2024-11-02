@@ -1,6 +1,8 @@
-import Block from "./Block";
+import Block from "./Block.ts";
 import { Routes } from "../utils/Routes.ts";
 import { render } from "../utils/dom/render.ts";
+// import UserAuthController  from "../controllers/auth.controller.ts";
+import store from "./Store.ts";
 
 function isEqual(lhs: string, rhs: string): boolean {
   return lhs === rhs;
@@ -63,6 +65,15 @@ export class Router {
     return this;
   }
 
+  public reset() {
+    const instance = Router.__instance;
+    if (instance) {
+      instance.routes = [];
+      instance.currentRoute = null;
+      instance.history.replaceState({}, "", "/");
+    }
+  }
+
   public start() {
     window.onpopstate = (event: PopStateEvent) => {
       const target = event.currentTarget as Window;
@@ -73,6 +84,11 @@ export class Router {
   }
 
   private _onRoute(pathname: string) {
+    const isAuthRoute = [Routes.Login, Routes.Signup].includes(pathname);
+  if (store.isUserAuthorized() && isAuthRoute) {
+    this.go(Routes.MainPage);
+    return;
+  }
     const route = this.getRoute(pathname);
     if (!route) {
       const notFoundRoute = this.getRoute(Routes.Error);
@@ -85,9 +101,9 @@ export class Router {
     }
 
     this.currentRoute = route;
-
     route.render();
   }
+
 
   public go(pathname: string) {
     this.history.pushState({}, "", pathname);
@@ -102,13 +118,6 @@ export class Router {
   public forward() {
     this.history.forward();
   }
-
-  public reset() {
-    delete Router.__instance;
-
-    new Router(this.rootQuery);
-  }
-
   public getRoute(pathname: string) {
     return this.routes.find((route) => route.match(pathname));
   }

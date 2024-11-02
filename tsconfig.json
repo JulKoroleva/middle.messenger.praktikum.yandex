@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
     "noEmit": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "outDir": "dist",
+    "target": "es2016",
     "declaration": false,
     "module": "ESNext",
-    "target": "ESNext",
     "moduleResolution": "Node",
     "allowImportingTsExtensions": true,
     "strictNullChecks": true,
@@ -14,12 +13,13 @@
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "strict": true,
-    "useDefineForClassFields": true,
-    "lib": ["ESNext", "DOM"],
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noImplicitReturns": true,
+    "skipLibCheck": true
   },
-  "include": ["src/**/*", "src/types/**/*", "custom.d.ts"],
+  "include": ["src/**/*.ts"],
+  "exclude": [
+    "node_modules",
+    "./node_modules",
+    "./node_modules/*",
+    "./node_modules/@types/node/index.d.ts"
+  ]
 }

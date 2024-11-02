@@ -12,7 +12,6 @@ class UserAuthController {
       const formIsValid = validateForm(form);
 
       if (!formIsValid) {
-        // throw new Error("Login data is invalid");
         showErrorModal(`Login data is invalid`);
         return;
       }
@@ -26,13 +25,15 @@ class UserAuthController {
 
       await authApi
         .signin(data)
-        .then( async () => {
-          await this.getUser(); 
-          await chatController.fetchChats(); 
+        .then(async () => {
+          await this.getUser();
+          await chatController.fetchChats();
           Router.go(Routes.MainPage);
         })
         .catch((error) => {
-          if (error.reason) {
+          if (error.reason === "User already in system") {
+            Router.go(Routes.MainPage); // Редирект к чатам
+          } else if (error.reason) {
             showErrorModal(error.reason);
           } else {
             showErrorModal("Неправильный логин или пароль");

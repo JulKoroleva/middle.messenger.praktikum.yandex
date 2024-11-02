@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import sinon from "sinon";
+import sinon, { SinonStub } from "sinon";
 import Input from "./input.ts";
 
 const defaultInputProps = {
@@ -21,9 +21,9 @@ const defaultInputProps = {
 
 describe("Input", () => {
   let instance: Input;
-  let activatePlaceholderStub: sinon.SinonStub;
-  let deactivatePlaceholderStub: sinon.SinonStub; 
-  let validateInputStub: sinon.SinonStub; 
+  let activatePlaceholderStub: SinonStub;
+  let deactivatePlaceholderStub: SinonStub;
+  let validateInputStub: SinonStub;
 
   beforeEach(() => {
     activatePlaceholderStub = sinon.stub();
@@ -31,7 +31,7 @@ describe("Input", () => {
     validateInputStub = sinon.stub().returns(true);
 
     instance = new Input(defaultInputProps);
-    
+
     instance.getEvents().focus = (e: Event) => activatePlaceholderStub(e.target as HTMLElement);
     instance.getEvents().focusout = (e: Event) => {
       deactivatePlaceholderStub(e.target as HTMLElement);

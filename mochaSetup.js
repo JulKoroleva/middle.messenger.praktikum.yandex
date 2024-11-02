@@ -6,6 +6,7 @@ const { window } = new JSDOM('<div id="app"></div>', {
 
 globalThis.window = window;
 globalThis.document = window.document;
+globalThis.Node = window.Node;
 globalThis.DocumentFragment = window.DocumentFragment;
 globalThis.FormData = window.FormData;
-globalThis.FocusEvent = window.FocusEvent;
+global.MouseEvent = window.MouseEvent;

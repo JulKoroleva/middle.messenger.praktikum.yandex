@@ -3,6 +3,7 @@ import Block from "./Block.ts";
 import { expect } from "chai";
 import sinon from "sinon";
 import { Routes } from "../utils/Routes.ts";
+import { describe, beforeEach, it } from "node:test";
 
 const getContentFake = sinon.fake.returns(document.createElement("div"));
 const BlockMock = class {
@@ -53,29 +54,26 @@ describe("Router", () => {
     expect(router1).to.eq(router2);
   });
 
-  it("Методы back() и forward() изменяют текущий маршрут", (done) => {
+  it("Методы back() и forward() изменяют текущий маршрут", async () => {
     const router = Router;
     router.use("/route1", BlockMock);
     router.use("/route2", BlockMock2);
-
+  
     router.go("/route1");
     router.go("/route2");
-
-    setTimeout(() => {
-      router.back();
-
-      setTimeout(() => {
-        expect(window.location.pathname).to.eq("/route1");
-
-        router.forward();
-
-        setTimeout(() => {
-          expect(window.location.pathname).to.eq("/route2");
-          done(); 
-        }, 50);
-      }, 50);
-    }, 50);
+  
+    await new Promise(resolve => setTimeout(resolve, 50));
+    router.back();
+  
+    await new Promise(resolve => setTimeout(resolve, 50));
+    expect(window.location.pathname).to.eq("/route1");
+  
+    router.forward();
+  
+    await new Promise(resolve => setTimeout(resolve, 50));
+    expect(window.location.pathname).to.eq("/route2");
   });
+  
 
   it("Метод getRoute() возвращает правильный маршрут по pathname", () => {
     const router = Router;

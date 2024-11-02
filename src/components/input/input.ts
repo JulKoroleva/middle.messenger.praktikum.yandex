@@ -21,11 +21,7 @@ export default class Input extends Block {
     })
   }
 
-  public getProps() {
-    return this.props;
-  }
-
-  public getEvents() {
+  getEvents() {
     return this.props.events;
   }
 
