@@ -136,8 +136,6 @@ export default class DialogHeader extends Block {
     formData.append("avatar", file);
     formData.append("chatId", chatId.toString());
 
-    console.log("Проверка formData перед отправкой", formData);
-
     try {
       await chatController.addChatAvatar(formData);
 
@@ -145,7 +143,6 @@ export default class DialogHeader extends Block {
 
       this.updateChatAvatar();
       this.setProps({ avatarChangeVisibility: "hidden" });
-      console.log("Аватар успешно загружен.");
     } catch (error) {
       showErrorModal(`Ошибка при изменении аватара: ${JSON.stringify(error)}`);
     }
