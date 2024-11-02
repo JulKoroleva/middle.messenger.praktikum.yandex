@@ -4,6 +4,7 @@ import {PropsСhatList} from "../../../../../../interfaces/pages.interface";
 
 export default class СhatList extends Block {
   constructor(props: PropsСhatList) {
+    console.log('props', props)
     super({
       ...props,
     });
