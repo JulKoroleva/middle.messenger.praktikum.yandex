@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import EventBus from "./EventBus";
+import EventBus from "./EventBus.ts";
 
 class Block {
   static EVENTS = {
@@ -17,14 +17,15 @@ class Block {
   private _element: HTMLElement | null = null;
 
   /** JSDoc
-   * @param {string} tagName
-   * @param {Object} props
+   * @param {Object} propsWithChildren
+   * @param {EventBus} [eventBus] - Внедряемый экземпляр EventBus (для тестов)
    *
    * @returns {void}
    */
-  constructor(propsWithChildren: Props = {}) {
-    const eventBus = new EventBus();
-
+  constructor(
+    propsWithChildren: Props = {},
+    eventBus: EventBus = new EventBus()
+  ) {
     const { props, children } = this._getChildrenAndProps(propsWithChildren);
 
     this.children = children;

@@ -36,6 +36,7 @@ export interface PropsMessageItem {
 
 export interface PropsChatItem {
   chatId: any;
+  avatar: string,
   chatName: string;
   lastMessageDate: string;
   newMessages: number;

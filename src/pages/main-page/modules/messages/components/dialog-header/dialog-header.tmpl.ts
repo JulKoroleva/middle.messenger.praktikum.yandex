@@ -10,9 +10,20 @@ import showErrorModal from "../../../../../../components/modal/showErrorModal";
 
 export default class DialogHeader extends Block {
   constructor() {
+    const selectedChatId = store.getState().selectedChat;
+    const chats = store.getState().chats || [];
+    const selectedChat = chats.find((chat: any) => chat.id === selectedChatId);
+
+    const avatarUrl =
+      selectedChat && selectedChat.avatar
+        ? `https://ya-praktikum.tech/api/v2/resources${selectedChat.avatar}`
+        : union; 
+
     super({
       currentUserId: store.getState().user.id,
       ellipseIcon,
+      onAvatarPopupClick: () => this.toggleAddChatAvatarPopup(this),
+      avatarChangeVisibility: "hidden",
       chatOptionsVisibility: "hidden",
       onOptionsClick: () => this.handleOptionsClick(this),
       addUserPopupVisibility: "hidden",
@@ -20,9 +31,11 @@ export default class DialogHeader extends Block {
       handleAddUser: (e: Event) => this.handleAddUser(e, this),
       deleteUserPopupVisibility: "hidden",
       onRemoveUserClick: () => this.toggleDeleteUserPopup(this),
-      avatar: union,
+      avatar: avatarUrl,
+      chatName: selectedChat?.title,
       users: [],
       handleDeleteUser: (e: Event) => this.handleDeleteUser(e),
+      handleSetChatAvatar: (e: Event) => this.handleSetChatAvatar(e),
     });
   }
 
@@ -59,6 +72,15 @@ export default class DialogHeader extends Block {
     this.handleOptionsClick(block);
   };
 
+  toggleAddChatAvatarPopup = (block: Block) => {
+    this.loadUsers();
+    block.setProps({
+      avatarChangeVisibility:
+        this.props.avatarChangeVisibility === "visible" ? "hidden" : "visible",
+    });
+    this.handleOptionsClick(block);
+  };
+
   toggleAddUserPopup = (block: Block) => {
     this.loadUsers();
     block.setProps({
@@ -76,14 +98,12 @@ export default class DialogHeader extends Block {
     const userList: User[] = await usersController.searchUsers(
       formData.get("login") as string
     );
-    console.log("userList", userList);
     const user = userList[0];
-    console.log("user", user);
     await chatController.addUserToChat(chatId, user.id);
     block.setProps({ addUserPopupVisibility: "hidden" });
   };
+
   handleDeleteUser = (e: Event) => {
-    console.log("handleDeleteUser");
     const button = e.target as HTMLElement;
     const userIdString = button.getAttribute("data-user-id");
 
@@ -94,11 +114,55 @@ export default class DialogHeader extends Block {
       chatController
         .deleteUserFromChat(chatId, userId)
         .then(() => this.loadUsers())
-        .catch(() =>
-          showErrorModal(`Ошибка при удалении пользователя`)
-        );
+        .catch(() => showErrorModal(`Ошибка при удалении пользователя`));
     }
   };
+
+  handleSetChatAvatar = async (e: Event) => {
+    e.preventDefault();
+    const form = e.target as HTMLFormElement;
+    const input = form.querySelector(
+      'input[name="avatar"]'
+    ) as HTMLInputElement;
+    const file = input?.files?.[0];
+
+    if (!file) {
+      showErrorModal("Файл не выбран.");
+      return;
+    }
+
+    const chatId = store.getState().selectedChat;
+    const formData = new FormData();
+    formData.append("avatar", file);
+    formData.append("chatId", chatId.toString());
+
+    console.log("Проверка formData перед отправкой", formData);
+
+    try {
+      await chatController.addChatAvatar(formData);
+
+      await chatController.fetchChats();
+
+      this.updateChatAvatar();
+      this.setProps({ avatarChangeVisibility: "hidden" });
+      console.log("Аватар успешно загружен.");
+    } catch (error) {
+      showErrorModal(`Ошибка при изменении аватара: ${JSON.stringify(error)}`);
+    }
+  };
+
+  updateChatAvatar() {
+    const chatId = store.getState().selectedChat;
+    const chats = store.getState().chats;
+    const selectedChat = chats.find((chat: any) => chat.id === chatId);
+
+    if (selectedChat && selectedChat.avatar) {
+      this.setProps({
+        avatar: `https://ya-praktikum.tech/api/v2/resources${selectedChat.avatar}`,
+      });
+    }
+  }
+
   render() {
     return this.compile(templateDialogHeader, this.props);
   }

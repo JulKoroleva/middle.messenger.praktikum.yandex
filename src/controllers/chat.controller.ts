@@ -1,4 +1,4 @@
-import API, { ChatsAPI } from "../utils/api/chat-api"; 
+import API, { ChatsAPI } from "../utils/api/chat-api";
 import MessagesController from "../controllers/message.controller";
 import store from "../framework/Store";
 import showErrorModal from "../components/modal/showErrorModal";
@@ -37,7 +37,8 @@ class ChatsController {
         });
 
         store.set("chats", chats);
-      } 
+        console.log("chats", chats);
+      }
     } catch (e) {
       // showErrorModal(`${e}`);
     }
@@ -46,13 +47,13 @@ class ChatsController {
   async fetchLastMessage(id: number) {
     try {
       const socket = this.sockets.get(id);
-  
+
       if (!socket) {
         throw new Error(`Chat ${id} is not connected`);
       }
-  
+
       if (socket.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify({ type: "get old", content: "1" })); 
+        socket.send(JSON.stringify({ type: "get old", content: "1" }));
       } else {
         // console.error("WebSocket is not open, current state:", socket.readyState);
       }
@@ -118,7 +119,14 @@ class ChatsController {
       return [];
     }
   }
-  
+
+  async addChatAvatar(formData: FormData) {
+    try {
+      await this.api.addChatAvatar(formData);
+    } catch (e) {
+      showErrorModal(`Ошибка при добавлении аватара: ${e}`);
+    }
+  }
 }
 
 const chatController = new ChatsController();
